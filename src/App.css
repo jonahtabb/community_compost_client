@@ -1,21 +1,48 @@
+input:focus{
+  outline: none
+}
+
+input{
+  color:rgba(38, 124, 24, .8);
+  outline: none
+}
+
+input:focus-visible {
+  border: 2px solid rgba(38, 124, 24, .5);
+  border-radius: 20px;
+}
+
+input::placeholder {
+  color: rgba(38, 124, 24, .8)
+}
+
+button {
+  background-color: rgba(38, 124, 24, .8);
+  border-radius: 20px;
+  height: 2rem;
+  color: whitesmoke;
+  width: 200px;
+  margin-top: 1rem;
+  border-width: 0px;
+}
+
+button:hover{
+  cursor: pointer;
+}
+
+button:active{
+  transform: translate(1px, 1px)
+}
+
+
 .App {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
+.header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 100px;
+  min-width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -24,15 +51,41 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.user-register{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.user-register-form{
+  width:200px
 }
+
+
+
+.register-input{
+  box-sizing: border-box;
+  width: 100%;
+  height: 2rem;
+  border-radius: 20px;
+  border-width: 0px;
+  background-color: rgba(38, 124, 24, 0.16);
+  text-align: center;
+  margin-top: 1rem
+}
+
+.outlined-input{
+  box-sizing: border-box;
+  width: 100%;
+  height: 2rem;
+  border-radius: 20px;
+  border-width: 1px;
+  border-color: rgb(37, 124, 24);
+  border-style: solid;
+  background-color: transparent;
+  text-align: center;
+  margin-top: 1rem
+}
+
+
+
