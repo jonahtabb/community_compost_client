@@ -14,6 +14,7 @@ import {
 
 export type UserProfile = {
   userProfile: {
+    email: string | null,
     firstName: string | null,
     lastName: string | null
   }
@@ -32,6 +33,7 @@ export class App extends Component<{}, AppState> {
     this.state = {
       sessionToken : null,
       userProfile: {
+        email: null,
         firstName: null,
         lastName: null
       }
@@ -49,9 +51,14 @@ export class App extends Component<{}, AppState> {
     )
   }
 
-  setUserProfile = (firstName: string | null, lastName: string |null): void => {
+  setUserProfile = (
+    email: string | null,
+    firstName: string | null,
+    lastName: string | null
+  ): void => {
     this.setState({
       userProfile:{
+        email,
         firstName,
         lastName,
       }

@@ -4,17 +4,16 @@ import "../App.css";
 import { UserRegister } from "./UserRegister";
 import { AdminRegister } from "./AdminRegister";
 
-export type RegisterState = {
-    asAdmin: boolean;
-    registrationStep: number;
-
-};
 
 export type RegisterProps = 
     SessionToken
     & UserProfile
     & { setSessionToken: (newToken: string) => void}
-    & { setUserProfile: (firstName: string | null, lastName: string | null) => void}
+    & { setUserProfile: (email: string | null, firstName: string | null, lastName: string | null) => void}
+
+export type AsAdmin = { asAdmin: boolean }
+export type RegistrationStep = { registrationStep: number }
+export type RegisterState = AsAdmin & RegistrationStep
 
 export class Register extends Component<RegisterProps, RegisterState> {
     constructor(props: RegisterProps) {
@@ -41,10 +40,13 @@ export class Register extends Component<RegisterProps, RegisterState> {
 
 
     componentDidMount() {
-        let regStep = localStorage.getItem("registrationStep")
-        this.setState({
-            registrationStep: regStep ? +regStep : 1
-        })
+        let regStep = localStorage.getItem("registrationStep");
+        let token = localStorage.getItem("token");
+        if (token && regStep && +regStep === 1) {
+            this.setState({
+                registrationStep: regStep ? +regStep : 1
+            })  
+        }
     }
     
     render() {
