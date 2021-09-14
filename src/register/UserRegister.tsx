@@ -1,10 +1,16 @@
 import React, { Component } from "react";
 import "../App.css";
-import { RegisterState, RegisterProps } from "./Register";
+import { RegisterProps, AsAdmin, RegistrationStep } from "./Register";
 import APIURL from '../helpers/environment'
 import { UserProfile } from "../App";
 
-type UserRegisterState = {
+type UserRegisterProps = 
+    AsAdmin
+    & RegistrationStep
+    & UserProfile
+    & { incrementRegStep: () => void } & RegisterProps
+
+type FormInput = {
     formInput: {
         firstName: string | null;
         lastName: string | null;
@@ -14,12 +20,9 @@ type UserRegisterState = {
         confirmPassword: string | null;
         allValidated: boolean;
     };
-};
+}
 
-type UserRegisterProps = 
-    RegisterState
-    & UserProfile
-    & { incrementRegStep: () => void } & RegisterProps
+type UserRegisterState = FormInput
 
 export class UserRegister extends Component<
     UserRegisterProps,
@@ -58,6 +61,8 @@ export class UserRegister extends Component<
                 method: 'POST',
                 body: JSON.stringify({
                     user:{
+                        first_name: this.state.formInput.firstName,
+                        last_name: this.state.formInput.lastName,
                         email: this.state.formInput.email,
                         password: this.state.formInput.password,
                         is_admin: this.props.asAdmin ? "1" : "0"
@@ -68,12 +73,12 @@ export class UserRegister extends Component<
                 })
             })
             let json = await res.json()
-
+            
             //Store Session Token
             this.props.setSessionToken(json.sessionToken)
 
             //Update User Profile info in App.js State
-            this.props.setUserProfile(this.state.formInput.firstName, this.state.formInput.lastName)
+            this.props.setUserProfile(this.state.formInput.email, this.state.formInput.firstName, this.state.formInput.lastName)
 
             //Increment Registration Step in Register.js State
             this.props.incrementRegStep()

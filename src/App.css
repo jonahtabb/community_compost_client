@@ -1,3 +1,13 @@
+p {
+  color: #3D550C;
+  font-size: .8rem;
+}
+
+label {
+  color: #3D550C;
+  font-size: .8rem;
+}
+
 input:focus{
   outline: none
 }
@@ -61,8 +71,6 @@ button:active{
   width:200px
 }
 
-
-
 .register-input{
   box-sizing: border-box;
   width: 100%;
@@ -87,5 +95,65 @@ button:active{
   margin-top: 1rem
 }
 
+.register-text{
+  text-align: left;
+}
 
+.check-container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  text-align: left;
+}
 
+.check-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: rgba(38, 124, 24, .5);
+  border-radius: 50%;
+
+}
+
+.check-container input:checked ~ .checkmark {
+  /* background-color: rgba(38, 124, 24, .1); */
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.check-container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.check-container .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
