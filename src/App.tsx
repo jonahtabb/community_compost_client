@@ -20,11 +20,39 @@ export type UserProfile = {
   }
 }
 
+export type AdminProfile = {
+  adminProfile: {
+    secondary_email: string | null,
+    phone: string | null,
+    phone_type: string | null,
+    bio: string | null
+  }
+}
+
+export type CommunityProfile = {
+  communityProfile: {
+    name: string | null,
+    description: string | null
+  }
+}
+
+export type SetAdminProfile = (
+  secondary_email: string | null,
+  phone: string | null,
+  phone_type: string | null,
+  bio: string | null
+) => void
+
+export type SetCommunityProfile = (
+  name: string | null,
+  description: string | null
+) => void
+
 export type SessionToken = {
   sessionToken: string | null,
 }
 
-export type AppState = SessionToken & UserProfile
+export type AppState = SessionToken & UserProfile & AdminProfile & CommunityProfile
 
 
 export class App extends Component<{}, AppState> {
@@ -36,6 +64,16 @@ export class App extends Component<{}, AppState> {
         email: null,
         firstName: null,
         lastName: null
+      },
+      adminProfile: {
+        secondary_email: null,
+        phone: null,
+        phone_type: null,
+        bio: null
+      },
+      communityProfile: {
+        name: null,
+        description: null
       }
     }
   }
@@ -65,6 +103,34 @@ export class App extends Component<{}, AppState> {
     })
   }
 
+  setAdminProfile: SetAdminProfile = (
+    secondary_email,
+    phone,
+    phone_type,
+    bio,
+  ) => {
+    this.setState({
+      adminProfile: {
+        secondary_email,
+        phone,
+        phone_type,
+        bio,
+      }
+    })
+  }
+
+ setCommunityProfile: SetCommunityProfile = (
+   name,
+   description
+ ) => {
+    this.setState({
+      communityProfile: {
+        name, 
+        description
+      }
+    })
+ }
+
 
   render() {
     return (
@@ -85,6 +151,10 @@ export class App extends Component<{}, AppState> {
                 setSessionToken = {this.setSessionToken}
                 userProfile = {this.state.userProfile}
                 setUserProfile = {this.setUserProfile}
+                adminProfile = {this.state.adminProfile}
+                setAdminProfile = {this.setAdminProfile}
+                communityProfile= {this.state.communityProfile}
+                setCommunityProfile= {this.setCommunityProfile}
               />
             </Route>
           </Switch>

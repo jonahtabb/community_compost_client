@@ -1,14 +1,21 @@
 import React, { Component } from "react";
 import "../App.css";
 import { RegisterProps, AsAdmin, RegistrationStep } from "./Register";
-import APIURL from '../helpers/environment'
-import { UserProfile } from "../App";
+import APIURL from "../helpers/environment";
+import { SessionToken, UserProfile } from "../App";
 
-type UserRegisterProps = 
-    AsAdmin
-    & RegistrationStep
-    & UserProfile
-    & { incrementRegStep: () => void } & RegisterProps
+type UserRegisterProps = AsAdmin &
+    RegistrationStep &
+    SessionToken &
+    UserProfile & { incrementRegStep: () => void } & {
+        setSessionToken: (newToken: string) => void;
+    } & {
+        setUserProfile: (
+            email: string | null,
+            firstName: string | null,
+            lastName: string | null
+        ) => void;
+    };
 
 type FormInput = {
     formInput: {
@@ -20,9 +27,9 @@ type FormInput = {
         confirmPassword: string | null;
         allValidated: boolean;
     };
-}
+};
 
-type UserRegisterState = FormInput
+type UserRegisterState = FormInput;
 
 export class UserRegister extends Component<
     UserRegisterProps,
@@ -53,49 +60,48 @@ export class UserRegister extends Component<
         }));
     }
 
-    createAccount = async (): Promise<any> => {
-        
+    createUserAccount = async (): Promise<any> => {
         try {
-            let res = await fetch(`${APIURL}/user/register`,
-            {
-                method: 'POST',
+            let res = await fetch(`${APIURL}/user/register`, {
+                method: "POST",
                 body: JSON.stringify({
-                    user:{
+                    user: {
                         first_name: this.state.formInput.firstName,
                         last_name: this.state.formInput.lastName,
                         email: this.state.formInput.email,
                         password: this.state.formInput.password,
-                        is_admin: this.props.asAdmin ? "1" : "0"
-                    }
+                        is_admin: this.props.asAdmin ? "1" : "0",
+                    },
                 }),
                 headers: new Headers({
-                    'Content-Type': 'application/json',
-                })
-            })
-            let json = await res.json()
-            
+                    "Content-Type": "application/json",
+                }),
+            });
+            let json = await res.json();
+
             //Store Session Token
-            this.props.setSessionToken(json.sessionToken)
+            this.props.setSessionToken(json.sessionToken);
 
             //Update User Profile info in App.js State
-            this.props.setUserProfile(this.state.formInput.email, this.state.formInput.firstName, this.state.formInput.lastName)
+            this.props.setUserProfile(
+                this.state.formInput.email,
+                this.state.formInput.firstName,
+                this.state.formInput.lastName
+            );
 
             //Increment Registration Step in Register.js State
-            this.props.incrementRegStep()
-            
+            this.props.incrementRegStep();
         } catch (error) {
             console.log({
-                error
-            })
+                error,
+            });
         }
-        
-
-    }
+    };
 
     render() {
         return (
             <div className="user-register">
-                REGISTER COMPONENT
+
                 <div className="user-register-form">
                     <button onClick={() => console.log(this.state)}>
                         UserRegister STATE CHECKER
@@ -142,10 +148,10 @@ export class UserRegister extends Component<
                         id="confirmPassword"
                         onChange={(e) => this.updateInputState(e)}
                     />
-                    <button 
-                        className=""
-                        onClick={this.createAccount}
-                        >Create Account</button>
+                    <button className="" onClick={this.createUserAccount}>
+                        Continue
+                    </button>
+
                 </div>
             </div>
         );
