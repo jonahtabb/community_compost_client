@@ -1,19 +1,26 @@
 import React, { Component } from "react";
-import { SessionToken, UserProfile } from "../App";
+import { AdminProfile, CommunityProfile, SessionToken, SetAdminProfile, SetCommunityProfile, UserProfile } from "../App";
 import "../App.css";
 import { UserRegister } from "./UserRegister";
 import { AdminRegister } from "./AdminRegister";
 
-
 export type RegisterProps = 
-    SessionToken
-    & UserProfile
-    & { setSessionToken: (newToken: string) => void}
-    & { setUserProfile: (email: string | null, firstName: string | null, lastName: string | null) => void}
+    SessionToken &
+    UserProfile &
+    AdminProfile & { setSessionToken: (newToken: string) => void } & {
+        setUserProfile: (
+            email: string | null,
+            firstName: string | null,
+            lastName: string | null
+        ) => void;
+    } & 
+    {setAdminProfile: SetAdminProfile} &
+    CommunityProfile &
+    {setCommunityProfile: SetCommunityProfile}
 
-export type AsAdmin = { asAdmin: boolean }
-export type RegistrationStep = { registrationStep: number }
-export type RegisterState = AsAdmin & RegistrationStep
+export type AsAdmin = { asAdmin: boolean };
+export type RegistrationStep = { registrationStep: number };
+export type RegisterState = AsAdmin & RegistrationStep;
 
 export class Register extends Component<RegisterProps, RegisterState> {
     constructor(props: RegisterProps) {
@@ -22,63 +29,111 @@ export class Register extends Component<RegisterProps, RegisterState> {
             asAdmin: true,
             registrationStep: 1,
         };
-
     }
 
-    incrementRegStep = ():void  => {
+    incrementRegStep = (): void => {
         this.setState((prevState) => {
-            let newStep = prevState.registrationStep + 1
-            localStorage.setItem("registrationStep", newStep.toString())
-            return (            
-                {
+            let newStep = prevState.registrationStep + 1;
+            localStorage.setItem("registrationStep", newStep.toString());
+            return {
                 ...prevState,
-                registrationStep: newStep
-                }
-            )
-        })
-    }
+                registrationStep: newStep,
+            };
+        });
+    };
 
+    toggleAsAdmin = (): void => {
+        this.setState((prevState) => ({
+            ...prevState,
+            asAdmin: !prevState.asAdmin,
+            registrationStep: 1
+        }));
+    };
 
     componentDidMount() {
+
+        //Increase registration step on mount if necessary
         let regStep = localStorage.getItem("registrationStep");
         let token = localStorage.getItem("token");
         if (token && regStep && +regStep === 1) {
             this.setState({
-                registrationStep: regStep ? +regStep : 1
-            })  
+                registrationStep: regStep ? +regStep : 1,
+            });
         }
     }
-    
+
     render() {
         return (
-           <div>
+            <div>
                 <button onClick={() => console.log(this.state)}>
-                Register STATE CHECKER
+                    Register STATE CHECKER
                 </button>
-                {
-                    this.state.registrationStep === 1
-                    ?   <UserRegister
-                            asAdmin={this.state.asAdmin}
-                            registrationStep= {this.state.registrationStep}
-                            incrementRegStep = {this.incrementRegStep}
-                            sessionToken= {this.props.sessionToken}
-                            setSessionToken = {this.props.setSessionToken}
-                            userProfile = {this.props.userProfile}
-                            setUserProfile = {this.props.setUserProfile}
-                        />
-                    : this.state.asAdmin === true && this.state.registrationStep === 2
-                    ?   <AdminRegister
-                            asAdmin={this.state.asAdmin}
-                            registrationStep= {this.state.registrationStep}
-                            incrementRegStep = {this.incrementRegStep}
-                            sessionToken= {this.props.sessionToken}
-                            setSessionToken = {this.props.setSessionToken}
-                            userProfile = {this.props.userProfile}
-                            setUserProfile = {this.props.setUserProfile}
-                        />
-                    : null
-                }
 
+                {this.state.asAdmin ? (
+                    <div>
+                        <h3>Register as Compost Coordinator</h3>
+                        <p>
+                            Create an account to get started creating amazing
+                            compost with help from your community!
+                        </p>
+                    </div>
+                ) : (
+                    <div>
+                        <h3>Register as Member</h3>
+                        <p>
+                            Create an account to get compost picked-up directly
+                            from your house and help making healthy soil!
+                        </p>
+                    </div>
+                )}
+                {this.state.registrationStep === 1 ? (
+                    <UserRegister
+                        asAdmin={this.state.asAdmin}
+                        registrationStep={this.state.registrationStep}
+                        incrementRegStep={this.incrementRegStep}
+                        sessionToken={this.props.sessionToken}
+                        setSessionToken={this.props.setSessionToken}
+                        userProfile={this.props.userProfile}
+                        setUserProfile={this.props.setUserProfile}
+                    />
+                ) : this.state.asAdmin === true &&
+                  this.state.registrationStep === 2 ? (
+                    <AdminRegister
+                        asAdmin={this.state.asAdmin}
+                        registrationStep={this.state.registrationStep}
+                        incrementRegStep={this.incrementRegStep}
+                        sessionToken={this.props.sessionToken}
+                        setSessionToken={this.props.setSessionToken}
+                        userProfile={this.props.userProfile}
+                        setUserProfile={this.props.setUserProfile}
+                        adminProfile={this.props.adminProfile}
+                        setAdminProfile={this.props.setAdminProfile}
+                        communityProfile={this.props.communityProfile}
+                        setCommunityProfile={this.props.setCommunityProfile}
+                    />
+                ) : null}
+
+                {this.state.asAdmin ? (
+                    <div>
+                        <p>Not a coordinator?</p>
+                        <button
+                            className="link-like-button"
+                            onClick={() => this.toggleAsAdmin()}
+                        >
+                            Register as Member
+                        </button>
+                    </div>
+                ) : (
+                    <div>
+                        <p>Not a member?</p>
+                        <button
+                            className="link-like-button"
+                            onClick={() => this.toggleAsAdmin()}
+                        >
+                            Register as Admin
+                        </button>
+                    </div>
+                )}
             </div>
         );
     }

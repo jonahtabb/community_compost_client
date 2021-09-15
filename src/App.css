@@ -26,6 +26,33 @@ input::placeholder {
   color: rgba(38, 124, 24, .8)
 }
 
+
+input:focus-visible::placeholder {
+  color: rgba(38, 124, 24, .2)
+}
+
+textarea {
+  color: rgba(38, 124, 24, .8)
+
+}
+
+textarea::placeholder {
+  color: rgba(38, 124, 24, .8)
+}
+
+textarea:focus-visible::placeholder {
+  color: rgba(38, 124, 24, .2)
+}
+
+textarea:focus{
+  outline: none;
+}
+
+textarea:focus-visible{
+  border: 2px solid rgba(38, 124, 24, .5);
+  border-radius: 20px;
+}
+
 button {
   background-color: rgba(38, 124, 24, .8);
   border-radius: 20px;
@@ -34,6 +61,17 @@ button {
   width: 200px;
   margin-top: 1rem;
   border-width: 0px;
+}
+
+.link-like-button {
+  display: inline;
+  background-color: transparent;
+  font-size: .8rem;
+  color: #3D550C;
+  text-decoration: underline;
+  padding: 0 0 0 0;
+  margin: 0 0 0 0;
+  height: 1rem;
 }
 
 button:hover{
@@ -79,7 +117,7 @@ button:active{
   border-width: 0px;
   background-color: rgba(38, 124, 24, 0.16);
   text-align: center;
-  margin-top: 1rem
+  margin-top: 1rem;
 }
 
 .outlined-input{
