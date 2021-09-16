@@ -9,7 +9,6 @@ export default class Header extends Component<{}, {}> {
     return (
       <div className="header">
         HEADER
-        <Link to="/login">Login</Link>
       </div>
     )
   }

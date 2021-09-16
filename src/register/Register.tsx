@@ -1,21 +1,18 @@
 import React, { Component } from "react";
-import { AdminProfile, CommunityProfile, SessionToken, SetAdminProfile, SetCommunityProfile, UserProfile } from "../App";
+import { AdminProfile, CommunityProfile, SessionToken, SetAdminProfile, SetCommunityProfile, SetSessionToken, SetUserProfile, UserProfile } from "../App";
 import "../App.css";
 import { UserRegister } from "./UserRegister";
 import { AdminRegister } from "./AdminRegister";
 
+
 export type RegisterProps = 
     SessionToken &
     UserProfile &
-    AdminProfile & { setSessionToken: (newToken: string) => void } & {
-        setUserProfile: (
-            email: string | null,
-            firstName: string | null,
-            lastName: string | null
-        ) => void;
-    } & 
-    {setAdminProfile: SetAdminProfile} &
+    AdminProfile & 
     CommunityProfile &
+    {setSessionToken: SetSessionToken} & 
+    {setUserProfile: SetUserProfile} & 
+    {setAdminProfile: SetAdminProfile} &
     {setCommunityProfile: SetCommunityProfile}
 
 export type AsAdmin = { asAdmin: boolean };
