@@ -27,6 +27,23 @@ export type AdminProfile = {
     };
 };
 
+export type MemberProfile = {
+    memberProfile: {
+        emailSecondary: string | null;
+        phonePrimary: string | null;
+        phonePrimaryType: string | null;
+        phoneSecondary: string | null;
+        phoneSecondaryType: string | null;
+        bio: string | null;
+        location_name: string | null;
+        location_address1: string | null;
+        location_address2: string | null;
+        location_city: string | null;
+        location_zip: string | null;
+        location_state: string | null;
+    }
+}
+
 export type CommunityProfile = {
     communityProfile: {
         name: string | null;
@@ -54,6 +71,8 @@ export type SetCommunityProfile = (
 
 export type SetSessionToken = (newToken: string) => void
 
+export type SetRegistrationComplete = (registrationComplete: boolean) => void
+
 export type SessionToken = {
     sessionToken: string | null;
 };
@@ -71,7 +90,8 @@ export type AppState = SessionToken &
     AdminProfile &
     CommunityProfile &
     RegistrationComplete &
-    IsAdmin;
+    IsAdmin &
+    MemberProfile
 
 //BEGIN APP COMPONENT
 export class App extends Component<{}, AppState> {
@@ -92,6 +112,20 @@ export class App extends Component<{}, AppState> {
                 phone_type: null,
                 bio: null,
             },
+            memberProfile: {
+                emailSecondary: null,
+                phonePrimary: null,
+                phonePrimaryType: null,
+                phoneSecondary: null,
+                phoneSecondaryType: null,
+                bio: null,
+                location_name: null,
+                location_address1: null,
+                location_address2: null,
+                location_city: null,
+                location_zip: null,
+                location_state: null
+            },
             communityProfile: {
                 name: null,
                 description: null,
@@ -102,8 +136,9 @@ export class App extends Component<{}, AppState> {
     async componentDidMount() {
         // Get token from local storage
         let token = localStorage.getItem("token");
+        console.log(typeof token, token)
         // If there is a token, get the user's own profile data
-        if (token) {
+        if (token && token !== "undefined" ) {
             console.log(this.state.sessionToken);
             //Get user's own profile data from server
             let res = await fetch(`${APIURL}/user/me`, {
@@ -174,6 +209,7 @@ export class App extends Component<{}, AppState> {
                                     setCommunityProfile={
                                         this.setCommunityProfile
                                     }
+                                    setRegistrationComplete={this.setRegistrationComplete}
                                 />
                             </Route>
                         )}
@@ -197,6 +233,12 @@ export class App extends Component<{}, AppState> {
                 "Tried to save a new sessionToken but was unable to find one"
             );
     };
+
+    setRegistrationComplete: SetRegistrationComplete = (registrationComplete) => {
+        this.setState({
+            registrationComplete: true
+        })
+    }
 
     setUserProfile: SetUserProfile = (email, firstName, lastName) => {
         this.setState({
