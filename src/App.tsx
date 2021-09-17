@@ -29,27 +29,33 @@ export type AdminProfile = {
 
 export type MemberProfile = {
     memberProfile: {
-        emailSecondary: string | null;
-        phonePrimary: string | null;
-        phonePrimaryType: string | null;
-        phoneSecondary: string | null;
-        phoneSecondaryType: string | null;
-        bio: string | null;
-        location_name: string | null;
-        location_address1: string | null;
-        location_address2: string | null;
-        location_city: string | null;
-        location_zip: string | null;
-        location_state: string | null;
+        emailSecondary: string;
+        phonePrimary: string;
+        phonePrimaryType: string;
+        phoneSecondary: string;
+        phoneSecondaryType: string;
+        bio: string;
+        locationName: string;
+        locationAddress1: string;
+        locationAddress2: string;
+        locationCity: string;
+        locationZip: string;
+        locationState: string;
+        locationNotes: string;
     }
 }
 
 export type CommunityProfile = {
     communityProfile: {
-        name: string | null;
-        description: string | null;
+        id: number | undefined;
+        name: string ;
+        description: string ;
     };
 };
+
+export type AllCommunities = {
+    allCommunities: CommunityProfile[]
+}
 
 export type SetUserProfile= (
   email: string | null,
@@ -65,9 +71,19 @@ export type SetAdminProfile = (
 ) => void;
 
 export type SetCommunityProfile = (
-    name: string | null,
-    description: string | null
+    id: number | undefined,
+    name: string,
+    description: string
 ) => void;
+
+export type SetMemberProfile = (
+    propertyName: string,
+    propertyValue: string | number
+ ) => void
+
+export type SetAllCommunities = (
+    communitiesList: []
+) => void
 
 export type SetSessionToken = (newToken: string) => void
 
@@ -91,7 +107,8 @@ export type AppState = SessionToken &
     CommunityProfile &
     RegistrationComplete &
     IsAdmin &
-    MemberProfile
+    MemberProfile &
+    AllCommunities
 
 //BEGIN APP COMPONENT
 export class App extends Component<{}, AppState> {
@@ -113,23 +130,26 @@ export class App extends Component<{}, AppState> {
                 bio: null,
             },
             memberProfile: {
-                emailSecondary: null,
-                phonePrimary: null,
-                phonePrimaryType: null,
-                phoneSecondary: null,
-                phoneSecondaryType: null,
-                bio: null,
-                location_name: null,
-                location_address1: null,
-                location_address2: null,
-                location_city: null,
-                location_zip: null,
-                location_state: null
+                emailSecondary: '',
+                phonePrimary: '',
+                phonePrimaryType: '',
+                phoneSecondary: '',
+                phoneSecondaryType: '',
+                bio: '',
+                locationName: '',
+                locationAddress1: '',
+                locationAddress2: '',
+                locationCity: '',
+                locationZip: '',
+                locationState: '',
+                locationNotes: '',
             },
             communityProfile: {
-                name: null,
-                description: null,
+                id: undefined,
+                name: '',
+                description: '',
             },
+            allCommunities: []
         };
     }
 
@@ -169,6 +189,17 @@ export class App extends Component<{}, AppState> {
                 },
             });
         }
+
+        //Collect a list of all available communities
+        let allCommResponse = await fetch(`${APIURL}/community/all`, {
+            method: "GET",
+            headers: new Headers({"Content-Type": "application/json"})
+        })
+
+        let allCommJson = await allCommResponse.json()
+        let communityList = await allCommJson.allCommunities
+        this.setAllCommunities(await communityList)
+        console.log()
     }
 
     render() {
@@ -203,13 +234,12 @@ export class App extends Component<{}, AppState> {
                                     setUserProfile={this.setUserProfile}
                                     adminProfile={this.state.adminProfile}
                                     setAdminProfile={this.setAdminProfile}
-                                    communityProfile={
-                                        this.state.communityProfile
-                                    }
-                                    setCommunityProfile={
-                                        this.setCommunityProfile
-                                    }
+                                    communityProfile={ this.state.communityProfile}
+                                    setCommunityProfile={ this.setCommunityProfile}
                                     setRegistrationComplete={this.setRegistrationComplete}
+                                    memberProfile={this.state.memberProfile}
+                                    setMemberProfile={this.setMemberProfile}
+                                    allCommunities={this.state.allCommunities}
                                 />
                             </Route>
                         )}
@@ -266,12 +296,37 @@ export class App extends Component<{}, AppState> {
         });
     };
 
-    setCommunityProfile: SetCommunityProfile = (name, description) => {
+    setCommunityProfile: SetCommunityProfile = (id, name, description) => {
         this.setState({
             communityProfile: {
+                id,
                 name,
                 description,
             },
         });
     };
+
+    setMemberProfile: SetMemberProfile = (
+        propertyName, 
+        propertyValue) => {
+        console.log(propertyName, propertyValue)
+        this.setState((prevState) => ({
+            ...prevState,
+            memberProfile: {
+                ...prevState.memberProfile,
+                [propertyName]: propertyValue
+            }
+        }))
+        }
+
+    setAllCommunities: SetAllCommunities = (
+        communitiesList: []
+    ) => {
+        this.setState({
+            allCommunities: {
+                ...communitiesList
+            }     
+        })
+    }
 }
+
