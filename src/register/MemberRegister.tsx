@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import APIURL from "../helpers/environment";
-import { AdminProfile, CommunityProfile, SetRegistrationComplete, SessionToken, SetAdminProfile, SetCommunityProfile, UserProfile } from "../App";
+import { AdminProfile, CommunityProfile, SetRegistrationComplete, SessionToken, SetAdminProfile, SetCommunityProfile, UserProfile, SetMemberProfile, SetUserProfile, MemberProfile, AllCommunities } from "../App";
 import {
     AsAdmin,
     RegistrationStep,
@@ -11,15 +11,15 @@ export type MemberRegisterProps =
         RegistrationStep &
         SessionToken &
         UserProfile & 
+        MemberProfile &
+        CommunityProfile &
+        AllCommunities &
         { incrementRegStep: () => void } & 
         { setSessionToken: (newToken: string) => void } & 
-        { setUserProfile: (
-                email: string | null,
-                firstName: string | null,
-                lastName: string | null
-            ) => void;
-        } &
-        {setRegistrationComplete: SetRegistrationComplete}
+        { setUserProfile: SetUserProfile} &
+        { setRegistrationComplete: SetRegistrationComplete} &
+        { setMemberProfile: SetMemberProfile} &
+        { setCommunityProfile: SetCommunityProfile }
 
 export class MemberRegister extends Component<MemberRegisterProps, {}> {
     constructor(props: MemberRegisterProps) {
@@ -29,7 +29,7 @@ export class MemberRegister extends Component<MemberRegisterProps, {}> {
     handleChooseEmail = (e: React.ChangeEvent<HTMLInputElement>): void => {
         let primaryEmail = this.props.userProfile.email;
         let secondaryEmailField = document.getElementById(
-            "secondary-email"
+            "emailSecondary"
         ) as HTMLInputElement;
         let checked = e.target.checked;
         if (checked) {
@@ -41,6 +41,61 @@ export class MemberRegister extends Component<MemberRegisterProps, {}> {
         }
     };
 
+    handleSubmitForm = async (event:React.FormEvent<HTMLFormElement>): Promise<any> => {
+        event.preventDefault();
+        //Destructure memberProfile state of App.js
+        const {
+            emailSecondary,
+            phonePrimary,
+            phonePrimaryType,
+            phoneSecondary,
+            phoneSecondaryType,
+            bio,
+            locationName,
+            locationAddress1,
+            locationAddress2,
+            locationCity,
+            locationZip,
+            locationState,
+            locationNotes } = this.props.memberProfile
+        
+
+            let memberResponse = await fetch(`${APIURL}/member/create`, {
+                method: "POST",
+                body: JSON.stringify({
+                    member: {
+                        email_secondary: emailSecondary,
+                        phone_primary: phonePrimary,
+                        phone_primary_type: phonePrimaryType,
+                        phone_secondary: phoneSecondary,
+                        phone_secondary_type: phoneSecondaryType,
+                        bio: bio,
+                        location_name: locationName,
+                        location_address1: locationAddress1,
+                        location_address2:locationAddress2,
+                        location_city: locationCity,
+                        location_zip: locationZip,
+                        location_state: locationState,
+                        location_notes: locationNotes
+                    }
+                }),
+                headers: new Headers({
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${this.props.sessionToken}`
+                })
+            })
+            let memberJson = await memberResponse.json()
+            console.log(memberJson)
+    }
+    //Create new member profile associated with user profile
+    
+
+    handleChoosePhoneType =  (e: React.ChangeEvent<HTMLInputElement>, propertyName: string): void => {
+        const chosenType = e.target.getAttribute("data-select")
+        if (chosenType) this.props.setMemberProfile(propertyName, chosenType)
+            else console.error("Tried to pass a null or undefined value into phone type function in MemberRegister")
+    }
+
     render() {
         return (
             
@@ -49,7 +104,30 @@ export class MemberRegister extends Component<MemberRegisterProps, {}> {
                 <h2>{`Welcome ${this.props.userProfile.firstName}! Answer a few more questions to help you get set up!`}</h2>
                 <p>Answer a few more questions and we'll get you set up!</p>
                 <div className="user-register">
-                    <div className="user-register-form">
+                    <form 
+                        className="user-register-form" 
+                        onSubmit={this.handleSubmitForm}
+                    >
+                        {/* <label>
+                            <p>Choose The Community You want to Join</p>
+                            <select value={this.props.communityProfile.id}>
+
+                        {
+                            this.props.allCommunities.map(community => {
+                                <option value={community.id}>TEST</option>
+                            })
+                        }
+                            </select>
+                        </label> */}
+                        {/* <label>
+                        Pick your favorite flavor:
+                        <select value={this.state.value} onChange={this.handleChange}>
+                            <option value="grapefruit">Grapefruit</option>
+                            <option value="lime">Lime</option>
+                            <option value="coconut">Coconut</option>
+                            <option value="mango">Mango</option>
+                        </select>
+                        </label> */}
                         <p className="register-text">
                             Do you have another email address you would like to
                             be listed publicly?
@@ -69,16 +147,24 @@ export class MemberRegister extends Component<MemberRegisterProps, {}> {
                             className="outlined-input"
                             type=""
                             placeholder="Secondary Email"
-                            id="secondary-email"
-                            name="secondary-email"
+                            id="emailSecondary"
+                            name="emailSecondary"
+                            value={this.props.memberProfile.emailSecondary}
+                            onChange={ e => {
+                                this.props.setMemberProfile( e.target.name, e.target.value )
+                            }}
                         />
                         {/* Phone Number */}
                         <input
                             className="outlined-input"
                             type="tel"
                             placeholder="Phone Number"
-                            id="phone-number"
-                            name="phone-number"
+                            id="phonePrimary"
+                            name="phonePrimary"
+                            value={this.props.memberProfile.phonePrimary}
+                            onChange={ e => {
+                                this.props.setMemberProfile( e.target.name, e.target.value )
+                            }}
                         />
                         <div style={{ marginTop: "2rem" }}>
                             <p>Number Type</p>
@@ -90,7 +176,7 @@ export class MemberRegister extends Component<MemberRegisterProps, {}> {
                                     data-select="mobile"
                                     name="phoneNumber_type"
                                     onChange={(e) => {
- 
+                                        this.handleChoosePhoneType(e, "phonePrimaryType")
                                     }}
                                 />
                                 <span className="checkmark"></span>
@@ -104,7 +190,7 @@ export class MemberRegister extends Component<MemberRegisterProps, {}> {
                                     data-select="office"
                                     name="phoneNumber_type"
                                     onChange={(e) => {
-
+                                        this.handleChoosePhoneType(e, "phonePrimaryType")
                                     }}
                                 />
                                 <span className="checkmark"></span>
@@ -118,7 +204,7 @@ export class MemberRegister extends Component<MemberRegisterProps, {}> {
                                     data-select="home"
                                     name="phoneNumber_type"
                                     onChange={(e) => {
-
+                                        this.handleChoosePhoneType(e, "phonePrimaryType")
                                     }}
                                 />
                                 <span className="checkmark"></span>
@@ -128,9 +214,13 @@ export class MemberRegister extends Component<MemberRegisterProps, {}> {
                         <input
                             className="outlined-input"
                             type="tel"
-                            placeholder="Phone Number"
-                            id="secondary-phone-number"
-                            name="secondary-phone-number"
+                            placeholder="Secondary Phone Number"
+                            id="phoneSecondary"
+                            name="phoneSecondary"
+                            value={this.props.memberProfile.phoneSecondary}
+                            onChange={ e => {
+                                this.props.setMemberProfile( e.target.name, e.target.value )
+                            }}
                         />
                         <div style={{ marginTop: "2rem" }}>
                             <p>Number Type</p>
@@ -142,7 +232,7 @@ export class MemberRegister extends Component<MemberRegisterProps, {}> {
                                     data-select="mobile"
                                     name="s_phoneNumber_type"
                                     onChange={(e) => {
- 
+                                        this.handleChoosePhoneType(e, "phoneSecondaryType")
                                     }}
                                 />
                                 <span className="checkmark"></span>
@@ -156,7 +246,7 @@ export class MemberRegister extends Component<MemberRegisterProps, {}> {
                                     data-select="office"
                                     name="s_phoneNumber_type"
                                     onChange={(e) => {
-
+                                        this.handleChoosePhoneType(e, "phoneSecondaryType")
                                     }}
                                 />
                                 <span className="checkmark"></span>
@@ -170,49 +260,114 @@ export class MemberRegister extends Component<MemberRegisterProps, {}> {
                                     data-select="home"
                                     name="s_phoneNumber_type"
                                     onChange={(e) => {
-
+                                        this.handleChoosePhoneType(e, "phoneSecondaryType")
                                     }}
                                 />
                                 <span className="checkmark"></span>
                             </label>
                         </div>
+
                         <label htmlFor="bio">
-                                    Bio. Let everybody know a little bit about who you are!
-                        </label>
+                        Introduce your self! Why are you interesting in composting?       
                         <textarea
                             className="outlined-input"
                             style={{minHeight: "8rem", maxHeight:"30vh", maxWidth: '100%', minWidth: '100%' }}
                             placeholder="Your Bio"
                             id="bio"
                             name="bio"
+                            value={this.props.memberProfile.bio}
+                            onChange={ e => {
+                                this.props.setMemberProfile( e.target.name, e.target.value )
+                            }}
                         />
-
-                        <label htmlFor="community_name">
-                                    Choose a name for your compost pick-up community.  This might be the name of your neighborhood, business, or community garden.
                         </label>
+                    <label htmlFor="location-name"> Let us know information about the location we will picking up your compost! </label>
                         <input
                             className="outlined-input"
                             type="text"
-                            placeholder="Community Name"
-                            id="community-name"
-                            name="community-name"
+                            placeholder="Pick-Up Location Name"
+                            id="locationName"
+                            name="locationName"
+                            value={this.props.memberProfile.locationName}
+                            onChange={ e => {
+                                this.props.setMemberProfile( e.target.name, e.target.value )
+                            }}
+                        />
+                        <input
+                            className="outlined-input"
+                            type="text"
+                            placeholder="Address Line 1"
+                            id="locationAddress1"
+                            name="locationAddress1"
+                            value={this.props.memberProfile.locationAddress1}
+                            onChange={ e => {
+                                this.props.setMemberProfile( e.target.name, e.target.value )
+                            }}
+                        />
+                        <input
+                            className="outlined-input"
+                            type="text"
+                            placeholder="Address Line 1"
+                            id="locationAddress2"
+                            name="locationAddress2"
+                            value={this.props.memberProfile.locationAddress2}
+                            onChange={ e => {
+                                this.props.setMemberProfile( e.target.name, e.target.value )
+                            }}
+                        />
+                        <input
+                            className="outlined-input"
+                            type="text"
+                            placeholder="City"
+                            id="locationCity"
+                            name="locationCity"
+                            value={this.props.memberProfile.locationCity}
+                            onChange={ e => {
+                                this.props.setMemberProfile( e.target.name, e.target.value )
+                            }}
+                        />
+                        <input
+                            className="outlined-input"
+                            type="text"
+                            placeholder="Zip Code"
+                            id="locationZip"
+                            name="locationZip"
+                            value={this.props.memberProfile.locationZip}
+                            onChange={ e => {
+                                this.props.setMemberProfile( e.target.name, e.target.value )
+                            }}
+                        />
+                        <input
+                            className="outlined-input"
+                            type="text"
+                            placeholder="State"
+                            id="locationState"
+                            name="locationState"
+                            value={this.props.memberProfile.locationState}
+                            onChange={ e => {
+                                this.props.setMemberProfile( e.target.name, e.target.value )
+                            }}
                         />
 
-                        <label htmlFor="community_description">
-                                    Description. What should members know about your community composting group?
-                        </label>
+                        <label htmlFor="location-notes">
+                        Is there anything we should know about your pick-up location?     
                         <textarea
                             className="outlined-input"
                             style={{minHeight: "8rem", maxHeight:"30vh", maxWidth: '100%', minWidth: '100%' }}
-                            placeholder="Community Description"
-                            id="community-description"
-                            name="community-description"
+                            placeholder="Location Instructions / Notes"
+                            id="locationNotes"
+                            name="locationNotes"
+                            value={this.props.memberProfile.locationNotes}
+                            onChange={ e => {
+                                this.props.setMemberProfile( e.target.name, e.target.value )
+                            }}
                         />
+                        </label>
 
-                        <button className="" >
-                            Create Your Compost Community!
+                        <button className="" type="submit">
+                            Join Your Compost Community!
                         </button>
-                    </div>
+                    </form>
 
                 </div>
             </div>

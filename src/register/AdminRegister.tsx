@@ -68,7 +68,7 @@ export class AdminRegister extends Component<AdminRegisterProps, {}> {
             console.log(communityName, communityDesc)
             //Update input values in App.js State
             this.props.setRegistrationComplete(true)
-            this.props.setCommunityProfile(communityName, communityDesc)
+            this.props.setCommunityProfile(undefined, communityName, communityDesc)
             this.props.setAdminProfile(secondaryEmail, phone, phone_type, bio)
             //Create new admin profile associated with user profile
             let adminResponse = await fetch(`${APIURL}/admin/create`, {

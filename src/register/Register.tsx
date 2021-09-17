@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { AdminProfile, CommunityProfile, SetRegistrationComplete, SessionToken, SetAdminProfile, SetCommunityProfile, SetSessionToken, SetUserProfile, UserProfile } from "../App";
+import { AdminProfile, CommunityProfile, SetRegistrationComplete, SessionToken, SetAdminProfile, SetCommunityProfile, SetSessionToken, SetUserProfile, UserProfile, SetMemberProfile, MemberProfile, AllCommunities } from "../App";
 import "../App.css";
 import { UserRegister } from "./UserRegister";
 import { AdminRegister } from "./AdminRegister";
@@ -11,11 +11,14 @@ export type RegisterProps =
     UserProfile &
     AdminProfile & 
     CommunityProfile &
+    MemberProfile &
+    AllCommunities &
     {setSessionToken: SetSessionToken} & 
     {setUserProfile: SetUserProfile} & 
     {setAdminProfile: SetAdminProfile} &
     {setCommunityProfile: SetCommunityProfile} &
-    {setRegistrationComplete: SetRegistrationComplete}
+    {setRegistrationComplete: SetRegistrationComplete} & 
+    {setMemberProfile: SetMemberProfile}
 
 //
 export type AsAdmin = { asAdmin: boolean };
@@ -122,9 +125,12 @@ export class Register extends Component<RegisterProps, RegisterState> {
                         setUserProfile={this.props.setUserProfile}
                         // adminProfile={this.props.adminProfile}
                         // setAdminProfile={this.props.setAdminProfile}
-                        // communityProfile={this.props.communityProfile}
-                        // setCommunityProfile={this.props.setCommunityProfile}
-                        setRegistrationComplete={this.props.setRegistrationComplete}                        
+                        communityProfile={this.props.communityProfile}
+                        setCommunityProfile={this.props.setCommunityProfile}
+                        setRegistrationComplete={this.props.setRegistrationComplete}
+                        memberProfile={this.props.memberProfile}
+                        setMemberProfile={this.props.setMemberProfile}
+                        allCommunities={this.props.allCommunities}                    
                     />
                 }
 
