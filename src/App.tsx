@@ -54,6 +54,8 @@ export type SetCommunityProfile = (
 
 export type SetSessionToken = (newToken: string) => void
 
+export type SetRegistrationComplete = (registrationComplete: boolean) => void
+
 export type SessionToken = {
     sessionToken: string | null;
 };
@@ -102,8 +104,9 @@ export class App extends Component<{}, AppState> {
     async componentDidMount() {
         // Get token from local storage
         let token = localStorage.getItem("token");
+        console.log(typeof token, token)
         // If there is a token, get the user's own profile data
-        if (token) {
+        if (token && token !== "undefined" ) {
             console.log(this.state.sessionToken);
             //Get user's own profile data from server
             let res = await fetch(`${APIURL}/user/me`, {
@@ -174,6 +177,7 @@ export class App extends Component<{}, AppState> {
                                     setCommunityProfile={
                                         this.setCommunityProfile
                                     }
+                                    setRegistrationComplete={this.setRegistrationComplete}
                                 />
                             </Route>
                         )}
@@ -197,6 +201,12 @@ export class App extends Component<{}, AppState> {
                 "Tried to save a new sessionToken but was unable to find one"
             );
     };
+
+    setRegistrationComplete: SetRegistrationComplete = (registrationComplete) => {
+        this.setState({
+            registrationComplete: true
+        })
+    }
 
     setUserProfile: SetUserProfile = (email, firstName, lastName) => {
         this.setState({

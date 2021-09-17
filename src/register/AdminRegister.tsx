@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import "../App.css";
 import {
-    RegisterState,
-    RegisterProps,
     AsAdmin,
     RegistrationStep,
 } from "./Register";
 import APIURL from "../helpers/environment";
-import { AdminProfile, CommunityProfile, SessionToken, SetAdminProfile, SetCommunityProfile, UserProfile } from "../App";
+import { AdminProfile, CommunityProfile, SetRegistrationComplete, SessionToken, SetAdminProfile, SetCommunityProfile, UserProfile } from "../App";
 
 type AdminRegisterProps = 
     AsAdmin &
@@ -25,7 +23,8 @@ type AdminRegisterProps =
     AdminProfile & 
     {setAdminProfile: SetAdminProfile} &
     CommunityProfile &
-    {setCommunityProfile: SetCommunityProfile}
+    {setCommunityProfile: SetCommunityProfile} &
+    {setRegistrationComplete: SetRegistrationComplete}
 
 export class AdminRegister extends Component<AdminRegisterProps, {}> {
     constructor(props: AdminRegisterProps) {
@@ -67,7 +66,8 @@ export class AdminRegister extends Component<AdminRegisterProps, {}> {
             const communityName = (document.getElementById("community-name") as HTMLInputElement).value
             const communityDesc = (document.getElementById("community-description") as HTMLInputElement).value
             console.log(communityName, communityDesc)
-            //Store input values in App.js State
+            //Update input values in App.js State
+            this.props.setRegistrationComplete(true)
             this.props.setCommunityProfile(communityName, communityDesc)
             this.props.setAdminProfile(secondaryEmail, phone, phone_type, bio)
             //Create new admin profile associated with user profile
@@ -86,10 +86,10 @@ export class AdminRegister extends Component<AdminRegisterProps, {}> {
                     "Authorization": `Bearer ${this.props.sessionToken}`
                 })
             })
-            let json = await adminResponse.json()
-            console.log(await json)
+            let adminJson = await adminResponse.json()
+            
             //Create new community profile associated with user profile
-            let communityReponse = await fetch(`${APIURL}/community/create`, {
+            let communityResponse = await fetch(`${APIURL}/community/create`, {
                 method: "POST",
                 body: JSON.stringify({
                     community: {
@@ -102,16 +102,15 @@ export class AdminRegister extends Component<AdminRegisterProps, {}> {
                     "Authorization": `Bearer ${this.props.sessionToken}`
                 })
             })
-            let json2 = await communityReponse.json()
-            console.log(await json2)
-        
+            let communityJson = await communityResponse.json()
 
+            
+            
+
+        
         } catch (err) {
             console.error(err)
         }
-
-
-
         
     }
 
@@ -202,7 +201,7 @@ export class AdminRegister extends Component<AdminRegisterProps, {}> {
                         </label>
                         <textarea
                             className="outlined-input"
-                            style={{minHeight: "8rem", maxWidth: '100%', minWidth: '100%' }}
+                            style={{minHeight: "8rem", maxHeight:"30vh", maxWidth: '100%', minWidth: '100%' }}
                             placeholder="Your Bio"
                             id="bio"
                             name="bio"
@@ -224,7 +223,7 @@ export class AdminRegister extends Component<AdminRegisterProps, {}> {
                         </label>
                         <textarea
                             className="outlined-input"
-                            style={{minHeight: "8rem", maxWidth: '100%', minWidth: '100%' }}
+                            style={{minHeight: "8rem", maxHeight:"30vh", maxWidth: '100%', minWidth: '100%' }}
                             placeholder="Community Description"
                             id="community-description"
                             name="community-description"

@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { AdminProfile, CommunityProfile, SessionToken, SetAdminProfile, SetCommunityProfile, SetSessionToken, SetUserProfile, UserProfile } from "../App";
+import { AdminProfile, CommunityProfile, SetRegistrationComplete, SessionToken, SetAdminProfile, SetCommunityProfile, SetSessionToken, SetUserProfile, UserProfile } from "../App";
 import "../App.css";
 import { UserRegister } from "./UserRegister";
 import { AdminRegister } from "./AdminRegister";
+import { MemberRegister } from "./MemberRegister";
 
-
+// Import types and group them in props
 export type RegisterProps = 
     SessionToken &
     UserProfile &
@@ -13,8 +14,10 @@ export type RegisterProps =
     {setSessionToken: SetSessionToken} & 
     {setUserProfile: SetUserProfile} & 
     {setAdminProfile: SetAdminProfile} &
-    {setCommunityProfile: SetCommunityProfile}
+    {setCommunityProfile: SetCommunityProfile} &
+    {setRegistrationComplete: SetRegistrationComplete}
 
+//
 export type AsAdmin = { asAdmin: boolean };
 export type RegistrationStep = { registrationStep: number };
 export type RegisterState = AsAdmin & RegistrationStep;
@@ -107,8 +110,9 @@ export class Register extends Component<RegisterProps, RegisterState> {
                         setAdminProfile={this.props.setAdminProfile}
                         communityProfile={this.props.communityProfile}
                         setCommunityProfile={this.props.setCommunityProfile}
+                        setRegistrationComplete={this.props.setRegistrationComplete}
                     />
-                ) : null}
+                ) : <MemberRegister />}
 
                 {this.state.asAdmin ? (
                     <div>
