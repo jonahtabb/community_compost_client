@@ -112,7 +112,21 @@ export class Register extends Component<RegisterProps, RegisterState> {
                         setCommunityProfile={this.props.setCommunityProfile}
                         setRegistrationComplete={this.props.setRegistrationComplete}
                     />
-                ) : <MemberRegister />}
+                ) : <MemberRegister 
+                        asAdmin={this.state.asAdmin}
+                        registrationStep={this.state.registrationStep}
+                        incrementRegStep={this.incrementRegStep}
+                        sessionToken={this.props.sessionToken}
+                        setSessionToken={this.props.setSessionToken}
+                        userProfile={this.props.userProfile}
+                        setUserProfile={this.props.setUserProfile}
+                        // adminProfile={this.props.adminProfile}
+                        // setAdminProfile={this.props.setAdminProfile}
+                        // communityProfile={this.props.communityProfile}
+                        // setCommunityProfile={this.props.setCommunityProfile}
+                        setRegistrationComplete={this.props.setRegistrationComplete}                        
+                    />
+                }
 
                 {this.state.asAdmin ? (
                     <div>
