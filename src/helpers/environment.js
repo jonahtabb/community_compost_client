@@ -8,4 +8,18 @@ switch (window.location.hostname) {
     APIURL = 'https://jtabb-yum-app-server.herokuapp.com'
 }
 
-export default APIURL;
+let CLIENTURL = '';
+
+switch (window.location.hostname) {
+    case 'localhost' || '127.0.0.1':
+    CLIENTURL = 'http://localhost:300-';
+    break;
+    case 'jtabb-yum-app.herokuapp.com':
+    CLIENTURL = 'https://jtabb-yum-app-server.herokuapp.com'
+}
+
+
+export {
+    APIURL,
+    CLIENTURL
+}
