@@ -6,6 +6,7 @@ import RegisterUser from "./RegisterUser";
 import {RouteComponentProps, withRouter} from "react-router";
 import {APIURL, CLIENTURL} from "../helpers/environment";
 import { Register } from '.';
+import Login from './Login';
 
 
 type AuthProps = 
@@ -49,6 +50,17 @@ class Auth extends Component<AuthProps, AuthState>{
                 </Link>
             
             <Switch>
+                <Route exact path ={`${this.props.match.path}/login`}>
+                    <Login
+                    setSessionToken = {this.props.setSessionToken}
+                    isAdmin = {this.props.isAdmin}
+                    setIsAdmin = {this.props.setIsAdmin}
+                    user = {this.state}
+                    setUser = {this.setUser}
+                    setRegComplete= {this.props.setRegComplete}
+                    />
+                </Route>
+
                 <Route exact path={`${this.props.match.path}/register`}>
                     <Register
                         setSessionToken = {this.props.setSessionToken}

@@ -107,7 +107,20 @@ export default class RegisterAdmin extends Component<RegisterAdminProps, Registe
                 })
             })
             let communityJson = await communityResponse.json()
-            console.log(communityJson)
+
+            //Mark registration as complete
+            let res = await fetch(`${APIURL}/user/update`, {
+                method: "PUT",
+                body: JSON.stringify({
+                    user: {
+                        registration_complete: "1"
+                    }
+                }),
+                headers: new Headers({
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                })
+            })
 
 
         } catch (error) {

@@ -156,6 +156,20 @@ export default class RegisterMember extends Component<
             let json = await res.json()
             console.log(json)
 
+            //Mark registration as complete
+            let res2 = await fetch(`${APIURL}/user/update`, {
+                method: "PUT",
+                body: JSON.stringify({
+                    user: {
+                        registration_complete: "1"
+                    }
+                }),
+                headers: new Headers({
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                })
+            })
+
         }catch (error) {
             console.log(error)
         }

@@ -68,6 +68,12 @@ export type CommunityProfileSelect = {
 }
 
 export type chooseCommunity = {
-    selectedCommunityId: number,
+    selectedCommunityId: number;
     availableCommunities: CommunityProfileSelect[]
+}
+
+//Types that originate in Login Component
+export type LoginUser = {
+    email: string;
+    password: string
 }
