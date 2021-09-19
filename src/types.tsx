@@ -10,15 +10,15 @@ export type SetRegComplete = (value: boolean) => void
 
 //Types that originate in Auth.tsx
 export type User = {
-        email: string | null;
-        firstName: string | null;
-        lastName: string | null;
+        email: string;
+        firstName: string;
+        lastName: string;
 };
 
-//Types that originate in Register.tsx
-export type RegisterState = {
-    registrationStep: number
-}
+export type SetUser = (email: string, firstName: string, lastName: string) => void
+
+// Types that originate in Register.tsx
+export type SetRegStep = () => void
 
 //Types that originate in RegisterUser.tsx
 export type RegisterUserForm ={
@@ -28,12 +28,15 @@ export type RegisterUserForm ={
     confirmEmail: string;
     password: string;
     confirmPassword: string;
+    emailNotAvail: boolean;
 }
 
 //Types that originate in RegisterAdmin.tsx
 export type AdminProfile = {
-        secondary_email: string | null;
-        phone: string | null;
-        phone_type: string | null;
-        bio: string | null;
+        secondaryEmail: string;
+        phone: string;
+        phoneType: string;
+        bio: string;
+        communityName: string;
+        communityDescription: string;
 };

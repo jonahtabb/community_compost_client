@@ -1,6 +1,6 @@
 import '../App.css';
 import React, { Component } from "react";
-import { SetSessionToken, RegisterUserForm, IsAdmin, SetIsAdmin} from "../types";
+import { SetSessionToken, RegisterUserForm, IsAdmin, SetIsAdmin, User, SetUser, SetRegStep} from "../types";
 import {APIURL} from "../helpers/environment";
 import {RouteComponentProps, withRouter} from "react-router";
 
@@ -9,7 +9,10 @@ type RegisterUserProps =
 RouteComponentProps &
 {setSessionToken: SetSessionToken} &
 {isAdmin: IsAdmin} &
-{setIsAdmin: SetIsAdmin}
+{setIsAdmin: SetIsAdmin} &
+{user: User} &
+{setUser: SetUser} &
+{setRegStep: SetRegStep}
 
 type RegisterUserState = RegisterUserForm
 
@@ -23,6 +26,7 @@ class RegisterUser extends Component<RegisterUserProps, RegisterUserState>{
             confirmEmail: '',
             password: '',
             confirmPassword: '',
+            emailNotAvail: false
         }
     }
 
@@ -36,37 +40,73 @@ class RegisterUser extends Component<RegisterUserProps, RegisterUserState>{
         }))
     }
 
-    handleFormSubmit = async (): Promise<any> => {
+    handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<any> => {
+        e.preventDefault()
+        const { firstName, lastName, email, password } = this.state
+        const isAdmin = this.props.isAdmin
         try {
             let res = await fetch(`${APIURL}/user/register`, {
                 method: "POST",
                 body: JSON.stringify({
                     user: {
-                        first_name: this.state.firstName,
-                        last_name: this.state.lastName,
-                        email: this.state.email,
-                        password: this.state.password,
-                        is_admin: this.props.isAdmin ? "1" : "0",
+                        first_name: firstName,
+                        last_name: lastName,
+                        email: email,
+                        password: password,
+                        is_admin: isAdmin ? "1" : "0",
                     },
                 }),
                 headers: new Headers({
                     "Content-Type": "application/json",
                 }),
             });
-            let json = await res.json();
-        } catch (error){
-            console.error({error})
-        }
+            
+            let json = await res.json()
+            
+            if (res.status === 201) {
+                let token = await json.sessionToken
+                //Store Session Token in App State
+                this.props.setSessionToken(token)
+
+                //Update User Profile info in App.js State
+                this.props.setUser(email, firstName, lastName)
+
+                //Increment Registration Step
+                this.props.setRegStep()
+            } else throw {message: json, response: res}
+
+        } catch (error: any){
+            console.error(error.message)
+            if (error.response.status === 409) {
+                this.setState({
+                    emailNotAvail: true
+                })
+            }
+
+        }    
     }
+    // componentDidUpdate(){
+    //     if (this.state.emailNotAvail) {
+    //         console.log("test")
+    //     }
+    // }
 
     render(){
         return(
             <div className="user-register">
 
-                <form className="user-register-form" onSubmit={(e)=>{e.preventDefault(); console.log(e)}}>
-                    <button onClick={() => console.log(this.state)}>
-                        UserRegister STATE CHECKER
+                <form 
+                    className="user-register-form" 
+                    onSubmit={(e) => {this.handleFormSubmit(e)}}>
+
+                    <button onClick={(e) => {e.preventDefault(); console.log(this.state)}}>
+                        Register STATE CHECKER
                     </button>
+
+                    {this.state.emailNotAvail === true
+                        ?   <p style={{color: "red"}}>Please choose a different email address.  This email is not available.</p>
+                        :   <></>
+                    }
                     <input
                         className="register-input"
                         type=""
@@ -85,6 +125,7 @@ class RegisterUser extends Component<RegisterUserProps, RegisterUserState>{
                         value={this.state.lastName}
                         onChange={(e) => this.updateInputState(e)}
                     />
+
                     <input
                         className="register-input"
                         type="email"

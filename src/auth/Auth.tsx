@@ -1,7 +1,7 @@
 import '../App.css';
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom"
-import { IsAdmin, SetIsAdmin, SetRegComplete, SetSessionToken, User } from "../types";
+import { IsAdmin, SetIsAdmin, SetRegComplete, SetSessionToken, SetUser, User } from "../types";
 import RegisterUser from "./RegisterUser";
 import {RouteComponentProps, withRouter} from "react-router";
 import {APIURL, CLIENTURL} from "../helpers/environment";
@@ -27,6 +27,14 @@ class Auth extends Component<AuthProps, AuthState>{
         }
     }
 
+    setUser: SetUser = (email, firstName, lastName) => {
+        this.setState({
+            email,
+            firstName,
+            lastName
+        })
+    }
+
     render(){
         return(
             <div>
@@ -46,6 +54,9 @@ class Auth extends Component<AuthProps, AuthState>{
                         setSessionToken = {this.props.setSessionToken}
                         isAdmin = {this.props.isAdmin}
                         setIsAdmin = {this.props.setIsAdmin}
+                        user = {this.state}
+                        setUser = {this.setUser}
+                        setRegComplete= {this.props.setRegComplete}
                     />
                 </Route>
             </Switch>

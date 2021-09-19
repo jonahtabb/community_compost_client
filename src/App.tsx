@@ -24,7 +24,7 @@ class App extends Component<AppProps, AppState> {
         super(props);
         this.state = {
             sessionToken: null,
-            isAdmin: null,
+            isAdmin: false,
             regComplete: false //validation for the multi-step registration
     }}
 
@@ -40,14 +40,21 @@ class App extends Component<AppProps, AppState> {
     setRegComplete: SetRegComplete = (value) => {
         this.setState({regComplete: value})
     }
-    componentDidMount = () => {
+    componentDidMount (){
         let token = localStorage.getItem("token")
         if (token) this.setSessionToken(token)
+    }
+    componentDidUpdate () {
+        if (this.state.sessionToken){
+            localStorage.setItem("token", this.state.sessionToken)
+            localStorage.setItem("isAdmin", this.state.isAdmin ? "1" : "0")
+        }
     }
 
     render() {
         return (
             <>
+            <button onClick={()=>console.log(this.state)}>APP STATE CHECKER</button>
             <button onClick={()=> {console.log(this.props.match)}}>Check Router Match APP</button>
                 {this.state.sessionToken && this.state.regComplete ? 
                     <Redirect to="/home" /> :
