@@ -106,7 +106,12 @@ button:active{
 }
 
 .user-register-form{
-  width:200px
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80vw;
 }
 
 .register-input{
@@ -132,6 +137,7 @@ button:active{
   text-align: center;
   margin-top: 1rem
 }
+
 
 .register-text{
   text-align: left;
