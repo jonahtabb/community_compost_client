@@ -37,6 +37,37 @@ export type AdminProfile = {
         phone: string;
         phoneType: string;
         bio: string;
-        communityName: string;
-        communityDescription: string;
 };
+
+export type CommunityProfile = {
+    communityName: string;
+    communityDescription: string;
+}
+
+//Types that originate in RegisterMember.tsx
+export type MemberProfile = {
+    secondaryEmail: string,
+    primaryPhone: string,
+    primaryPhoneType: string,
+    secondaryPhone: string,
+    secondaryPhoneType: string,
+    bio: string,
+    locationName: string,
+    locationAddress1: string,
+    locationAddress2: string,
+    locationCity: string,
+    locationZip: string,
+    locationState: string,
+    locationNotes: string
+}
+
+export type CommunityProfileSelect = {
+    id: number;
+    name: string;
+    description: string;
+}
+
+export type chooseCommunity = {
+    selectedCommunityId: number,
+    availableCommunities: CommunityProfileSelect[]
+}

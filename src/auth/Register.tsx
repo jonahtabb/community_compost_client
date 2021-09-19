@@ -4,6 +4,7 @@ import { SetSessionToken, RegisterUserForm, IsAdmin, SetIsAdmin, User, SetUser, 
 import {APIURL} from "../helpers/environment";
 import {RouteComponentProps, withRouter} from "react-router";
 import {RegisterUser, RegisterAdmin} from "./"
+import RegisterMember from './RegisterMember';
 
 type RegisterProps =
     RouteComponentProps &
@@ -74,7 +75,11 @@ class Register extends Component<RegisterProps, RegisterState>{
                         setRegStep = {this.setRegStep}
                         setRegComplete = {this.props.setRegComplete}
                     />
-                :   <h3>REGISTER MEMBER COMPONENT</h3>
+                :   <RegisterMember 
+                        user = {this.props.user}
+                        setRegStep = {this.setRegStep}
+                        setRegComplete = {this.props.setRegComplete}
+                    />
             }
 
             {/* Toggle between Admin and Member Registration */}

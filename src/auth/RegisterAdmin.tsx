@@ -1,6 +1,6 @@
 import '../App.css';
 import React, { Component } from "react";
-import { SetSessionToken, RegisterUserForm, IsAdmin, SetIsAdmin, AdminProfile, SetRegStep, User, SetRegComplete} from "../types";
+import { AdminProfile, SetRegStep, User, SetRegComplete, CommunityProfile} from "../types";
 import {APIURL} from "../helpers/environment";
 
 type RegisterAdminProps = 
@@ -9,7 +9,7 @@ type RegisterAdminProps =
         setRegStep: SetRegStep ,
         setRegComplete: SetRegComplete
     }
-type RegisterAdminState = AdminProfile
+type RegisterAdminState = AdminProfile & CommunityProfile
 
 const phoneNumberTypes = ["Mobile", "Office", "Home"]
 
@@ -46,7 +46,6 @@ export default class RegisterAdmin extends Component<RegisterAdminProps, Registe
         ): void {
         let stateName: string = e.target.name;
         let stateValue: string = e.target.value;
-        console.log(stateName, stateValue)
         this.setState((prevState) => ({
             ...prevState,
             [stateName]: stateValue
@@ -124,7 +123,7 @@ export default class RegisterAdmin extends Component<RegisterAdminProps, Registe
                 <button onClick={()=>console.log(this.state)}>REGISTER ADMIN STATE CHECKER</button>
                 <h2>{`Welcome ${this.props.user.firstName}`}</h2>
                 <p>Answer a few more questions and we'll get you set up!</p>
-                <div className="user-register">
+                <div className="user-register-form">
                     <form onSubmit={(e)=> {this.handleFormSubmit()}} className="user-register-form">
                         {/* Email Address */}
                         <p className="register-text">

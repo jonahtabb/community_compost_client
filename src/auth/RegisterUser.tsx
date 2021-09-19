@@ -33,7 +33,6 @@ class RegisterUser extends Component<RegisterUserProps, RegisterUserState>{
     updateInputState(e: React.ChangeEvent<HTMLInputElement>): void {
         let stateName: string = e.target.name;
         let stateValue: string = e.target.value;
-        console.log(stateName, stateValue)
         this.setState((prevState) => ({
             ...prevState,
             [stateName]: stateValue
