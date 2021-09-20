@@ -1,12 +1,11 @@
 import '../App.css';
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom"
-import { IsAdmin, SetIsAdmin, SetRegComplete, SetSessionToken, SetUser, User } from "../types";
-import RegisterUser from "./RegisterUser";
 import {RouteComponentProps, withRouter} from "react-router";
+import { IsAdmin, SetIsAdmin, SetRegComplete, SetSessionToken, SetUser, User } from "../types";
 import {APIURL, CLIENTURL} from "../helpers/environment";
-import { Register } from '.';
-import Login from './Login';
+import { Register, Login } from '.';
+
 
 
 type AuthProps = 
@@ -41,7 +40,6 @@ class Auth extends Component<AuthProps, AuthState>{
             <div>
                 <button onClick={()=> {console.log(this.props.match)}}>Check Router Match </button>
 
-                
                 <Link to={`${this.props.match.path}/login`}>
                     <button type="button">Login</button>
                 </Link>

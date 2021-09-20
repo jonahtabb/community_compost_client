@@ -3,8 +3,7 @@ import React, { Component } from "react";
 import { SetSessionToken, RegisterUserForm, IsAdmin, SetIsAdmin, User, SetUser, SetRegStep, SetRegComplete} from "../types";
 import {APIURL} from "../helpers/environment";
 import {RouteComponentProps, withRouter} from "react-router";
-import {RegisterUser, RegisterAdmin} from "./"
-import RegisterMember from './RegisterMember';
+import {RegisterUser, RegisterAdmin, RegisterMember} from "./"
 
 type RegisterProps =
     RouteComponentProps &

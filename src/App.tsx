@@ -5,6 +5,8 @@ import { IsAdmin, RegComplete, SessionToken, SetIsAdmin, SetRegComplete, SetSess
 import {APIURL} from "./helpers/environment";
 import {Auth} from './auth'
 import {RouteComponentProps} from "react-router";
+import { Home } from "./home";
+import { getOwnUserData } from "./helpers";
 
 //Resources
 //https://reactrouter.com/web/guides/quick-start
@@ -40,9 +42,14 @@ class App extends Component<AppProps, AppState> {
     setRegComplete: SetRegComplete = (value) => {
         this.setState({regComplete: value})
     }
-    componentDidMount (){
+    async componentDidMount (){
         let token = localStorage.getItem("token")
-        if (token) this.setSessionToken(token)
+        if (token) {
+            let userObj = await getOwnUserData(token)
+            let regComplete = userObj.userData.registration_complete
+            this.setSessionToken(token)
+            this.setState({regComplete})
+        }
     }
     componentDidUpdate () {
         if (this.state.sessionToken){
@@ -71,8 +78,8 @@ class App extends Component<AppProps, AppState> {
                             setRegComplete={this.setRegComplete}
                         />
                     </Route>
-                    <Route exact path="home">
-                        {/* <Home /> */}
+                    <Route path="/home">
+                        <Home />
                     </Route>
                 </Switch>
             
