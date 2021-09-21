@@ -1,6 +1,6 @@
 import '../App.css';
 import React, { Component } from "react";
-import { AdminProfile, SetRegStep, User, SetRegComplete, MemberProfile, chooseCommunity} from "../types";
+import { SetRegStep, User, SetRegComplete, MemberProfile, chooseCommunity} from "../types";
 import {APIURL} from "../helpers/environment";
 
 type RegisterMemberProps = {
@@ -157,7 +157,7 @@ export default class RegisterMember extends Component<
             console.log(json)
 
             //Mark registration as complete
-            let res2 = await fetch(`${APIURL}/user/update`, {
+            await fetch(`${APIURL}/user/update`, {
                 method: "PUT",
                 body: JSON.stringify({
                     user: {

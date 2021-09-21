@@ -1,10 +1,11 @@
 import "./App.css";
-import React, { Component } from "react";
-import { BrowserRouter as Router, Switch, Route, Link, Redirect, withRouter } from "react-router-dom";
+import { Component } from "react";
+import { BrowserRouter as Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { IsAdmin, RegComplete, SessionToken, SetIsAdmin, SetRegComplete, SetSessionToken } from "./types";
-import {APIURL} from "./helpers/environment";
 import {Auth} from './auth'
 import {RouteComponentProps} from "react-router";
+import { Home } from "./home";
+import { getOwnUserData } from "./helpers";
 
 //Resources
 //https://reactrouter.com/web/guides/quick-start
@@ -40,9 +41,18 @@ class App extends Component<AppProps, AppState> {
     setRegComplete: SetRegComplete = (value) => {
         this.setState({regComplete: value})
     }
-    componentDidMount (){
+    async componentDidMount (){
         let token = localStorage.getItem("token")
-        if (token) this.setSessionToken(token)
+        let isAdminLocal = localStorage.getItem("isAdmin")
+        if (token) {
+            let userObj = await getOwnUserData(token)
+            let regComplete = userObj.userData.registration_complete
+            this.setState({
+                sessionToken: token,
+                isAdmin: isAdminLocal === "1",
+                regComplete: regComplete
+            })
+        }
     }
     componentDidUpdate () {
         if (this.state.sessionToken){
@@ -54,14 +64,13 @@ class App extends Component<AppProps, AppState> {
     render() {
         return (
             <>
+            <Switch>
             <button onClick={()=>console.log(this.state)}>APP STATE CHECKER</button>
             <button onClick={()=> {console.log(this.props.match)}}>Check Router Match APP</button>
                 {this.state.sessionToken && this.state.regComplete ? 
                     <Redirect to="/home" /> :
                     <Redirect to="/auth" />
-                }
-
-                <Switch>
+                }               
                     <Route 
                         path="/auth">
                         <Auth 
@@ -71,8 +80,10 @@ class App extends Component<AppProps, AppState> {
                             setRegComplete={this.setRegComplete}
                         />
                     </Route>
-                    <Route exact path="home">
-                        {/* <Home /> */}
+                    <Route path="/home">
+                        <Home 
+                            isAdmin={this.state.isAdmin}
+                        />
                     </Route>
                 </Switch>
             

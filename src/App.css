@@ -201,3 +201,58 @@ button:active{
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+
+/* Admin Dashboard */
+.card-header-container {
+  display: flex;
+  width: 100%;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+
+.card-header-title {
+  font-size: 1rem;
+  padding-left: .5rem;
+  color:rgba(38, 124, 24, .8);
+  font-weight: 600;
+  margin-bottom: .2rem;
+}
+
+.card-header-title-underline {
+  height: 2px;
+  width: 105%;
+  background-color: rgba(38, 124, 24, .8);
+}
+
+.card-header-edit {
+  color: grey;
+  padding-right: 2rem;
+  text-decoration: underline;
+
+}
+
+.card-content-container {
+  display: flex;
+  flex-direction: column;
+  padding-left: 2rem;
+}
+
+.card-content-header {
+  font-size: 1rem;
+  margin-bottom: 0;
+  color: #40413e;
+}
+
+.card-content-text {
+  margin-top: 0;
+}
+
+.modal {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 2px solid green;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
