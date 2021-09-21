@@ -93,7 +93,7 @@ export default class RegisterAdmin extends Component<RegisterAdminProps, Registe
 
             console.log(adminJson)
             //Create new community profile associated with user profile
-            let communityResponse = await fetch(`${APIURL}/community/create`, {
+            await fetch(`${APIURL}/community/create`, {
                 method: "POST",
                 body: JSON.stringify({
                     community: {
@@ -106,10 +106,9 @@ export default class RegisterAdmin extends Component<RegisterAdminProps, Registe
                     "Authorization": `Bearer ${token}`
                 })
             })
-            let communityJson = await communityResponse.json()
 
             //Mark registration as complete
-            let res = await fetch(`${APIURL}/user/update`, {
+            await fetch(`${APIURL}/user/update`, {
                 method: "PUT",
                 body: JSON.stringify({
                     user: {

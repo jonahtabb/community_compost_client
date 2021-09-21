@@ -1,10 +1,10 @@
 import '../App.css';
-import React, { Component } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom"
-import {RouteComponentProps, withRouter} from "react-router";
-import {APIURL, CLIENTURL} from "../helpers/environment";
+import { Component } from "react";
+import { BrowserRouter as Switch, Route, Redirect, withRouter, RouteComponentProps } from "react-router-dom";
+
 import { getOwnAdminProfile, getOwnCommunityProfile, getOwnUserData } from '../helpers';
 import {AdminProfile, CommunityProfile, User} from '../types'
+import { AdminDashboard } from '.';
 
 type AdminHomeProps = {} & RouteComponentProps
 type AdminHomeState = 
@@ -71,9 +71,19 @@ class AdminHome extends Component<AdminHomeProps, AdminHomeState>{
     render(){
         return(
             <div>
-
-                <h2>Admin Home</h2>
+                                <h2>Admin Home</h2>
                 <button onClick={()=> {console.log(this.state)}}>Check Admin Home State</button>
+                <button onClick={()=> {console.log(this.props.match.path)}}>Check Admin Home Path</button>
+                
+                <Switch>
+                <Redirect to={`${this.props.match.path}/dashboard`} />
+
+                    <Route exact path ={`${this.props.match.path}/dashboard`}>     
+                        <AdminDashboard 
+                            communityProfile={this.state.communityProfile}
+                        />
+                    </Route>
+                </Switch>
             </div>
         )
     }

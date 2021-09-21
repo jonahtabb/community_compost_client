@@ -1,7 +1,6 @@
 import '../App.css';
-import React, { Component } from "react";
-import { SetSessionToken, RegisterUserForm, IsAdmin, SetIsAdmin, User, SetUser, SetRegStep, SetRegComplete} from "../types";
-import {APIURL} from "../helpers/environment";
+import { Component } from "react";
+import { SetSessionToken, IsAdmin, SetIsAdmin, User, SetUser, SetRegStep, SetRegComplete} from "../types";
 import {RouteComponentProps, withRouter} from "react-router";
 import {RegisterUser, RegisterAdmin, RegisterMember} from "./"
 

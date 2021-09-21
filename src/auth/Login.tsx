@@ -1,6 +1,6 @@
 import '../App.css';
 import React, { Component } from "react";
-import { SetSessionToken, RegisterUserForm, IsAdmin, SetIsAdmin, User, SetUser, SetRegStep, LoginUser, SetRegComplete} from "../types";
+import { SetSessionToken, IsAdmin, SetIsAdmin, User, SetUser, LoginUser, SetRegComplete} from "../types";
 import {APIURL} from "../helpers/environment";
 import {RouteComponentProps, withRouter} from "react-router";
 
@@ -68,8 +68,8 @@ class Login extends Component<LoginProps, LoginState>{
                 //Set regComplete in App State
                 this.props.setRegComplete(registration_complete)
 
-                //Update User Profile info in Auth State
-                this.props.setUser(email, first_name, last_name)
+                // //Update User Profile info in Auth State
+                // this.props.setUser(email, first_name, last_name)
 
             }
         }catch (error){
