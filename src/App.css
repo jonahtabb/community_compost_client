@@ -3,6 +3,11 @@ p {
   font-size: .8rem;
 }
 
+a {
+  color: rgba(38, 124, 24, .8);
+  font-size: .8rem;
+}
+
 label {
   color: #3D550C;
   font-size: .8rem;
@@ -245,6 +250,19 @@ button:active{
 
 .card-content-text {
   margin-top: 0;
+  margin-bottom: 0;
+}
+
+.manage-link-container{
+  display: flex;
+  align-items: flex-start;
+  padding-left: 2rem
+}
+
+
+.manage-link-arrow {
+  width: 3.3rem;
+  margin-left: 1rem;
 }
 
 .modal {

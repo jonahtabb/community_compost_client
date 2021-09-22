@@ -77,3 +77,29 @@ export type LoginUser = {
     email: string;
     password: string
 }
+
+//Types that originate in Admin Home
+export type MemberProfileSummary = {
+    userId: number;
+    email: string;
+    firstName: string;
+    lastName: string;
+    phonePrimary: string;
+    locationAddress1: string;
+    locationAddress2: string;
+    locationCity: string;
+    locationName: string;
+}
+export type CommunityMembers = MemberProfileSummary[]
+
+export type PickupGroup = {
+    id: number;
+    name: string; 
+    description: string;
+    publicNotes: string;
+    startTime: string;
+    endTime: string;
+    day: number;
+}
+
+export type PickupGroups = PickupGroup[]
