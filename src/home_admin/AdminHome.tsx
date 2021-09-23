@@ -1,6 +1,6 @@
 import '../App.css';
 import { Component } from "react";
-import { BrowserRouter as Switch, Route, Redirect, withRouter, RouteComponentProps } from "react-router-dom";
+import { BrowserRouter as Switch, Route, Redirect, withRouter, RouteComponentProps, Router} from "react-router-dom";
 import { getOwnAdminProfile, getOwnCommunityProfile, getOwnUserData, getAllCommunityMembers, getAllPickupGroups } from '../helpers';
 import {AdminProfile, CommunityProfile, User, MemberProfile, CommunityMembers, PickupGroups} from '../types'
 import { AdminDashboard } from '.';
@@ -118,7 +118,7 @@ class AdminHome extends Component<AdminHomeProps, AdminHomeState>{
                 <Switch>
                 <Redirect to={`${this.props.match.path}/dashboard`} />
 
-                    <Route exact path ={`${this.props.match.path}/dashboard`}>     
+                     <Route exact path ={`${this.props.match.path}/dashboard`}>     
                         <AdminDashboard 
                             communityProfile={this.state.communityProfile}
                             communityMembers={this.state.communityMembers}
