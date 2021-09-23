@@ -103,3 +103,18 @@ export type PickupGroup = {
 }
 
 export type PickupGroups = PickupGroup[]
+
+//Types that originate in Manage Pick-up Groups
+export type UserDetailed = {
+    id: number ;
+    email: string;
+    firstName: string;
+    lastName: string;
+}
+
+export type MemberDetailed = {
+    userDetailed: UserDetailed,
+    memberProfile: MemberProfile
+}
+
+export type PickupGroupMembers = {userDetailed: MemberDetailed, memberDetailed: MemberDetailed}[]

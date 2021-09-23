@@ -1,5 +1,6 @@
 import { dayConverterNumToString, dayConverterStringToNum } from "./dayConverters";
 import { getAllCommunityMembers } from "./getAllCommunityMembers";
+import { getAllMembersOfPickupGroup } from "./getAllMembersOfPickupGroup";
 import { getAllPickupGroups } from "./getAllPickupGroups";
 import { getOwnUserData } from "./getOwnUserData";
 import { getOwnAdminProfile } from "./getOwnAdminProfile";
@@ -10,6 +11,7 @@ export {
     dayConverterNumToString,
     dayConverterStringToNum,
     getAllCommunityMembers,
+    getAllMembersOfPickupGroup,
     getAllPickupGroups,
     getOwnUserData,
     getOwnAdminProfile,

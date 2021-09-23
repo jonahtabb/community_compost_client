@@ -76,7 +76,7 @@ class AdminDashboard extends Component<AdminDashboardProps, AdminDashboardState>
                         )
                     }
 
-                    <Link to={`${this.props.match.path}/groups`}>
+                    <Link to={`/home/admin/groups`}>
                         <div className="manage-link-container">
                         <h3 className="manage-link-text">Manage Pickups</h3>
                             <img className="manage-link-arrow" src='/assets/green_arrow.svg' alt="arrow" />
