@@ -20,6 +20,7 @@ class Auth extends Component<AuthProps, AuthState>{
     constructor(props: AuthProps){
         super(props)
         this.state = {
+            id: null,
             email: '',
             firstName: '',
             lastName: ''

@@ -10,6 +10,7 @@ export type SetRegComplete = (value: boolean) => void
 
 //Types that originate in Auth.tsx
 export type User = {
+        id: number | null;
         email: string;
         firstName: string;
         lastName: string;
@@ -58,7 +59,8 @@ export type MemberProfile = {
     locationCity: string,
     locationZip: string,
     locationState: string,
-    locationNotes: string
+    locationNotes: string,
+    pickupGroupId: number | null
 }
 
 export type CommunityProfileSelect = {
@@ -79,18 +81,13 @@ export type LoginUser = {
 }
 
 //Types that originate in Admin Home
-export type MemberProfileSummary = {
-    userId: number;
-    email: string;
-    firstName: string;
-    lastName: string;
-    phonePrimary: string;
-    locationAddress1: string;
-    locationAddress2: string;
-    locationCity: string;
-    locationName: string;
+export type MemberFullInfo = {
+    userProfile: User;
+    memberProfile: MemberProfile 
+
 }
-export type CommunityMembers = MemberProfileSummary[]
+
+export type CommunityMembers = MemberFullInfo[]
 
 export type PickupGroup = {
     id: number;
@@ -103,6 +100,8 @@ export type PickupGroup = {
 }
 
 export type PickupGroups = PickupGroup[]
+
+export type SetMemberGroup = (userId: number | null, groupId: number | null) => void
 
 //Types that originate in Manage Pick-up Groups
 export type UserDetailed = {

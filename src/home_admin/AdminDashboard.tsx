@@ -1,7 +1,7 @@
 import '../App.css';
 import { Component } from "react";
 import { BrowserRouter as Switch, Route, Redirect, withRouter, RouteComponentProps, Link } from "react-router-dom";
-import { CommunityMembers, CommunityProfile, MemberProfileSummary, PickupGroup, PickupGroups } from '../types';
+import { CommunityMembers, CommunityProfile,  MemberFullInfo,  PickupGroup, PickupGroups } from '../types';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { dayConverterNumToString } from '../helpers';
 
@@ -94,11 +94,11 @@ class AdminDashboard extends Component<AdminDashboardProps, AdminDashboardState>
                         </div>
                     </div>
                     {
-                        this.props.communityMembers.map((member: MemberProfileSummary) => (
-                            <div className="card-content-container" key={`${member.userId}${member.lastName}`}>
-                                <h3 className="card-content-header">{member.firstName} {member.lastName}</h3>
-                                <p className="card-content-text">{member.email}</p>
-                                <p className="card-content-text">{member.phonePrimary}</p>
+                        this.props.communityMembers.map((member: MemberFullInfo) => (
+                            <div className="card-content-container" key={`${member.userProfile.firstName}${member.userProfile.lastName}`}>
+                                <h3 className="card-content-header">{`${member.userProfile.firstName} ${member.userProfile.lastName}`}</h3>
+                                <p className="card-content-text">{member.userProfile.email}</p>
+                                <p className="card-content-text">{member.memberProfile.primaryPhone}</p>
                             </div>
                         ))
                     }
