@@ -1,7 +1,7 @@
 import '../App.css';
 import { Component } from "react";
 import { BrowserRouter as Switch, Route, Redirect, withRouter, RouteComponentProps, Router} from "react-router-dom";
-import { getOwnAdminProfile, getOwnCommunityProfile, getOwnUserData, getAllCommunityMembers, getAllPickupGroups } from '../helpers';
+import { getOwnAdminProfile, getOwnCommunityProfile, getOwnUserData, getAllCommunityMembers, getAllPickupGroups, updateMemberPickupGroup } from '../helpers';
 import {AdminProfile, CommunityProfile, User, MemberProfile, CommunityMembers, PickupGroups, MemberFullInfo, SetMemberGroup} from '../types'
 import { AdminDashboard } from '.';
 import ManagePickupGroups from './ManagePickupGroups';
@@ -40,25 +40,35 @@ class AdminHome extends Component<AdminHomeProps, AdminHomeState>{
     }
 
     setMemberGroup: SetMemberGroup = (userId, groupId) => {
-        
+        //This updates the local state first for user experience speed
         let members = this.state.communityMembers
         let matchedIndex = members.findIndex(element => (
             element.userProfile.id === userId
         ))
-        this.setState(prevState => {
-        //    let membersCopy = [...this.state.communityMembers]
-        //    let memberCopy = membersCopy[matchedIndex]
-        //    membersCopy.memberProfile.pickupGroupId = groupId
+        let membersCopy = [...this.state.communityMembers];
+        let memberCopy = {...membersCopy[matchedIndex]}
+        memberCopy.memberProfile.pickupGroupId = groupId
+        membersCopy[matchedIndex] = memberCopy
 
-            return ({
-                ...prevState,
-                communityMembers: {
-                    ...prevState.communityMembers,
-                    [prevState.communityMembers[matchedIndex: number].memberProfile.pickupGroupId]: groupId
-                }
-            
+        this.setState(prevState => ({
+            ...prevState,
+            communityMembers: [
+                ...membersCopy
+            ]
+        }
+        ))
+
+        //Assign member to group on backend
+        let token = localStorage.getItem("token")
+        if (token && userId && groupId)
+        updateMemberPickupGroup(token, userId, groupId)
+            else console.error({
+                error: "Received a null value",
+                token,
+                userId,
+                groupId
             })
-        })
+
     }
 
     async componentDidMount(){

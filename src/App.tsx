@@ -1,4 +1,4 @@
-import "./App.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { Component } from "react";
 import { BrowserRouter as Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { IsAdmin, RegComplete, SessionToken, SetIsAdmin, SetRegComplete, SetSessionToken } from "./types";
@@ -6,6 +6,7 @@ import {Auth} from './auth'
 import {RouteComponentProps} from "react-router";
 import { Home } from "./home";
 import { getOwnUserData } from "./helpers";
+import "./App.css";
 
 //Resources
 //https://reactrouter.com/web/guides/quick-start

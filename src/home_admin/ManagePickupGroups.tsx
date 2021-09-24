@@ -1,4 +1,3 @@
-import '../App.css';
 import { Component } from "react";
 import { BrowserRouter as Switch, Route, Redirect, withRouter, RouteComponentProps, Link } from "react-router-dom";
 import { CommunityMembers, MemberDetailed, MemberFullInfo, MemberProfile, PickupGroup, PickupGroupMembers, PickupGroups, SetMemberGroup, UserDetailed } from '../types';
@@ -23,7 +22,6 @@ class ManagePickupGroups extends Component<ManagePickupGroupsProps, ManagePickup
         }
 }
 
-
    
     render(){
         return (
@@ -33,7 +31,7 @@ class ManagePickupGroups extends Component<ManagePickupGroupsProps, ManagePickup
             {/* <button onClick={this.test}>Test fetch</button> */}
             {
                 this.props.pickupGroups.map((group: PickupGroup )=> (
-                    <div>
+                    <div key={`group${group.id}`}>
                         {/* Group Header Info */}
                         <div className="card-header-container">
                             <div>
@@ -54,25 +52,49 @@ class ManagePickupGroups extends Component<ManagePickupGroupsProps, ManagePickup
                                 member.memberProfile.pickupGroupId === group.id)
                             )
                             .map((member: MemberFullInfo) => (
-                                <h3 className="card-content-header" key={`userid${member.userProfile.id}`}>
-                                    {
-                                        `${member.userProfile.firstName} ${member.userProfile.lastName} | ${member.memberProfile.locationAddress1}`
-                                    }
-                                    <div className="dropdown">
-                                    <button className="dropbtn">Change Group</button>
-                                        <div className="dropdown-content">
-                                            {
-                                                this.props.pickupGroups.map((group: PickupGroup) => (
-                                                    <button onClick={(e) => {
-                                                        let userId = member.userProfile.id;
-                                                        let groupId = group.id
-                                                        this.props.setMemberGroup(userId, groupId)
-                                                    }}>{group.name}</button>
-                                                ))
-                                            }
+                                <div className="container">
+                                    <div className="row">
+                                        <div className="col my-auto">
+                                            <p className="group-member-text" key={`userid${member.userProfile.id}`}>
+                                                {
+                                                    `${member.userProfile.firstName} ${member.userProfile.lastName} | ${member.memberProfile.locationAddress1}`
+                                                }
+                                            </p>
                                         </div>
+                                        {/* <div className="col-4 my-auto d-flex"> */}
+                                        <div className="dropdown col my-1">
+                                            <button className="dropbtn">Change Group</button>
+                                                <div className="dropdown-content">
+                                                    {/* Dropdown list of pick-up groups */}
+                                                    {
+                                                        this.props.pickupGroups
+                                                            //Only display groups that member does not belong to
+                                                            .filter((group:PickupGroup) => (
+                                                                group.id !== member.memberProfile.pickupGroupId
+                                                            ))
+                                                            //Display available pickup groups in dropdown
+                                                            .map((group: PickupGroup) => (
+                                                            <button 
+                                                                key={`groupbutton${group.id}`}
+                                                                onClick={(e) => {
+                                                                this.props.setMemberGroup(member.userProfile.id, group.id)
+                                                                }}
+                                                            >
+                                                                {group.name}
+                                                            </button>
+                                                        ))
+                                                    }
+                                                </div>
+                                            </div>
+                                        {/* </div> */}
+                                        
                                     </div>
-                                </h3>
+
+
+                                </div>
+
+
+                                
                             ))
                             
                         }   
