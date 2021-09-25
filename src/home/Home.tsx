@@ -3,6 +3,8 @@ import { Component } from "react";
 import { BrowserRouter as Switch, Route, Redirect, withRouter, RouteComponentProps, Link } from "react-router-dom";
 import { AdminHome } from '../home_admin'
 import { IsAdmin } from '../types';
+import { Header } from '../common';
+import { MemberHome } from '../home_member';
 
 type HomeProps = 
     {isAdmin: IsAdmin} & 
@@ -21,7 +23,7 @@ class Home extends Component<HomeProps, HomeState>{
     render(){
         return (
             <div>
-                
+               
                 <h1>Home Component</h1>
                 {/* Temp Links */}
                 <p>These are temporary links for easy access</p>
@@ -43,7 +45,7 @@ class Home extends Component<HomeProps, HomeState>{
                         <AdminHome />
                     </Route>
                     <Route exact path = {`${this.props.match.path}/member`}>
-                        <h1>Member Components</h1>
+                        <MemberHome />
                     </Route>
                 </Switch>
 

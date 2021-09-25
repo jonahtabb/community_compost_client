@@ -1,4 +1,4 @@
-import "./App.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { Component } from "react";
 import { BrowserRouter as Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { IsAdmin, RegComplete, SessionToken, SetIsAdmin, SetRegComplete, SetSessionToken } from "./types";
@@ -6,6 +6,8 @@ import {Auth} from './auth'
 import {RouteComponentProps} from "react-router";
 import { Home } from "./home";
 import { getOwnUserData } from "./helpers";
+import "./App.css";
+import { Header } from './common';
 
 //Resources
 //https://reactrouter.com/web/guides/quick-start
@@ -64,6 +66,11 @@ class App extends Component<AppProps, AppState> {
     render() {
         return (
             <>
+            <Header
+                setSessionToken={this.setSessionToken}
+                setIsAdmin={this.setIsAdmin}
+                setRegComplete={this.setRegComplete}
+            />
             <Switch>
             <button onClick={()=>console.log(this.state)}>APP STATE CHECKER</button>
             <button onClick={()=> {console.log(this.props.match)}}>Check Router Match APP</button>

@@ -1,6 +1,6 @@
 //Types that originate in App.tsx
 export type SessionToken = string | null
-export type SetSessionToken = (value: string) => void
+export type SetSessionToken = (value: string | null) => void
 
 export type IsAdmin = boolean | null
 export type SetIsAdmin = (value: boolean) => void
@@ -10,6 +10,7 @@ export type SetRegComplete = (value: boolean) => void
 
 //Types that originate in Auth.tsx
 export type User = {
+        id: number | null;
         email: string;
         firstName: string;
         lastName: string;
@@ -58,7 +59,8 @@ export type MemberProfile = {
     locationCity: string,
     locationZip: string,
     locationState: string,
-    locationNotes: string
+    locationNotes: string,
+    pickupGroupId: number | null
 }
 
 export type CommunityProfileSelect = {
@@ -79,18 +81,13 @@ export type LoginUser = {
 }
 
 //Types that originate in Admin Home
-export type MemberProfileSummary = {
-    userId: number;
-    email: string;
-    firstName: string;
-    lastName: string;
-    phonePrimary: string;
-    locationAddress1: string;
-    locationAddress2: string;
-    locationCity: string;
-    locationName: string;
+export type MemberFullInfo = {
+    userProfile: User;
+    memberProfile: MemberProfile 
+
 }
-export type CommunityMembers = MemberProfileSummary[]
+
+export type CommunityMembers = MemberFullInfo[]
 
 export type PickupGroup = {
     id: number;
@@ -104,6 +101,8 @@ export type PickupGroup = {
 
 export type PickupGroups = PickupGroup[]
 
+export type SetMemberGroup = (userId: number | null, groupId: number | null) => void
+
 //Types that originate in Manage Pick-up Groups
 export type UserDetailed = {
     id: number ;
@@ -112,9 +111,9 @@ export type UserDetailed = {
     lastName: string;
 }
 
-export type MemberDetailed = {
-    userDetailed: UserDetailed,
-    memberProfile: MemberProfile
-}
+// export type MemberDetailed = {
+//     userDetailed: UserDetailed,
+//     memberProfile: MemberProfile
+// }
 
-export type PickupGroupMembers = {userDetailed: MemberDetailed, memberDetailed: MemberDetailed}[]
+// export type PickupGroupMembers = {userDetailed: MemberDetailed, memberDetailed: MemberDetailed}[]

@@ -5,6 +5,9 @@ import { getAllPickupGroups } from "./getAllPickupGroups";
 import { getOwnUserData } from "./getOwnUserData";
 import { getOwnAdminProfile } from "./getOwnAdminProfile";
 import { getOwnCommunityProfile } from "./getOwnCommunityProfile";
+import { getOwnCommunityProfileForMember } from "./getOwnCommunityProfileForMember";
+import { getOwnMemberProfile } from "./getOwnMemberProfile";
+import { updateMemberPickupGroup } from "./updateMemberPickupGroup";
 import { APIURL, CLIENTURL } from "./environment";
 
 export {
@@ -16,6 +19,9 @@ export {
     getOwnUserData,
     getOwnAdminProfile,
     getOwnCommunityProfile,
+    getOwnCommunityProfileForMember,
+    getOwnMemberProfile,
+    updateMemberPickupGroup,
     APIURL,
     CLIENTURL
 }

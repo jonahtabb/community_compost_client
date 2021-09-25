@@ -33,6 +33,7 @@ export default class RegisterMember extends Component<
             locationZip: "",
             locationState: "",
             locationNotes: "",
+            pickupGroupId: null,
             selectedCommunityId: 0,
             availableCommunities: [],
         };
