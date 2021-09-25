@@ -1,6 +1,6 @@
 //Types that originate in App.tsx
 export type SessionToken = string | null
-export type SetSessionToken = (value: string) => void
+export type SetSessionToken = (value: string | null) => void
 
 export type IsAdmin = boolean | null
 export type SetIsAdmin = (value: boolean) => void
@@ -111,9 +111,9 @@ export type UserDetailed = {
     lastName: string;
 }
 
-export type MemberDetailed = {
-    userDetailed: UserDetailed,
-    memberProfile: MemberProfile
-}
+// export type MemberDetailed = {
+//     userDetailed: UserDetailed,
+//     memberProfile: MemberProfile
+// }
 
-export type PickupGroupMembers = {userDetailed: MemberDetailed, memberDetailed: MemberDetailed}[]
+// export type PickupGroupMembers = {userDetailed: MemberDetailed, memberDetailed: MemberDetailed}[]

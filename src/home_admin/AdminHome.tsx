@@ -1,4 +1,3 @@
-import '../App.css';
 import { Component } from "react";
 import { BrowserRouter as Switch, Route, Redirect, withRouter, RouteComponentProps, Router} from "react-router-dom";
 import { getOwnAdminProfile, getOwnCommunityProfile, getOwnUserData, getAllCommunityMembers, getAllPickupGroups, updateMemberPickupGroup } from '../helpers';
@@ -42,14 +41,19 @@ class AdminHome extends Component<AdminHomeProps, AdminHomeState>{
     setMemberGroup: SetMemberGroup = (userId, groupId) => {
         //This updates the local state first for user experience speed
         let members = this.state.communityMembers
+        
+        //Find the index of the member in the communityMembers array
         let matchedIndex = members.findIndex(element => (
             element.userProfile.id === userId
         ))
+
+        //Copy and mutate community members
         let membersCopy = [...this.state.communityMembers];
         let memberCopy = {...membersCopy[matchedIndex]}
         memberCopy.memberProfile.pickupGroupId = groupId
         membersCopy[matchedIndex] = memberCopy
 
+        //Insert mutated array back into state
         this.setState(prevState => ({
             ...prevState,
             communityMembers: [
