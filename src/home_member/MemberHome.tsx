@@ -14,7 +14,7 @@ import {
     getOwnUserData,
 } from "../helpers";
 import { getOwnCommunityProfileForMember } from "../helpers/getOwnCommunityProfileForMember";
-import { CommunityProfile, MemberProfile, User } from "../types";
+import { CommunityProfile, MemberProfile, MemberProfileOptions, SetMemberProfile, User } from "../types";
 
 type MemberHomeProps = RouteComponentProps;
 
@@ -53,6 +53,16 @@ class MemberHome extends Component<MemberHomeProps, MemberHomeState> {
                 communityDescription: "",
             },
         };
+    }
+
+    setMemberProfile: SetMemberProfile = (keyName, value) => {
+        this.setState((prevState) => ({
+            ...prevState,
+            memberProfile: {
+                ...prevState.memberProfile,
+                [keyName]: value
+            }
+        }))
     }
 
 
@@ -142,6 +152,7 @@ class MemberHome extends Component<MemberHomeProps, MemberHomeState> {
                             userData={this.state.userData}
                             memberProfile={this.state.memberProfile}
                             communityProfile={this.state.communityProfile}
+                            setMemberProfile={this.setMemberProfile}
                         />
                     </Route>
                 </Switch>

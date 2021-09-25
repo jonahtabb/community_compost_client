@@ -111,6 +111,27 @@ export type UserDetailed = {
     lastName: string;
 }
 
+//Types that originate in Member Home
+
+export type SetMemberProfile = (keyName: MemberProfileOptions, value: string | number)  => void
+
+export type MemberProfileOptions = 
+    "secondaryEmail" |
+    "primaryPhone" |
+    "primaryPhoneType" |
+    "secondaryPhone" |
+    "secondaryPhoneType" |
+    "bio" |
+    "locationName" |
+    "locationAddress1" |
+    "locationAddress2" |
+    "locationCity" |
+    "locationZip" |
+    "locationState" |
+    "locationNotes" |
+    "pickupGroupId"
+
+
 // export type MemberDetailed = {
 //     userDetailed: UserDetailed,
 //     memberProfile: MemberProfile

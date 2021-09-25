@@ -18,7 +18,11 @@ input:focus{
 }
 
 input{
+  box-sizing: border-box;
   color:rgba(38, 124, 24, .8);
+  border: 1px solid rgba(38, 124, 24, .2);
+  border-radius: 20px;
+  
   outline: none
 }
 
@@ -390,6 +394,11 @@ div.pickup-group-container:nth-child(even){
 }
 
 /* Member Dashboard Styles */
+/* This isn't working correctly */
+/* div.member-profile-container:nth-child(2n){
+  background-color: rgba(38, 124, 24, .1);
+} */
+
 .member-dash-container{
   display: flex;
   flex-direction: column;
@@ -411,3 +420,7 @@ div.pickup-group-container:nth-child(even){
   align-self: flex-start;
   padding: 1rem;
 }
+
+/* div.member-profile-container:nth-child(odd){
+  background-color: rgba(38, 124, 24, .05);
+} */
