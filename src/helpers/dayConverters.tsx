@@ -1,7 +1,7 @@
 
 export function dayConverterNumToString(value: number) {
     let dayString
-    switch (value) {
+    switch (+value) {
         case 1:
             dayString = "Sunday";
             break;
@@ -23,7 +23,7 @@ export function dayConverterNumToString(value: number) {
         case 7:
             dayString = "Saturday";
             break;
-        default: dayString = "Must choose a valid day of the week"
+        default: dayString = "No Date Assigned"
     }
     return dayString
 }
@@ -52,7 +52,7 @@ export function dayConverterStringToNum(value: string) {
         case "Saturday":
             dayNum = 7;
             break;
-        default: dayNum = "Must choose a valid day of the week"
+        default: dayNum = "No Date Assigned"
     }
     return dayNum
 }
