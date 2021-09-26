@@ -417,6 +417,7 @@ div.pickup-group-container:nth-child(even){
 }
 
 .member-dash-card-section{
+  width: 100%;
   align-self: flex-start;
   padding: 1rem;
 }

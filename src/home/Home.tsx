@@ -23,17 +23,6 @@ class Home extends Component<HomeProps, HomeState>{
     render(){
         return (
             <div>
-               
-                <h1>Home Component</h1>
-                {/* Temp Links */}
-                <p>These are temporary links for easy access</p>
-                <Link to={`${this.props.match.path}/admin`}>
-                    <button type="button">Admin</button>
-                </Link>
-                <Link to={`${this.props.match.path}/member`}>
-                    <button type="button">Member</button>
-                </Link>
-
                 {/* Routes */}
                 <Switch>
                     {this.props.isAdmin

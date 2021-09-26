@@ -11,22 +11,25 @@ import { MemberDashboard } from ".";
 import {
     getOwnCommunityProfile,
     getOwnMemberProfile,
+    getOwnPickupGroup,
     getOwnUserData,
 } from "../helpers";
 import { getOwnCommunityProfileForMember } from "../helpers/getOwnCommunityProfileForMember";
-import { CommunityProfile, MemberProfile, MemberProfileOptions, SetMemberProfile, User } from "../types";
+import { CommunityProfile, MemberProfile, MemberProfileOptions, PickupGroup, SetMemberProfile, SetUserProfile, User } from "../types";
 
 type MemberHomeProps = RouteComponentProps;
 
-type MemberHomeState = { userData: User } & { memberProfile: MemberProfile } & {
-    communityProfile: CommunityProfile;
-};
+type MemberHomeState = 
+    { userProfile: User } & 
+    { memberProfile: MemberProfile } & 
+    { communityProfile: CommunityProfile} &
+    { pickupGroup: PickupGroup }
 
 class MemberHome extends Component<MemberHomeProps, MemberHomeState> {
     constructor(props: MemberHomeProps) {
         super(props);
         this.state = {
-            userData: {
+            userProfile: {
                 id: null,
                 email: "",
                 firstName: "",
@@ -52,6 +55,15 @@ class MemberHome extends Component<MemberHomeProps, MemberHomeState> {
                 communityName: "",
                 communityDescription: "",
             },
+            pickupGroup: {
+                id: null,
+                name: "",
+                description: "",
+                publicNotes: "",
+                startTime: "",
+                endTime: "",
+                day: -1,
+            }
         };
     }
 
@@ -60,6 +72,16 @@ class MemberHome extends Component<MemberHomeProps, MemberHomeState> {
             ...prevState,
             memberProfile: {
                 ...prevState.memberProfile,
+                [keyName]: value
+            }
+        }))
+    }
+
+    setUserProfile: SetUserProfile = (keyName, value) => {
+        this.setState((prevState) => ({
+            ...prevState,
+            userProfile: {
+                ...prevState.userProfile,
                 [keyName]: value
             }
         }))
@@ -78,6 +100,23 @@ class MemberHome extends Component<MemberHomeProps, MemberHomeState> {
                 // Get own member profile data
                 const memberResponse = await getOwnMemberProfile(token);
 
+                //Get own community profile data
+                const communityResponse = await getOwnCommunityProfileForMember(
+                    token
+                );
+                const { name, description } = await communityResponse.communityProfile;
+
+                // Get own pickup group data
+                const pickupGroupResponse = await getOwnPickupGroup(token);
+                const {
+                    id: gId,
+                    name: gName,
+                    description: gDesc,
+                    public_notes: gNotes,
+                    start_time: gStart,
+                    end_time: gEnd,
+                    day: gDay} = await pickupGroupResponse.pickupGroup
+
                 const {
                     email_secondary,
                     phone_primary,
@@ -95,16 +134,11 @@ class MemberHome extends Component<MemberHomeProps, MemberHomeState> {
                     PickupGroupId,
                 } = memberResponse.memberProfile;
 
-                //Get own community profile data
-                const communityResponse = await getOwnCommunityProfileForMember(
-                    token
-                );
-                const { name, description } =
-                    await communityResponse.communityProfile;
+
 
                 //Add Data to State
                 this.setState({
-                    userData: {
+                    userProfile: {
                         id: id,
                         email: email,
                         firstName: first_name,
@@ -130,6 +164,15 @@ class MemberHome extends Component<MemberHomeProps, MemberHomeState> {
                         communityName: name,
                         communityDescription: description,
                     },
+                    pickupGroup:{
+                        id: gId,
+                        name: gName,
+                        description: gDesc,
+                        publicNotes: gNotes,
+                        startTime: gStart,
+                        endTime: gEnd,
+                        day: gDay,
+                    }
                 });
             }
         } catch (error) {
@@ -145,14 +188,17 @@ class MemberHome extends Component<MemberHomeProps, MemberHomeState> {
         return (
             <>
                 <h2>Member Home</h2>
+                <button onClick={()=>console.info(this.state)}>Member Home State</button>
                 <Switch>
                     <Redirect to={`${this.props.match.path}/dashboard`} />
                     <Route exact path={`${this.props.match.path}/dashboard`}>
                         <MemberDashboard
-                            userData={this.state.userData}
+                            userProfile={this.state.userProfile}
+                            setUserProfile={this.setUserProfile}
                             memberProfile={this.state.memberProfile}
                             communityProfile={this.state.communityProfile}
                             setMemberProfile={this.setMemberProfile}
+                            pickupGroup={this.state.pickupGroup}
                         />
                     </Route>
                 </Switch>

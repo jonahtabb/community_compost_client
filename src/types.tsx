@@ -90,7 +90,7 @@ export type MemberFullInfo = {
 export type CommunityMembers = MemberFullInfo[]
 
 export type PickupGroup = {
-    id: number;
+    id: number | null;
     name: string; 
     description: string;
     publicNotes: string;
@@ -103,17 +103,13 @@ export type PickupGroups = PickupGroup[]
 
 export type SetMemberGroup = (userId: number | null, groupId: number | null) => void
 
-//Types that originate in Manage Pick-up Groups
-export type UserDetailed = {
-    id: number ;
-    email: string;
-    firstName: string;
-    lastName: string;
-}
-
 //Types that originate in Member Home
 
 export type SetMemberProfile = (keyName: MemberProfileOptions, value: string | number)  => void
+
+export type SetUserProfile = (keyName: UserProfileOptions, value: string | number ) => void
+
+//These are used for dynamic mapping in the MemberDashboard
 
 export type MemberProfileOptions = 
     "secondaryEmail" |
@@ -129,12 +125,10 @@ export type MemberProfileOptions =
     "locationZip" |
     "locationState" |
     "locationNotes" |
-    "pickupGroupId"
+    "pickupGroupId";
 
-
-// export type MemberDetailed = {
-//     userDetailed: UserDetailed,
-//     memberProfile: MemberProfile
-// }
-
-// export type PickupGroupMembers = {userDetailed: MemberDetailed, memberDetailed: MemberDetailed}[]
+export type UserProfileOptions =
+        "id" |
+        "email" |
+        "firstName" |
+        "lastName";

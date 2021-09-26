@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { BrowserRouter as Switch, Route, Redirect, withRouter, RouteComponentProps, Router} from "react-router-dom";
+import { BrowserRouter as Switch, Route, Redirect, withRouter, RouteComponentProps, Link} from "react-router-dom";
 import { getOwnAdminProfile, getOwnCommunityProfile, getOwnUserData, getAllCommunityMembers, getAllPickupGroups, updateMemberPickupGroup } from '../helpers';
 import {AdminProfile, CommunityProfile, User, MemberProfile, CommunityMembers, PickupGroups, MemberFullInfo, SetMemberGroup} from '../types'
 import { AdminDashboard } from '.';
@@ -161,10 +161,9 @@ class AdminHome extends Component<AdminHomeProps, AdminHomeState>{
     render(){
         return(
             <div>
-                                <h2>Admin Home</h2>
-                <button onClick={()=> {console.log(this.state)}}>Check Admin Home State</button>
-                <button onClick={()=> {console.log(this.props.match.path)}}>Check Admin Home Path</button>
-                
+                <Link to={`/home/admin/dashboard`}>
+                    <p>Dashboard</p>
+                </Link>              
                 <Switch>
                 <Redirect to={`${this.props.match.path}/dashboard`} />
 
