@@ -27,18 +27,18 @@ import { updateOwnMemberProfile } from "../helpers/updateOwnMemberProfile";
 /* 
     Member Dashboard Component
     This component is a practice in dynamic mapping to display the data in JSX.  
-    The key-names of objects are used to 
+    The key-names of objects are copied and processed to display human-readable labels and to retrieve object values.
 
     Positives:
     This means that data models can be modified server-side and this component will still dynamically display the data.
-    Copying and pasting JSX is unnecessary - Saves a lot of JSX divs.
+    Copying and pasting JSX is unnecessary - Saves writing repetitive JSX divs.
 
     Draw-backs:
-    Updates data models still requires updates to type information.
-    Readability and 'code cleanliness' suffer.
+    Updates to data models still require updates to type information.
+    Readability and 'code cleanliness' suffer in some ways.
 
     Challenges and Thoughts:
-    Setting up type checks for using a string variable / binding as the dynamic name of an object key.
+    It was a challenge to set up type checks for string variables used dynamic names of an object keys.
 
     Also - if you are reading this and have an opinion or suggestion, I would love to know!  
     I am learning what makes sense, and what doesn't - your input is appreciated.

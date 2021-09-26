@@ -84,11 +84,6 @@ class RegisterUser extends Component<RegisterUserProps, RegisterUserState>{
 
         }    
     }
-    // componentDidUpdate(){
-    //     if (this.state.emailNotAvail) {
-    //         console.log("test")
-    //     }
-    // }
 
     render(){
         return(
@@ -97,10 +92,6 @@ class RegisterUser extends Component<RegisterUserProps, RegisterUserState>{
                 <form 
                     className="user-register-form" 
                     onSubmit={(e) => {this.handleFormSubmit(e)}}>
-
-                    <button onClick={(e) => {e.preventDefault(); console.log(this.state)}}>
-                        Register STATE CHECKER
-                    </button>
 
                     {this.state.emailNotAvail === true
                         ?   <p style={{color: "red"}}>Please choose a different email address.  This email is not available.</p>

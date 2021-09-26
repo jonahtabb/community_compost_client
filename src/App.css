@@ -1,15 +1,106 @@
+html, body{
+  background-color: var(--light-background);
+  min-height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+#wrapper {
+  padding-top: 100px;
+  padding-bottom: 5px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+*{
+  --paragraph-fonts:'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+  --header-fonts: 'Spartan','Inter','Roboto', sans-serif;
+  --main-green:  hsl(81, 65%, 30%);
+  --light-background: hsl(50, 24%, 85%);
+
+  background-color: var(--light-background);
+  font-family: var(--paragraph-fonts);
+}
+
+
+
+div {
+  background-color: var(--light-background);
+}
+
+h1,h2,h3,h4,h5,h6 {
+  font-family: var(--header-fonts);
+  color: var(--main-green);
+}
+
+h1{
+  font-weight: 600;
+  font-size: 2rem;
+  text-align: center;
+}
+
+h2{
+  font-size: 1.5rem;
+  text-align: center;
+}
+
 p {
-  color: #3D550C;
-  font-size: .8rem;
+
+  color: var(--main-green);
+  font-size: 1rem;
+  
 }
 
 a {
+
   color: rgba(38, 124, 24, .8);
   font-size: .8rem;
 }
 
+
+button {
+  font-family: var(--header-fonts);
+  font-weight: 600;
+  background-color: var(--main-green);
+  border-radius: 2rem;
+  color: hsl(51, 42%, 94%);
+  border: 2px solid var(--main-green);
+  padding: 1rem 1.5rem 1rem 1.5rem;
+  margin: 10px 5px;
+  font-size: 1.2rem;
+}
+
+button:hover{
+  cursor: pointer;
+  background-color: transparent;
+  color: var(--main-green);
+}
+
+button:active{
+  transform: translate(1px, 1px)
+}
+
+.link-like-button {
+  display: inline;
+  font-family: var(--header-fonts);
+  font-size: .8rem;
+  background-color: transparent; 
+  color: var(--main-green);
+  padding: 0 0 0 0;
+  margin: 0 0 0 0;
+  text-decoration: none;
+  border: none;
+}
+
+
+
 label {
-  color: #3D550C;
+  color: var(--main-green);
   font-size: .8rem;
 }
 
@@ -19,10 +110,11 @@ input:focus{
 
 input{
   box-sizing: border-box;
-  color:rgba(38, 124, 24, .8);
-  border: 1px solid rgba(38, 124, 24, .2);
+  color: var(--main-green);
+  border: 2px solid var(--main-green);
   border-radius: 20px;
-  
+  margin: 10px 5px;
+  text-align: center;
   outline: none
 }
 
@@ -32,7 +124,7 @@ input:focus-visible {
 }
 
 input::placeholder {
-  color: rgba(38, 124, 24, .8)
+  color: var(--main-green);
 }
 
 
@@ -41,12 +133,18 @@ input:focus-visible::placeholder {
 }
 
 textarea {
-  color: rgba(38, 124, 24, .8)
+  box-sizing: border-box;
+  color: var(--main-green);
+  border: 2px solid var(--main-green);
+  border-radius: 20px;
+  margin: 10px 5px;
+  text-align: center;
+  outline: none
 
 }
 
 textarea::placeholder {
-  color: rgba(38, 124, 24, .8)
+  color: var(--main-green)
 }
 
 textarea:focus-visible::placeholder {
@@ -62,33 +160,15 @@ textarea:focus-visible{
   border-radius: 20px;
 }
 
-button {
-  background-color: rgba(38, 124, 24, .8);
+select{
+  box-sizing: border-box;
+  color: var(--main-green);
+  border: 2px solid var(--main-green);
   border-radius: 20px;
+  margin: 20px 5px;
+  text-align: center;
+  outline: none;
   height: 2rem;
-  color: whitesmoke;
-  width: 200px;
-  margin-top: 1rem;
-  border-width: 0px;
-}
-
-.link-like-button {
-  display: inline;
-  background-color: transparent;
-  font-size: .8rem;
-  color: #3D550C;
-  text-decoration: underline;
-  padding: 0 0 0 0;
-  margin: 0 0 0 0;
-  height: 1rem;
-}
-
-button:hover{
-  cursor: pointer;
-}
-
-button:active{
-  transform: translate(1px, 1px)
 }
 
 
@@ -96,9 +176,10 @@ button:active{
   text-align: center;
 }
 
+/* Header Component */
 .header {
-  background-color: #ffffff;
-  min-height: 100px;
+  margin-top: -100px;
+  height: 100px;
   min-width: 100%;
   display: flex;
   flex-direction: row;
@@ -106,19 +187,35 @@ button:active{
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: rgba(38, 124, 24, .8);
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  
 }
 
-.logout-container {
+/* Auth / Landing Page */
+
+.login-logout-container {
   position: absolute;
   right: 3rem;
 }
 
-.logout-button {
-  all: initial;
-  background-color: rgba(38, 124, 24, .5);
-  padding: .4rem;
+.login-logout-container button {
+  border: 1px solid var(--main-green);
+  text-decoration: none;
+  line-height: initial;
+  padding: .5rem
 }
+
+.landing-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100%;
+}
+
+.landing-image {
+  max-width: 125px;
+  width: 12vw;
+}
+
 
 .user-register{
   display: flex;
@@ -133,30 +230,6 @@ button:active{
   align-items: center;
   justify-content: center;
   width: 80vw;
-}
-
-.register-input{
-  box-sizing: border-box;
-  width: 100%;
-  height: 2rem;
-  border-radius: 20px;
-  border-width: 0px;
-  background-color: rgba(38, 124, 24, 0.16);
-  text-align: center;
-  margin-top: 1rem;
-}
-
-.outlined-input{
-  box-sizing: border-box;
-  width: 100%;
-  height: 2rem;
-  border-radius: 20px;
-  border-width: 1px;
-  border-color: rgb(37, 124, 24);
-  border-style: solid;
-  background-color: transparent;
-  text-align: center;
-  margin-top: 1rem
 }
 
 
@@ -192,8 +265,9 @@ button:active{
   left: 0;
   height: 25px;
   width: 25px;
-  background-color: rgba(38, 124, 24, .5);
+  background-color: transparent;
   border-radius: 50%;
+  border: 2px solid var(--main-green)
 
 }
 
@@ -212,12 +286,12 @@ button:active{
 }
 
 .check-container .checkmark:after {
-  left: 9px;
-  top: 5px;
+  left: 40%;
+  top: 20%;
   width: 5px;
   height: 10px;
-  border: solid white;
-  border-width: 0 3px 3px 0;
+  border: solid var(--main-green);
+  border-width: 0 2px 2px 0;
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);

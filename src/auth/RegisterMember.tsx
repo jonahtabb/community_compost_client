@@ -183,10 +183,6 @@ export default class RegisterMember extends Component<
     render() {
         return (
             <div className="user-register">
-                <h1>Register Member Component</h1>
-                <button onClick={() => console.log(this.state)}>
-                    REGISTER MEMBER STATE CHECKER
-                </button>
                 <h2>{`Welcome ${this.props.user.firstName}`}</h2>
                 <p>Answer a few more questions and we'll get you set up!</p>
 
@@ -208,7 +204,6 @@ export default class RegisterMember extends Component<
                     </label>
 
                     <input
-                        className="outlined-input"
                         type="email"
                         placeholder="Secondary Email"
                         id="secondaryEmail"
@@ -219,7 +214,6 @@ export default class RegisterMember extends Component<
 
                     {/* Primary Phone Number */}
                     <input
-                        className="outlined-input"
                         type="tel"
                         placeholder="Primary Phone Number"
                         id="primaryPhone"
@@ -253,7 +247,6 @@ export default class RegisterMember extends Component<
 
                     {/* Secondary Phone Number */}
                     <input
-                        className="outlined-input"
                         type="tel"
                         placeholder="Secondary Phone Number"
                         id="secondaryPhone"
@@ -290,7 +283,6 @@ export default class RegisterMember extends Component<
                         Bio. Let everybody know a little bit about who you are!
                     </label>
                     <textarea
-                        className="outlined-input"
                         style={{
                             minHeight: "8rem",
                             maxHeight: "30vh",
@@ -311,7 +303,6 @@ export default class RegisterMember extends Component<
                         picking up your compost!{" "}
                     </label>
                     <input
-                        className="outlined-input"
                         type="text"
                         placeholder="Pick-Up Location Name"
                         id="locationName"
@@ -322,7 +313,6 @@ export default class RegisterMember extends Component<
 
                     {/* Location Address 1 */}
                     <input
-                        className="outlined-input"
                         type="text"
                         placeholder="Address Line 1"
                         id="locationAddress1"
@@ -333,9 +323,8 @@ export default class RegisterMember extends Component<
 
                     {/* Location Address 2 */}
                     <input
-                        className="outlined-input"
                         type="text"
-                        placeholder="Address Line 1"
+                        placeholder="Address Line 2"
                         id="locationAddress2"
                         name="locationAddress2"
                         value={this.state.locationAddress2}
@@ -343,7 +332,6 @@ export default class RegisterMember extends Component<
                     />
                     {/* Location City */}
                     <input
-                        className="outlined-input"
                         type="text"
                         placeholder="City"
                         id="locationCity"
@@ -353,7 +341,6 @@ export default class RegisterMember extends Component<
                     />
                     {/* Location Zip */}
                     <input
-                        className="outlined-input"
                         type="text"
                         placeholder="Zip Code"
                         id="locationZip"
@@ -363,7 +350,6 @@ export default class RegisterMember extends Component<
                     />
                     {/* Location State */}
                     <input
-                        className="outlined-input"
                         type="text"
                         placeholder="State"
                         id="locationState"
@@ -378,7 +364,6 @@ export default class RegisterMember extends Component<
                         Is there anything we should know about your pick-up
                         location?
                         <textarea
-                            className="outlined-input"
                             style={{
                                 minHeight: "8rem",
                                 maxHeight: "30vh",
@@ -394,8 +379,9 @@ export default class RegisterMember extends Component<
                     </label>
 
                     {/* Select A Community */}
-                    <label>
+                    <label htmlFor="selectedCommunityId">
                         Choose a Composting Community to Join!
+                        </label>
                     <select
                         name={"selectedCommunityId"} //Must match state property name
                         value={this.state.selectedCommunityId}
@@ -407,7 +393,7 @@ export default class RegisterMember extends Component<
                         ))
                     }
                     </select>
-                    </label>
+                    
 
                     <button type="submit">Join Your Compost Community!</button>
                 </form>

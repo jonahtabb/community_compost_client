@@ -1,4 +1,4 @@
-import '../App.css';
+
 import { Component } from "react";
 import { SetSessionToken, IsAdmin, SetIsAdmin, User, SetUser, SetRegStep, SetRegComplete} from "../types";
 import {RouteComponentProps, withRouter} from "react-router";
@@ -40,7 +40,7 @@ class Register extends Component<RegisterProps, RegisterState>{
             {
                 this.props.isAdmin
                 ?    <>
-                    <h3>Register As Compost Coordinator</h3>
+                    <h2>Register As Compost Coordinator</h2>
                     <p>
                         Create an account to get started creating amazing
                         compost with help from your community!
@@ -48,7 +48,7 @@ class Register extends Component<RegisterProps, RegisterState>{
                     </>
 
                 :   <>
-                    <h3>Register As Member</h3>
+                    <h2>Register As Member</h2>
                     <p>
                         Create an account to get compost picked-up directly
                         from your house and help making healthy soil!

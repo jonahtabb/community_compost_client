@@ -131,8 +131,6 @@ export default class RegisterAdmin extends Component<RegisterAdminProps, Registe
     render(){
         return (
             <div>
-                <h1>Register Admin Component</h1>
-                <button onClick={()=>console.log(this.state)}>REGISTER ADMIN STATE CHECKER</button>
                 <h2>{`Welcome ${this.props.user.firstName}`}</h2>
                 <p>Answer a few more questions and we'll get you set up!</p>
                 <div className="user-register-form">
