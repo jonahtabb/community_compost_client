@@ -80,7 +80,7 @@ class Auth extends Component<AuthProps, AuthState> {
                         />
                     </Route>
 
-                    <Route path={`${this.props.match.path}/register`}>
+                    <Route exact path={`${this.props.match.path}/register`}>
                         <Register
                             setSessionToken={this.props.setSessionToken}
                             isAdmin={this.props.isAdmin}

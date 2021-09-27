@@ -57,7 +57,7 @@ class ManagePickupGroups extends Component<
                 {pickupGroups.map((group: PickupGroup) => (
                     <div key={`group${group.id}`}>
                         {/* Group Header Info */}
-                        <div className="card-header-container">
+                        <div className="container card-header-container">
                             <div>
                                 <p
                                     key={`groupid${group.id}`}

@@ -6,6 +6,7 @@ import { IsAdmin } from '../types';
 import { Header } from '../common';
 import { MemberHome } from '../home_member';
 
+
 type HomeProps = 
     {isAdmin: IsAdmin} & 
     RouteComponentProps

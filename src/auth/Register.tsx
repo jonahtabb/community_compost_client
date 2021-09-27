@@ -48,7 +48,7 @@ class Register extends Component<RegisterProps, RegisterState>{
 
     render() {
         return (
-            <div className="App">
+            <div className="App register-container">
             {
                 this.props.isAdmin
                 ?    <>
@@ -110,7 +110,7 @@ class Register extends Component<RegisterProps, RegisterState>{
                             className="link-like-button"
                             onClick={() => this.props.setIsAdmin(true)}
                         >
-                            Register as Admin
+                            Register as a Compost Coordinator
                         </button>
                     </div>
                 )}

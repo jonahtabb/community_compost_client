@@ -1,3 +1,4 @@
+import { camelToSentenceConverter } from "./camelToSentenceConverter";
 import { dayConverterNumToString, dayConverterStringToNum } from "./dayConverters";
 import { getAllCommunityMembers } from "./getAllCommunityMembers";
 import { getAllMembersOfPickupGroup } from "./getAllMembersOfPickupGroup";
@@ -13,6 +14,7 @@ import { updateOwnUserProfile } from "./updateOwnUserProfile";
 import { APIURL, CLIENTURL } from "./environment";
 
 export {
+    camelToSentenceConverter,
     dayConverterNumToString,
     dayConverterStringToNum,
     getAllCommunityMembers,

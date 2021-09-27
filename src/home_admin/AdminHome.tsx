@@ -160,10 +160,7 @@ class AdminHome extends Component<AdminHomeProps, AdminHomeState>{
 
     render(){
         return(
-            <div>
-                <Link to={`/home/admin/dashboard`}>
-                    <p>Dashboard</p>
-                </Link>              
+            <div> 
                 <Switch>
                 <Redirect to={`${this.props.match.path}/dashboard`} />
 

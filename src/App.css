@@ -98,16 +98,42 @@ button:active{
 .link-like-button {
   display: inline;
   font-family: var(--header-fonts);
-  font-size: .8rem;
+  font-size: 1rem;
+  font-weight: 400;
   background-color: transparent; 
   color: var(--main-green);
   padding: 0 0 0 0;
   margin: 0 0 0 0;
   text-decoration: underline;
   border: none;
+  text-align: center;
 }
 
 .link-like-button:hover {
+  color: var(--light-green);
+  border-color: var(--light-green);
+}
+
+.link-like-button:active{
+  transform: translate(1px, 1px)
+}
+
+.link-button-small {
+  display: inline;
+  font-family: var(--paragraph-fonts);
+  font-size: 1rem;
+  font-weight: 400;
+  background-color: transparent; 
+  color: var(--main-green);
+  padding: 5px;
+  margin: 0 0 0 0;
+  text-decoration: none;
+  border: 1px solid var(--main-green);
+  border-radius: 10px;
+
+}
+
+.link-button-small:hover {
   color: var(--hover-green)
 }
 
@@ -122,6 +148,7 @@ button:active{
   margin: 10px 5px;
   font-size: 1.2rem;
   text-decoration: none;
+  text-align: center;
 }
 
 .react-router-link-button:hover{
@@ -176,8 +203,7 @@ textarea {
   border-radius: 20px;
   margin: 10px 5px;
   text-align: center;
-  outline: none
-
+  outline: none;
 }
 
 textarea::placeholder {
@@ -219,19 +245,54 @@ select{
   height: 100px;
   min-width: 100%;
   display: flex;
+  flex-grow: 1;
+  flex-basis: 0;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   font-size: calc(10px + 2vmin);
   color: rgba(38, 124, 24, .8);
+  padding-left: 5rem;
+  padding-right: 5rem;
   
+}
+
+.header-image-container {
+
+  max-width: 70px;
+  min-width: 40px;
+}
+
+@media (min-width:1200px){
+  .header {
+    padding-left: 25vw;
+    padding-right: 25vw;
+  }
+}
+
+@media (max-width: 650px){
+  .header h1 {
+    font-size: 1.8rem;
+  }
+  .header {
+    padding-left: .5rem;
+    padding-right: .5rem;
+  }
+}
+
+@media (max-width: 450px){
+  .header h1 {
+    font-size: 1.2rem;
+  }
+  .link-button-small {
+    font-size: .9rem;
+  }
 }
 
 /* Auth / Landing Page */
 
 .login-logout-container {
-  position: absolute;
-  right: 3rem;
+
 }
 
 .login-logout-container button {
@@ -263,11 +324,23 @@ select{
 }
 
 /* User Register Component */
+.register-container{
+  padding-left: 10rem;
+  padding-right: 10rem;
+}
+
+@media (max-width: 725px ){
+  .register-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
 
 .user-register{
   display: flex;
   flex-direction: column;
   align-items: center;
+
 }
 
 .user-register-form{
@@ -276,7 +349,8 @@ select{
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 80vw;
+  
+  margin:auto;
 }
 
 
@@ -357,16 +431,16 @@ select{
 
 .card-header-title {
   font-size: 1rem;
-  padding-left: .5rem;
+  /* padding-left: .5rem; */
   font-weight: 600;
   margin-bottom: .2rem;
-  color: var(--brown);
+  color: var(--main-green);
 }
 
 .card-header-title-underline {
   height: 2px;
   width: 105%;
-  background-color: var(--brown);
+  background-color: var(--main-green);
 }
 
 .card-header-edit {
@@ -405,6 +479,7 @@ select{
   color: var(--main-green);
 }
 
+
 .manage-link-text{
   color: var(--main-green);
   font-size: 1.2rem;
@@ -416,20 +491,42 @@ select{
 }
 
 .manage-link-arrow {
-  width: 2.5rem;
-  margin-left: 1rem;
+  font-family: var(--paragraph-fonts);
+  font-size: 2rem;
+  margin-bottom: 0;
+}
+
+.manage-link-container:hover .manage-link-arrow a {
+  text-decoration: none;
+  text-decoration-thickness: 0;
 }
 
 
 .modal {
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  border: 2px solid green;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  background-color: transparent;
 }
+.modal button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  color: var(--main-green);
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  font-size: 2rem;
+  transition: all .2s ease-in-out;
+}
+
+.modal button span {
+  background-color: transparent;
+  
+}
+.modal button:hover{
+  transform: scale(1.05)
+}
+
+
 
 /* Pickup Groups Component */
 

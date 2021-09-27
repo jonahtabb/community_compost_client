@@ -182,7 +182,7 @@ export default class RegisterMember extends Component<
 
     render() {
         return (
-            <div className="user-register">
+            <div className="container-sm mx-auto">
                 <h2>{`Welcome ${this.props.user.firstName}`}</h2>
                 <p>Answer a few more questions and we'll get you set up!</p>
 

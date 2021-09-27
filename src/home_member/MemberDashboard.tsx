@@ -20,7 +20,7 @@ import {
     User,
     UserProfileOptions,
 } from "../types";
-import { dayConverterNumToString, updateOwnUserProfile } from "../helpers";
+import { camelToSentenceConverter, dayConverterNumToString, updateOwnUserProfile } from "../helpers";
 import { isThisTypeNode } from "typescript";
 import { updateOwnMemberProfile } from "../helpers/updateOwnMemberProfile";
 
@@ -65,12 +65,6 @@ class MemberDashboard extends Component<
             canEditProfile: false,
         };
     }
-
-    // Helper function that aids in converting object keys to human readable labels
-    camelToSentenceConverter = (keyValue: string) => {
-        let changeCase = keyValue.replace(/([A-Z\d])/g, " $1");
-        return changeCase.charAt(0).toUpperCase() + changeCase.slice(1);
-    };
 
     // Handles clicking the 'Edit Profile' Button
     handleEditClick = () => {
@@ -143,8 +137,8 @@ class MemberDashboard extends Component<
         // Create an array copy of the UserProfile so it can be mapped in JSX
         let mappableUserData = Object.entries(displayUserData)
             .map((user) => {
-                const uglyKey = typeof user[0] === "string" ? user[0] : "";
-                let prettyKey = this.camelToSentenceConverter(user[0]);
+                const uglyKey = typeof user[0] === "string" ? user[0] : ""; 
+                let prettyKey = camelToSentenceConverter(user[0])
                 // Literal indexing for values
                 let newIndex
                 switch (uglyKey) {
@@ -171,7 +165,7 @@ class MemberDashboard extends Component<
             Object.entries(filteredMemberData).map(
                 (member) => {
                     //Prettify and Format Member Profile Keys
-                    let prettyKey = this.camelToSentenceConverter(member[0]);
+                    let prettyKey = camelToSentenceConverter(member[0])
 
                     //Typegaurd for ugly key
                     const uglyKey = typeof member[0] === "string" ? member[0] : "";
