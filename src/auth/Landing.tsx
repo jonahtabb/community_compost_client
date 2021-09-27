@@ -27,13 +27,12 @@ class Landing extends Component<LandingProps, LandingState> {
                     </h2>
                 </div>
                 <div className="container d-flex justify-content-center">
-                    <Link to={`${this.props.match.path}/register`}>
-                        <button
-                            type="button"
-                            onClick={() => this.props.setIsAdmin(false)}
+                    <Link 
+                        to={`${this.props.match.path}/register`}
+                        className="react-router-link-button"
+                        onClick={() => this.props.setIsAdmin(false)}
                         >
                             Schedule Your Compost Pick-Up
-                        </button>
                     </Link>
                 </div>
                 <div className="container d-flex flex-column align-items-center">
@@ -41,14 +40,13 @@ class Landing extends Component<LandingProps, LandingState> {
                         Are you a community garden, farmer, or just an all-round
                         awesome person?
                     </p>
-                    <Link to={`${this.props.match.path}/register`}>
-                        <button
-                            className="link-like-button"
-                            type="button"
-                            onClick={() => this.props.setIsAdmin(true)}
+                    <Link 
+                        to={`${this.props.match.path}/register`}
+                        className="link-like-button"
+                        onClick={() => this.props.setIsAdmin(true)}
                         >
                             Start composting in your neighborhood today!
-                        </button>
+                  
                     </Link>
                 </div>
 

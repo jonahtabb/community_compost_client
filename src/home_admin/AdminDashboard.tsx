@@ -3,6 +3,7 @@ import { BrowserRouter as Switch, Route, Redirect, withRouter, RouteComponentPro
 import { CommunityMembers, CommunityProfile,  MemberFullInfo,  PickupGroup, PickupGroups } from '../types';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { dayConverterNumToString } from '../helpers';
+import green_arrow from '../assets/green_arrow.svg'
 
 
 type AdminDashboardProps =
@@ -16,15 +17,6 @@ type AdminDashboardState = {modal: boolean}
 class AdminDashboard extends Component<AdminDashboardProps, AdminDashboardState>{
     constructor(props: AdminDashboardProps){
         super(props)
-        this.state = {
-            modal: false
-        }
-    }
-
-    toggleModal = () => {
-        this.setState(prevState => ({
-            modal: !prevState.modal
-        }))
     }
 
     render(){
@@ -40,7 +32,7 @@ class AdminDashboard extends Component<AdminDashboardProps, AdminDashboardState>
                                 <div className="card-header-title-underline"></div>
                             </div>
                             <div>
-                                <p className="card-header-edit">Edit</p>
+                                <p className="card-header-edit">Edit REMOVE IF NOT FINISHED</p>
                             </div>
                         </div>
 
@@ -60,9 +52,6 @@ class AdminDashboard extends Component<AdminDashboardProps, AdminDashboardState>
                                 <p className="card-header-title">Pickup Groups</p>
                                 <div className="card-header-title-underline"></div>
                             </div>
-                            <div>
-                                <p className="card-header-edit">Edit</p>
-                            </div>
                         </div>
                         {
                             this.props.pickupGroups.map((group: PickupGroup) => {
@@ -81,7 +70,7 @@ class AdminDashboard extends Component<AdminDashboardProps, AdminDashboardState>
                         <Link to={`/home/admin/groups`} className="manage-link-container">
 
                             <h3 className="manage-link-text">Manage Pickups</h3>
-                                <img className="manage-link-arrow" src='/assets/green_arrow.svg' alt="arrow" />
+                                <img className="manage-link-arrow" src={green_arrow} alt="arrow" />
 
                         </Link>
 
@@ -94,9 +83,6 @@ class AdminDashboard extends Component<AdminDashboardProps, AdminDashboardState>
                         <div>
                             <p className="card-header-title">Community Members</p>
                             <div className="card-header-title-underline"></div>
-                        </div>
-                        <div>
-                            <p className="card-header-edit">Edit</p>
                         </div>
                     </div>
                     {
@@ -121,17 +107,6 @@ class AdminDashboard extends Component<AdminDashboardProps, AdminDashboardState>
 
 
                     </div>
-                <Button color="danger" onClick={this.toggleModal}>Test Modal</Button>
-                    <Modal isOpen={this.state.modal} toggle={this.toggleModal} className="modal">
-                    <ModalHeader toggle={this.toggleModal}>Modal title</ModalHeader>
-                    <ModalBody>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </ModalBody>
-                    <ModalFooter>
-                    <Button color="primary" onClick={this.toggleModal}>Do Something</Button>{' '}
-                    <Button color="secondary" onClick={this.toggleModal}>Cancel</Button>
-                    </ModalFooter>
-                    </Modal>
             </div>
         )
     }

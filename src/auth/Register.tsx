@@ -27,11 +27,23 @@ class Register extends Component<RegisterProps, RegisterState>{
 
     //Method that increments registration step
     setRegStep: SetRegStep = () => {
+
         this.setState((prevState) => (
             {
                 registrationStep: prevState.registrationStep + 1
             }
         ))
+    }
+
+    componentDidMount(){
+        let registrationStep = localStorage.getItem("registrationStep")
+        if (registrationStep){
+            this.setState({registrationStep: +registrationStep})
+        }
+    }
+
+    componentDidUpdate(){
+        localStorage.setItem("registrationStep", this.state.registrationStep.toString())
     }
 
     render() {

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { BrowserRouter as Switch, Route, Redirect, withRouter, Router, Link } from "react-router-dom";
+import {RouteComponentProps} from "react-router";
 import { Logout } from ".";
 import {
     IsAdmin,
@@ -10,12 +11,13 @@ import {
     SetUser,
     User,
 } from "../types";
+import {CLIENTURL} from '../helpers'
 
-type HeaderProps = { sessionToken: SessionToken } & {
+type HeaderProps = RouteComponentProps & { sessionToken: SessionToken } & {
     setSessionToken: SetSessionToken;
-} & { setIsAdmin: SetIsAdmin } & { setRegComplete: SetRegComplete };
+} & { setIsAdmin: SetIsAdmin } & { setRegComplete: SetRegComplete }
 
-export default class Header extends Component<HeaderProps, {}> {
+class Header extends Component<HeaderProps, {}> {
 
 
       handleClickLogout = ():void => {
@@ -26,8 +28,10 @@ export default class Header extends Component<HeaderProps, {}> {
     }
 
     render() {
+        console.info(this.props)
         return (
-            <div className="header">
+     
+                            <div className="header">
                 <h1>Community Compost</h1>
 
                 <div className="login-logout-container">
@@ -39,15 +43,30 @@ export default class Header extends Component<HeaderProps, {}> {
                         >
                             Logout
                         </button>
-                    ) : (
-                        <Link to={`/auth`}>
-                            <button className="link-like-button" type="button">
-                                Login
-                            </button>
+                    ) : this.props.location.pathname.includes("login")
+                    ? 
+                        <Link 
+                            to={`${this.props.match.url}auth/register`}
+                            className="link-like-button"
+                            >
+                            Register
+                        </Link>
+                    :
+                    (
+                        <Link 
+                            to={`${this.props.match.url}auth/login`}
+                            className="link-like-button"
+                            >
+                            Login
                         </Link>
                     )}
                 </div>
             </div>
+
+
+
         );
     }
 }
+
+export default  withRouter(Header)

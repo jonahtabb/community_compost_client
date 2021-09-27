@@ -21,7 +21,10 @@ html, body{
   sans-serif;
   --header-fonts: 'Spartan','Inter','Roboto', sans-serif;
   --main-green:  hsl(81, 65%, 30%);
+  --hover-green: hsl(81, 85%, 35%);
+  --light-green:  hsla(81, 65%, 30%, 0.322);
   --light-background: hsl(50, 24%, 85%);
+  --brown: hsl(30, 29%, 28%);
 
   background-color: var(--light-background);
   font-family: var(--paragraph-fonts);
@@ -36,6 +39,8 @@ div {
 h1,h2,h3,h4,h5,h6 {
   font-family: var(--header-fonts);
   color: var(--main-green);
+  margin: 15px 10px;
+  background-color: transparent;
 }
 
 h1{
@@ -49,15 +54,20 @@ h2{
   text-align: center;
 }
 
-p {
+h3{
+  font-size: 1.2rem;
+  text-align: center;
+}
 
+p {
+  background-color: transparent;
   color: var(--main-green);
   font-size: 1rem;
   
 }
 
 a {
-
+  background-color: transparent;
   color: rgba(38, 124, 24, .8);
   font-size: .8rem;
 }
@@ -93,15 +103,37 @@ button:active{
   color: var(--main-green);
   padding: 0 0 0 0;
   margin: 0 0 0 0;
-  text-decoration: none;
+  text-decoration: underline;
   border: none;
 }
 
+.link-like-button:hover {
+  color: var(--hover-green)
+}
+
+.react-router-link-button{
+  font-family: var(--header-fonts);
+  font-weight: 600;
+  background-color: var(--main-green);
+  border-radius: 2rem;
+  color: hsl(51, 42%, 94%);
+  border: 2px solid var(--main-green);
+  padding: 1rem 1.5rem 1rem 1.5rem;
+  margin: 10px 5px;
+  font-size: 1.2rem;
+  text-decoration: none;
+}
+
+.react-router-link-button:hover{
+  cursor: pointer;
+  background-color: transparent;
+  color: var(--main-green);
+}
 
 
 label {
   color: var(--main-green);
-  font-size: .8rem;
+  font-size: 1rem;
 }
 
 input:focus{
@@ -115,7 +147,8 @@ input{
   border-radius: 20px;
   margin: 10px 5px;
   text-align: center;
-  outline: none
+  outline: none;
+  background-color: transparent;
 }
 
 input:focus-visible {
@@ -130,6 +163,10 @@ input::placeholder {
 
 input:focus-visible::placeholder {
   color: rgba(38, 124, 24, .2)
+}
+
+input:disabled {
+  border: 2px solid transparent;
 }
 
 textarea {
@@ -208,6 +245,7 @@ select{
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
   min-height: 100%;
 }
 
@@ -216,6 +254,15 @@ select{
   width: 12vw;
 }
 
+/* User Login Component */
+.user-login-form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+}
+
+/* User Register Component */
 
 .user-register{
   display: flex;
@@ -311,15 +358,15 @@ select{
 .card-header-title {
   font-size: 1rem;
   padding-left: .5rem;
-  color:rgba(38, 124, 24, .8);
   font-weight: 600;
   margin-bottom: .2rem;
+  color: var(--brown);
 }
 
 .card-header-title-underline {
   height: 2px;
   width: 105%;
-  background-color: rgba(38, 124, 24, .8);
+  background-color: var(--brown);
 }
 
 .card-header-edit {
@@ -337,9 +384,10 @@ select{
 }
 
 .card-content-header {
-  font-size: .9rem;
-  margin-bottom: 0;
-  color: #40413e;
+  margin: 0;
+  margin-left: 0;
+  margin-top: 15px;
+  text-align: left;
 }
 
 .card-content-text {
@@ -350,19 +398,21 @@ select{
 .manage-link-container{
   display: flex;
   align-items: center;
-  padding-left: 2rem;
   text-decoration: none;
-  color: rgba(38, 124, 24, .8);
 }
 .manage-link-container:hover{
   text-decoration: underline;
-  color: rgba(38, 124, 24, .8);
+  color: var(--main-green);
 }
 
 .manage-link-text{
-  color: rgba(38, 124, 24, .8);
+  color: var(--main-green);
   font-size: 1.2rem;
   margin-bottom: 0;
+}
+
+.manage-link-text:hover{
+  text-decoration: underline;
 }
 
 .manage-link-arrow {
@@ -392,34 +442,26 @@ div.pickup-group-container:nth-child(even){
 
 /* Text of each group member */
 .group-member-text {
-  font-size: .7rem;
   margin: 0;
 }
 /* Dropdown Button */
 .dropbtn {
-  background-color: rgba(38, 124, 24, .3);
-  color: black;
-  height: 1.5rem;
-  /* padding: 1rem; */
+  background-color: transparent;
+  color: var(--main-green);
   margin: 0;
   border-radius: 2px;
   font-size: .6rem;
   font-weight: 600;
-  border: none;
+  border: 1px solid var(--main-green);
   cursor: pointer;
   max-width: 150px;
 }
 
-.dropbtn:hover {
-  background-color:rgba(59, 24, 124, 0.4) ;
-}
 
 /* The container <div> - needed to position the dropdown content */
 .dropdown {
   position: relative;
-  display: flex;
-  /* justify-content: center; */
-  align-items:flex-start
+  display: block;
 
 }
 
@@ -434,44 +476,44 @@ div.pickup-group-container:nth-child(even){
   z-index: 1;
 }
 
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  color: var(--main-green);
+  display: block;
+  top: 2.5rem;
+}
+
 /* Links inside the dropdown */
 .dropdown-content button {
   all:initial;
-  color: black;
-  /* padding: .5rem .5rem; */
   text-decoration: none;
   display: block;
-  /* margin: .5rem .5rem; */
   border-radius: 2px;
-  font-size: 16px;
   border: none;
   cursor: pointer;
   height: 100%;
-  width: 150px;
-}
-.dropdown-content button{
-  width: 150px;
+  width: 145px;
+  color: var(--main-green);
+  font: var(--paragraph-fonts);
+  padding-left: 5px;
+  background-color: var(--light-background);
 }
 
 /* Change color of dropdown links on hover */
 .dropdown-content button:hover {background-color: rgba(38, 124, 24, .4) }
 
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {
-  display: block;
-  top: 1.4rem;
-}
-
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown .dropbtn:hover {
-  background-color: rgba(38, 124, 24, .5);
+  background-color: rgba(38, 124, 24, .4)
+}
+.dropdown .dropbtn:active{
+  transform: none;
+  cursor:default;
 }
 
 /* Member Dashboard Styles */
-/* This isn't working correctly */
-/* div.member-profile-container:nth-child(2n){
-  background-color: rgba(38, 124, 24, .1);
-} */
+
+
 
 .member-dash-container{
   display: flex;

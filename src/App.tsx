@@ -66,7 +66,7 @@ class App extends Component<AppProps, AppState> {
         return (
             <div id="wrapper">
 
-            <Switch>
+            
 
                 <Header
                     sessionToken = {this.state.sessionToken}
@@ -74,25 +74,31 @@ class App extends Component<AppProps, AppState> {
                     setIsAdmin={this.setIsAdmin}
                     setRegComplete={this.setRegComplete}
                 />
+                
                 {this.state.sessionToken && this.state.regComplete ? 
                     <Redirect to="/home" /> :
                     <Redirect to="/auth" />
-                }               
+                }
+       
                     <Route 
-                        path="/auth">
-                        <Auth 
-                            setSessionToken={this.setSessionToken}
-                            isAdmin={this.state.isAdmin}
-                            setIsAdmin={this.setIsAdmin}
-                            setRegComplete={this.setRegComplete}
-                        />
-                    </Route>
-                    <Route path="/home">
-                        <Home 
-                            isAdmin={this.state.isAdmin}
-                        />
-                    </Route>
-                </Switch>
+                            path="/auth">
+                            <Auth
+                                sessionToken={this.state.sessionToken}
+                                setSessionToken={this.setSessionToken}
+                                isAdmin={this.state.isAdmin}
+                                setIsAdmin={this.setIsAdmin}
+                                setRegComplete={this.setRegComplete}
+                            />
+                        </Route>
+                        <Route path="/home">
+                            <Home 
+                                isAdmin={this.state.isAdmin}
+                            />
+                        </Route>
+                    
+  
+
+                
             
             </div>
             

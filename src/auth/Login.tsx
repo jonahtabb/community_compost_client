@@ -78,16 +78,13 @@ class Login extends Component<LoginProps, LoginState>{
     }
 
     render(){
+        console.log(this.props)
         return (
-            <div>
-                <h1>Login Component</h1>
-                <button 
-                    onClick={(e) => {e.preventDefault(); console.log(this.state)}}
-                > Register STATE CHECKER
-                </button>
+            <div className="container">
+                <h1>Login</h1>
 
                 <form
-                    className="user-register-form"
+                    className="user-login-form"
                     onSubmit={e => {this.handleFormSubmit(e)}}
                 >
 
