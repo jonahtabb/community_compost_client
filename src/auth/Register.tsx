@@ -1,4 +1,4 @@
-import '../App.css';
+
 import { Component } from "react";
 import { SetSessionToken, IsAdmin, SetIsAdmin, User, SetUser, SetRegStep, SetRegComplete} from "../types";
 import {RouteComponentProps, withRouter} from "react-router";
@@ -27,6 +27,7 @@ class Register extends Component<RegisterProps, RegisterState>{
 
     //Method that increments registration step
     setRegStep: SetRegStep = () => {
+
         this.setState((prevState) => (
             {
                 registrationStep: prevState.registrationStep + 1
@@ -34,13 +35,24 @@ class Register extends Component<RegisterProps, RegisterState>{
         ))
     }
 
+    componentDidMount(){
+        let registrationStep = localStorage.getItem("registrationStep")
+        if (registrationStep){
+            this.setState({registrationStep: +registrationStep})
+        }
+    }
+
+    componentDidUpdate(){
+        localStorage.setItem("registrationStep", this.state.registrationStep.toString())
+    }
+
     render() {
         return (
-            <div className="App">
+            <div className="App register-container">
             {
                 this.props.isAdmin
                 ?    <>
-                    <h3>Register As Compost Coordinator</h3>
+                    <h2>Register As Compost Coordinator</h2>
                     <p>
                         Create an account to get started creating amazing
                         compost with help from your community!
@@ -48,7 +60,7 @@ class Register extends Component<RegisterProps, RegisterState>{
                     </>
 
                 :   <>
-                    <h3>Register As Member</h3>
+                    <h2>Register As Member</h2>
                     <p>
                         Create an account to get compost picked-up directly
                         from your house and help making healthy soil!
@@ -98,7 +110,7 @@ class Register extends Component<RegisterProps, RegisterState>{
                             className="link-like-button"
                             onClick={() => this.props.setIsAdmin(true)}
                         >
-                            Register as Admin
+                            Register as a Compost Coordinator
                         </button>
                     </div>
                 )}

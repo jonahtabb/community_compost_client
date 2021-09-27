@@ -57,7 +57,7 @@ class ManagePickupGroups extends Component<
                 {pickupGroups.map((group: PickupGroup) => (
                     <div key={`group${group.id}`}>
                         {/* Group Header Info */}
-                        <div className="card-header-container">
+                        <div className="container card-header-container">
                             <div>
                                 <p
                                     key={`groupid${group.id}`}
@@ -89,7 +89,8 @@ class ManagePickupGroups extends Component<
                                                     <strong>{`${member.userProfile.firstName} ${member.userProfile.lastName}`}</strong> | {`${member.memberProfile.locationAddress1}`}
                                                 </p>
                                             </div>
-                                            <div className="dropdown col my-1">
+                                            <div className="col d-flex">
+                                            <div className="dropdown my-1">
                                                 <button className="dropbtn">
                                                     Change Group
                                                 </button>
@@ -130,6 +131,9 @@ class ManagePickupGroups extends Component<
                                                         )}
                                                 </div>
                                             </div>
+                                                
+                                            </div>
+                                            
                                         </div>
                                     </div>
                                 ))}

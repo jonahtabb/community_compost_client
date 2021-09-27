@@ -99,24 +99,6 @@ class MemberHome extends Component<MemberHomeProps, MemberHomeState> {
 
                 // Get own member profile data
                 const memberResponse = await getOwnMemberProfile(token);
-
-                //Get own community profile data
-                const communityResponse = await getOwnCommunityProfileForMember(
-                    token
-                );
-                const { name, description } = await communityResponse.communityProfile;
-
-                // Get own pickup group data
-                const pickupGroupResponse = await getOwnPickupGroup(token);
-                const {
-                    id: gId,
-                    name: gName,
-                    description: gDesc,
-                    public_notes: gNotes,
-                    start_time: gStart,
-                    end_time: gEnd,
-                    day: gDay} = await pickupGroupResponse.pickupGroup
-
                 const {
                     email_secondary,
                     phone_primary,
@@ -134,8 +116,12 @@ class MemberHome extends Component<MemberHomeProps, MemberHomeState> {
                     PickupGroupId,
                 } = memberResponse.memberProfile;
 
-
-
+                //Get own community profile data
+                const communityResponse = await getOwnCommunityProfileForMember(
+                    token
+                );
+                const { name, description } = await communityResponse.communityProfile;
+                
                 //Add Data to State
                 this.setState({
                     userProfile: {
@@ -163,17 +149,44 @@ class MemberHome extends Component<MemberHomeProps, MemberHomeState> {
                     communityProfile: {
                         communityName: name,
                         communityDescription: description,
-                    },
-                    pickupGroup:{
+                    }
+                });
+
+                // Get own pickup group data, if pickup group is not null
+                
+                if (!PickupGroupId) {
+                    const pickupGroupResponse = await getOwnPickupGroup(token);
+                    
+                    const {
                         id: gId,
                         name: gName,
                         description: gDesc,
-                        publicNotes: gNotes,
-                        startTime: gStart,
-                        endTime: gEnd,
-                        day: gDay,
+                        public_notes: gNotes,
+                        start_time: gStart,
+                        end_time: gEnd,
+                        day: gDay} = await pickupGroupResponse.pickupGroup
+
+                    this.setState({            
+                        pickupGroup:{
+                            id: gId,
+                            name: gName,
+                            description: gDesc,
+                            publicNotes: gNotes,
+                            startTime: gStart,
+                            endTime: gEnd,
+                            day: gDay,
                     }
-                });
+                    })
+                }
+                
+                
+
+
+
+
+
+
+
             }
         } catch (error) {
             console.log(error);

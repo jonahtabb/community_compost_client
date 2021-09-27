@@ -20,25 +20,25 @@ import {
     User,
     UserProfileOptions,
 } from "../types";
-import { dayConverterNumToString, updateOwnUserProfile } from "../helpers";
+import { camelToSentenceConverter, dayConverterNumToString, updateOwnUserProfile } from "../helpers";
 import { isThisTypeNode } from "typescript";
 import { updateOwnMemberProfile } from "../helpers/updateOwnMemberProfile";
 
 /* 
     Member Dashboard Component
     This component is a practice in dynamic mapping to display the data in JSX.  
-    The key-names of objects are used to 
+    The key-names of objects are copied and processed to display human-readable labels and to retrieve object values.
 
     Positives:
     This means that data models can be modified server-side and this component will still dynamically display the data.
-    Copying and pasting JSX is unnecessary - Saves a lot of JSX divs.
+    Copying and pasting JSX is unnecessary - Saves writing repetitive JSX divs.
 
     Draw-backs:
-    Updates data models still requires updates to type information.
-    Readability and 'code cleanliness' suffer.
+    Updates to data models still require updates to type information.
+    Readability and 'code cleanliness' suffer in some ways.
 
     Challenges and Thoughts:
-    Setting up type checks for using a string variable / binding as the dynamic name of an object key.
+    It was a challenge to set up type checks for string variables used dynamic names of an object keys.
 
     Also - if you are reading this and have an opinion or suggestion, I would love to know!  
     I am learning what makes sense, and what doesn't - your input is appreciated.
@@ -66,19 +66,12 @@ class MemberDashboard extends Component<
         };
     }
 
-    // Helper function that aids in converting object keys to human readable labels
-    camelToSentenceConverter = (keyValue: string) => {
-        let changeCase = keyValue.replace(/([A-Z\d])/g, " $1");
-        return changeCase.charAt(0).toUpperCase() + changeCase.slice(1);
-    };
-
     // Handles clicking the 'Edit Profile' Button
     handleEditClick = () => {
 
-        this.setState((prevState) => ({
-            ...prevState,
-            canEditProfile: !prevState.canEditProfile,
-        }));
+        this.setState({
+            canEditProfile: true
+        });
     };
 
     // Handles clicking the 'Save Profile' Button
@@ -90,10 +83,9 @@ class MemberDashboard extends Component<
             
         }
         
-        this.setState((prevState) => ({
-            ...prevState,
-            canEditProfile: !prevState.canEditProfile,
-        }));
+        this.setState({
+            canEditProfile: false
+        })
     }
 
     /*  Documentation source for the custom type checks.  
@@ -145,8 +137,8 @@ class MemberDashboard extends Component<
         // Create an array copy of the UserProfile so it can be mapped in JSX
         let mappableUserData = Object.entries(displayUserData)
             .map((user) => {
-                const uglyKey = typeof user[0] === "string" ? user[0] : "";
-                let prettyKey = this.camelToSentenceConverter(user[0]);
+                const uglyKey = typeof user[0] === "string" ? user[0] : ""; 
+                let prettyKey = camelToSentenceConverter(user[0])
                 // Literal indexing for values
                 let newIndex
                 switch (uglyKey) {
@@ -173,7 +165,7 @@ class MemberDashboard extends Component<
             Object.entries(filteredMemberData).map(
                 (member) => {
                     //Prettify and Format Member Profile Keys
-                    let prettyKey = this.camelToSentenceConverter(member[0]);
+                    let prettyKey = camelToSentenceConverter(member[0])
 
                     //Typegaurd for ugly key
                     const uglyKey = typeof member[0] === "string" ? member[0] : "";
@@ -226,16 +218,16 @@ class MemberDashboard extends Component<
 
                         <div className="member-profile-container">
                             {/* Map and display user data */}
-                            {this.state.canEditProfile ? (
-                                <form>
+                            {
+                                <form className= "member-edit-container">
                                     {mappableUserData.map((user, index) => {
-                                        //Define Dynamic key name to retrieve value from user state
+                                        //Define Dynamic key name to retrieve value from userProfile state
                                         let keyName = this.isUserProfileOption(user[3]) ? user[3] : "id";
 
                                         return (
                                             <div key={`userData${index}`} className="container">
                                                 <div className="row">
-                                                    <div className="col-3">
+                                                    <div className="col">
                                                         <label
                                                             htmlFor={user[3]}
                                                             className="my-3"
@@ -244,13 +236,14 @@ class MemberDashboard extends Component<
                                                             {user[0]} 
                                                         </label>
                                                     </div>
-                                                    <div className="col">
+                                                    <div className="col-sm-8">
                                                         <input
                                                             name={user[3]}
                                                             type="text"
                                                             className="my-3"
                                                             value={ this.props.userProfile[keyName] || "" }
                                                             onChange={(e) => this.updateUserFormInputState(e)}
+                                                            disabled = {!this.state.canEditProfile}
                                                         />
                                                     </div>
                                                 </div>
@@ -258,39 +251,15 @@ class MemberDashboard extends Component<
                                         );
                                     })}
                                 </form>
-                            ) : (
-                                // Show viewable Member User Data
-                                mappableUserData.map((user, index) => {
-                                    //Format User Data Key
-
-                                    return (
-                                        <div
-                                            key={`userData${index}`}
-                                            className="container"
-                                        >
-                                            <div className="row">
-                                                <div className="col-3">
-                                                    <p className="my-3" style={{fontWeight: "bold"}}>
-                                                        {user[0]}
-                                                    </p>
-                                                </div>
-                                                <div className="col">
-                                                    <p className="my-3">
-                                                        {user[1]}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    );
-                                })
-                            )}
+                            }
 
                             {/* Map and display member profile data */}
 
-                            {this.state.canEditProfile ? (
-                                //{Map and Display Editable Member Profile Data}
-                                <form>
+                            {
+                                //{Map and Display Member Profile Data}
+                                <form className= "member-edit-container">
                                     {mappableMemberData.map((member, index) => {
+                                        //Define Dynamic key name to retrieve value from memberProfile state
                                         let keyName: MemberProfileOptions = this.isMemberProfileOption(member[2]) ? member[2] : "bio";
 
                                         return (
@@ -299,7 +268,7 @@ class MemberDashboard extends Component<
                                                 className="container"
                                             >
                                                 <div className="row">
-                                                    <div className="col-3">
+                                                    <div className="col">
                                                         <label
                                                             htmlFor={member[2]}
                                                             className="my-3"
@@ -308,13 +277,14 @@ class MemberDashboard extends Component<
                                                             {member[0]}
                                                         </label>
                                                     </div>
-                                                    <div className="col">
+                                                    <div className="col-sm-8">
                                                         <input
                                                             name={member[2]}
                                                             type="text"
                                                             className="my-3"
                                                             value={this.props.memberProfile[keyName] || ""}
                                                             onChange={(e) => this.updateMemberFormInputState(e)}
+                                                            disabled={!this.state.canEditProfile}
                                                         />
                                                     </div>
                                                 </div>
@@ -322,29 +292,7 @@ class MemberDashboard extends Component<
                                         );
                                     })}
                                 </form>
-                            ) : (
-                                //{Or Map and Display Non Editable Member Profile Data}
-                                mappableMemberData.map((member, index) => (
-                                    <div
-                                        key={`memberProfile${index}`}
-                                        className="container"
-                                    >
-                                        <div className="row">
-                                            <div className="col-3">
-                                                <p
-                                                    className="my-3" style={{fontWeight: "bold"}}>
-                                                    {member[0]}
-                                                </p>
-                                            </div>
-                                            <div className="col">
-                                                <p className="my-3">
-                                                    {member[1]}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))
-                            )}
+                            }
                         </div>
                     </div>
                 </div>
