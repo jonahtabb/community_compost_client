@@ -30,6 +30,14 @@ export type RegisterUserForm ={
     password: string;
     confirmPassword: string;
     emailNotAvail: boolean;
+    emailMatch: boolean;
+    passwordMatch: boolean;
+    emailValid: boolean;
+    passwordValid: boolean;
+    emailStyle: string;
+    emailConfirmStyle: string;
+    passwordStyle: string;
+    passwordConfirmStyle: string;
 }
 
 //Types that originate in RegisterAdmin.tsx

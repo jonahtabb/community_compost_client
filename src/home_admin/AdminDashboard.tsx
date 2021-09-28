@@ -116,7 +116,7 @@ class AdminDashboard extends Component<AdminDashboardProps, AdminDashboardState>
     render(){
 
         return (
-            <div className="container">
+            <div className="container-sm px-5">
                 <h2>Admin Dashboard</h2>  
                 <div className="row">
                     <div className="col-md">

@@ -336,6 +336,19 @@ select{
   }
 }
 
+.register-valid {
+  box-shadow: hsla(81, 65%, 30%, 0.45) 0px 4px 16px;
+}
+
+.register-invalid {
+  box-shadow: rgba(136, 22, 22, 0.37) 0px 6px 16px;
+}
+
+.register-validation-text {
+  font-size: .6rem;
+  background-color: transparent;
+}
+
 .user-register{
   display: flex;
   flex-direction: column;

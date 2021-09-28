@@ -212,8 +212,8 @@ class MemberDashboard extends Component<
                         <p>Profile</p>
                         {/* Edit-Save Profile Buttons */}
                         {this.state.canEditProfile 
-                            ?   <button onClick={() => this.handleSaveClick()}>Save Profile</button>
-                            :   <button onClick={() => this.handleEditClick()}>Edit Profile</button>
+                            ?   <button onClick={() => this.handleSaveClick() } className="link-button-small">Save Profile</button>
+                            :   <button onClick={() => this.handleEditClick()} className="link-button-small">Edit Profile</button>
                         }
 
                         <div className="member-profile-container">

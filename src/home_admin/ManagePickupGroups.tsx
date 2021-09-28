@@ -50,7 +50,7 @@ class ManagePickupGroups extends Component<
         const communityMembers = [...this.props.communityMembers]
         
         return (
-            <>
+            <div className="container">
                 <h3>Manage Pickup Groups</h3>
                 {/* Sort, Map, and Display the name of each pickup group */}
                 {/* Note: this .sort() method just below only sorts by group id. An additional order field should be added for proper sorting */}
@@ -208,7 +208,7 @@ class ManagePickupGroups extends Component<
                         </div>
                     </div>
                 }
-            </>
+            </div>
         );
     }
 }

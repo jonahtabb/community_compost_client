@@ -11,6 +11,7 @@ import {
 } from "../types";
 import { APIURL } from "../helpers/environment";
 import { RouteComponentProps, withRouter } from "react-router";
+import { ETXTBSY } from "constants";
 
 type RegisterUserProps = RouteComponentProps & {
     setSessionToken: SetSessionToken;
@@ -31,6 +32,14 @@ class RegisterUser extends Component<RegisterUserProps, RegisterUserState> {
             password: "",
             confirmPassword: "",
             emailNotAvail: false,
+            emailMatch: true,
+            passwordMatch: true,
+            emailValid: false,
+            passwordValid: false,
+            emailStyle: '',
+            emailConfirmStyle: '',
+            passwordStyle: '',
+            passwordConfirmStyle:'',
         };
     }
 
@@ -41,6 +50,53 @@ class RegisterUser extends Component<RegisterUserProps, RegisterUserState> {
             ...prevState,
             [stateName]: stateValue,
         }));
+    }
+
+    handleEmail(e: React.ChangeEvent<HTMLInputElement>) {
+        const elementId = e.target.id
+        const emailInput = document.getElementById(elementId) as HTMLInputElement
+        if (emailInput) {
+            const isEmailValid = emailInput.checkValidity()
+            const isEmailMatch = this.state.confirmEmail === e.target.value
+            this.setState({
+                emailValid: isEmailValid,
+                emailStyle: isEmailValid ? "register-valid" : "register-invalid",
+                emailConfirmStyle: isEmailMatch ? "register-valid" : "register-invalid"
+            })
+        }
+    }
+
+    handleConfirmEmail(e: React.ChangeEvent<HTMLInputElement>) {
+        console.log(e.target.value)
+            const isEmailMatch = e.target.value === this.state.email
+            this.setState({
+                emailMatch: isEmailMatch,
+                emailConfirmStyle: isEmailMatch ? "register-valid" : "register-invalid"
+            })
+    }
+
+    handlePassword(e: React.ChangeEvent<HTMLInputElement>) {
+        const elementId = e.target.id
+        const passwordInput = document.getElementById(elementId) as HTMLInputElement
+        if (passwordInput) {
+            const isPasswordValid = passwordInput.checkValidity()
+            const isPasswordMatch = this.state.confirmPassword === e.target.value
+            this.setState({
+                passwordValid: isPasswordValid,
+                passwordStyle: isPasswordValid ? "register-valid" : "register-invalid",
+                passwordConfirmStyle: isPasswordMatch ? "register-valid" : "register-invalid"
+            })
+
+        }
+    }
+
+    handleConfirmPassword(e: React.ChangeEvent<HTMLInputElement>) {
+            const isPasswordMatch = e.target.value === this.state.password
+            this.setState({
+                passwordMatch: isPasswordMatch,
+                passwordConfirmStyle: isPasswordMatch ? "register-valid" : "register-invalid"
+            })
+
     }
 
     handleFormSubmit = async (
@@ -89,6 +145,7 @@ class RegisterUser extends Component<RegisterUserProps, RegisterUserState> {
         }
     };
 
+
     render() {
         return (
             <div className="container-sm">
@@ -108,7 +165,7 @@ class RegisterUser extends Component<RegisterUserProps, RegisterUserState> {
                             <></>
                         )}
                         <input
-                            className="register-input"
+                            
                             type=""
                             placeholder="First Name"
                             id="firstName"
@@ -117,7 +174,7 @@ class RegisterUser extends Component<RegisterUserProps, RegisterUserState> {
                             onChange={(e) => this.updateInputState(e)}
                         />
                         <input
-                            className="register-input"
+                            
                             type=""
                             placeholder="Last Name"
                             id="lastName"
@@ -125,42 +182,53 @@ class RegisterUser extends Component<RegisterUserProps, RegisterUserState> {
                             value={this.state.lastName}
                             onChange={(e) => this.updateInputState(e)}
                         />
-
+ 
                         <input
-                            className="register-input"
+                            required
+                            className={this.state.emailStyle}
                             type="email"
+                            pattern='^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}'
+                            title="Please input a valid email address"
                             placeholder="Email"
                             id="email"
                             name="email"
                             value={this.state.email}
-                            onChange={(e) => this.updateInputState(e)}
+                            onChange={(e) => {this.updateInputState(e); this.handleEmail(e)}}
                         />
                         <input
-                            className="register-input"
-                            type=""
+                            required
+                            className={this.state.emailConfirmStyle}
+                            type="email"
+                            title="Please input a valid email address"
                             placeholder="Confirm Email"
                             id="confirmEmail"
                             name="confirmEmail"
                             value={this.state.confirmEmail}
-                            onChange={(e) => this.updateInputState(e)}
+                            onChange={(e) => {this.updateInputState(e); this.handleConfirmEmail(e)}}
                         />
                         <input
-                            className="register-input"
-                            type=""
+                            className={this.state.passwordStyle}
+                            required
+                            pattern={'^(?=.{5,10})(?=.*[a-z])(?=.*[A-Z]).*$'}
+                            title="Password must be at least 5 characters, contain at least 1 uppercase character, a lowercase character, and a number"
+                            type="password"
                             placeholder="Password"
                             id="password"
                             name="password"
+                            minLength={5}
+                            maxLength={10}
                             value={this.state.password}
-                            onChange={(e) => this.updateInputState(e)}
+                            onChange={(e) => {this.updateInputState(e); this.handlePassword(e)}}
                         />
+                        <label htmlFor="password" className="register-validation-text">Password must be at least 5 characters, contain at least 1 uppercase character, a lowercase character, and a number</label>
                         <input
-                            className="register-input"
-                            type=""
+                            className={this.state.passwordConfirmStyle}
+                            type="password"
                             placeholder="Confirm Password"
                             id="confirmPassword"
                             name="confirmPassword"
                             value={this.state.confirmPassword}
-                            onChange={(e) => this.updateInputState(e)}
+                            onChange={(e) => {this.updateInputState(e); this.handleConfirmPassword(e)}}
                         />
                         <button className="" type="submit">
                             Continue

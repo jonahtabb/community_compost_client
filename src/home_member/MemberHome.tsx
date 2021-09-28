@@ -201,7 +201,6 @@ class MemberHome extends Component<MemberHomeProps, MemberHomeState> {
         return (
             <>
                 <h2>Member Home</h2>
-                <button onClick={()=>console.info(this.state)}>Member Home State</button>
                 <Switch>
                     <Redirect to={`${this.props.match.path}/dashboard`} />
                     <Route exact path={`${this.props.match.path}/dashboard`}>

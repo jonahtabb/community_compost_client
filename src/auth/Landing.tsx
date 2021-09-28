@@ -57,11 +57,11 @@ class Landing extends Component<LandingProps, LandingState> {
                         </div>
 
                         <div className="col d-flex flex-column justify-content-end">
-                            <img src={woman_carrying_apple}alt=""className="landing-image"  />
+                            <img src={woman_carrying_pepper}alt="" className="landing-image" />
                         </div>
 
                         <div className="col d-flex flex-column justify-content-end">
-                            <img src={woman_carrying_pepper}alt="" className="landing-image" />
+                            <img src={woman_carrying_apple}alt=""className="landing-image"  />
                         </div>
 
                         <div className="col d-flex flex-column justify-content-end">
