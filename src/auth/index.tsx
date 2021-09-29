@@ -1,15 +1,15 @@
 import Auth from './Auth'
+import Landing from './Landing'
+import Login from './Login'
 import Register from './Register'
 import RegisterAdmin from './RegisterAdmin'
-import RegisterUser from './RegisterUser'
 import RegisterMember from './RegisterMember'
-import Login from './Login'
-import Landing from './Landing'
+import RegisterUser from './RegisterUser'
 
 export {
     Auth,
     Register,
-    RegisterUser ,
+    RegisterUser,
     RegisterAdmin,
     RegisterMember,
     Login,

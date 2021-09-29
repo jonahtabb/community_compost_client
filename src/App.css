@@ -336,6 +336,19 @@ select{
   }
 }
 
+.register-valid {
+  box-shadow: hsla(81, 65%, 30%, 0.45) 0px 4px 16px;
+}
+
+.register-invalid {
+  box-shadow: rgba(136, 22, 22, 0.37) 0px 6px 16px;
+}
+
+.register-validation-text {
+  font-size: .6rem;
+  background-color: transparent;
+}
+
 .user-register{
   display: flex;
   flex-direction: column;
@@ -501,7 +514,7 @@ select{
   text-decoration-thickness: 0;
 }
 
-
+/* Modal Standards for Member Details Button */
 .modal {
   background-color: transparent;
 }
@@ -526,7 +539,26 @@ select{
   transform: scale(1.05)
 }
 
+/* Modal Mods for Add New Pickup Group */
 
+.add-group-modal-form {
+  display: block
+}
+
+.add-group-modal-form label {
+  display: block;
+}
+
+.add-group-modal-form input {
+  display: block;
+}
+.add-group-modal-form button {
+  display: block;
+  font-size: 1rem;
+  width: auto;
+  height: auto;
+  border-radius: 10px;
+}
 
 /* Pickup Groups Component */
 

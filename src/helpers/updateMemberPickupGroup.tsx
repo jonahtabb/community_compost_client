@@ -18,7 +18,6 @@ export async function updateMemberPickupGroup (token: string, userId: number, gr
         })
         return await res.json()
     } catch (error) {
-        console.info(error)
         return await error
     }
 }

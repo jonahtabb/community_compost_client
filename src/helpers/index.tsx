@@ -1,3 +1,4 @@
+import { addNewPickupGroup } from "./addNewPickupGroup"
 import { camelToSentenceConverter } from "./camelToSentenceConverter";
 import { dayConverterNumToString, dayConverterStringToNum } from "./dayConverters";
 import { getAllCommunityMembers } from "./getAllCommunityMembers";
@@ -14,6 +15,7 @@ import { updateOwnUserProfile } from "./updateOwnUserProfile";
 import { APIURL, CLIENTURL } from "./environment";
 
 export {
+    addNewPickupGroup,
     camelToSentenceConverter,
     dayConverterNumToString,
     dayConverterStringToNum,

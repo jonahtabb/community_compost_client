@@ -1,5 +1,5 @@
 import { APIURL } from ".";
-import { MemberProfile, User } from "../types";
+import { User } from "../types";
 
 export async function updateOwnUserProfile(
     token: string,

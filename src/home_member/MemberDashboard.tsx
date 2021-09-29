@@ -1,33 +1,23 @@
 import { Component } from "react";
 import {
-    BrowserRouter as Switch,
-    Route,
-    Redirect,
-    withRouter,
-    RouteComponentProps,
-    Link,
+    RouteComponentProps, withRouter
 } from "react-router-dom";
+import { Weather } from ".";
+import { camelToSentenceConverter, dayConverterNumToString, updateOwnUserProfile } from "../helpers";
+import { updateOwnMemberProfile } from "../helpers/updateOwnMemberProfile";
 import {
-    CommunityMembers,
-    CommunityProfile,
-    MemberFullInfo,
-    MemberProfile,
+    CommunityProfile, MemberProfile,
     MemberProfileOptions,
-    PickupGroup,
-    PickupGroups,
-    SetMemberProfile,
+    PickupGroup, SetMemberProfile,
     SetUserProfile,
     User,
-    UserProfileOptions,
+    UserProfileOptions
 } from "../types";
-import { camelToSentenceConverter, dayConverterNumToString, updateOwnUserProfile } from "../helpers";
-import { isThisTypeNode } from "typescript";
-import { updateOwnMemberProfile } from "../helpers/updateOwnMemberProfile";
 
 /* 
     Member Dashboard Component
     This component is a practice in dynamic mapping to display the data in JSX.  
-    The key-names of objects are copied and processed to display human-readable labels and to retrieve object values.
+    The key-names of objects are copied and processed to display human-readable labels.
 
     Positives:
     This means that data models can be modified server-side and this component will still dynamically display the data.
@@ -36,6 +26,7 @@ import { updateOwnMemberProfile } from "../helpers/updateOwnMemberProfile";
     Draw-backs:
     Updates to data models still require updates to type information.
     Readability and 'code cleanliness' suffer in some ways.
+    I am unsure if this would have performance issues for large amounts of data
 
     Challenges and Thoughts:
     It was a challenge to set up type checks for string variables used dynamic names of an object keys.
@@ -128,18 +119,24 @@ class MemberDashboard extends Component<
         }
     };
 
-    render() {
-
-        //Pre-process UserData Object for Display
-
+    //Pre-process UserData Object for Display
+    makeUserDataReady = (userProfile: User): any[][] => {
         // Copy the UserProfile object, removing values we don't want to display
-        const { id, ...displayUserData } = this.props.userProfile;
+        const { id, ...displayUserData } = userProfile;
         // Create an array copy of the UserProfile so it can be mapped in JSX
         let mappableUserData = Object.entries(displayUserData)
-            .map((user) => {
+            .map((user, index) => {
+                //Store the original index for future reference if necessary
+                const originalIndex = index
+
+                //Store the value
+                const value = user[1]
+
+                //Store and typegaurd the ugly key (original key)
                 const uglyKey = typeof user[0] === "string" ? user[0] : ""; 
                 let prettyKey = camelToSentenceConverter(user[0])
-                // Literal indexing for values
+                
+                //Custom sort display order by literal indexing
                 let newIndex
                 switch (uglyKey) {
                     case "firstName":
@@ -151,24 +148,33 @@ class MemberDashboard extends Component<
                     default:
                         newIndex = 2
                 }
-                return [prettyKey, user[1], newIndex, uglyKey];
+                return [originalIndex, newIndex, uglyKey, prettyKey, value ];
             })
             //Sort based on the newIndex
-            .sort((a, b) => a[2] - b[2]);
+            .sort((a, b) => a[1] - b[1]);
+        
+            return mappableUserData
+    }
 
-        //Pre-process MemberProfile Data for Display
-
+    //Pre-process MemberProfile Data for Display
+    makeMemberDataReady = (memberProfile: MemberProfile): any[][] => {
         // Copy the MemberProfile object, removing values we don't want to display
-        let {pickupGroupId, ...filteredMemberData} = this.props.memberProfile
+        let {pickupGroupId, ...filteredMemberData} = memberProfile
         // Create an array copy of the UserProfile so it can be mapped in JSX
         let mappableMemberData = 
             Object.entries(filteredMemberData).map(
-                (member) => {
+                (member, index) => {
+                    const originalIndex = index
+                    const value = member[1]
+                    const uglyKey = typeof member[0] === "string" ? member[0] : "";
+
+                    //New Index Can be used with a switch to re-sort display order. 
+                    //Currently we are not doing any custom sorting for the MemberProfile Data
+                    let newIndex
+                    newIndex = index
+
                     //Prettify and Format Member Profile Keys
                     let prettyKey = camelToSentenceConverter(member[0])
-
-                    //Typegaurd for ugly key
-                    const uglyKey = typeof member[0] === "string" ? member[0] : "";
 
                     //Custom formats and exceptions for Key display
                     if (uglyKey === "locationName") {
@@ -177,71 +183,88 @@ class MemberDashboard extends Component<
                         prettyKey = prettyKey.split(" ").slice(1, 3).join(" ")
                     }
 
-                    return [prettyKey, member[1], uglyKey];
+                    return [originalIndex, newIndex, uglyKey, prettyKey, value];
                 }
             )
+        
+        return mappableMemberData
+    }
+
+    render() {
 
         return (
             <div className="member-dash-container">
+                
                 <h2>Member Dashboard</h2>
+
+                {/* Overview Card */}
                 <div className="member-dash-card">
                     <h3>Welcome {this.props.userProfile.firstName}!</h3>
                     <div className="member-dash-card-section">
                         <div className="row">
-                            <div className="col">
+                            <div className="col-sm">
                                 <p><strong>Your Community:</strong></p>
                                 <p>{this.props.communityProfile.communityName}</p>
                                 <p>{this.props.communityProfile.communityDescription}</p>
                             </div>
                             <div className="col">
                                 <p><strong>Your Pickup Group:</strong></p>
-                                <p>{this.props.pickupGroup.name || "None Assigned"}</p>
-                                <p>
-                                    Pickups are on{" "}
-                                    {dayConverterNumToString(this.props.pickupGroup.day)}{" "}
-                                    from{" "}{this.props.pickupGroup.startTime}{" "}to{" "}
-                                    {this.props.pickupGroup.endTime}
-                                </p>
+                                {
+                                    this.props.pickupGroup.name ?
+                                        <>
+                                            <p>{this.props.pickupGroup.name}</p>
+                                            <p>
+                                                Pickups are on{" "}
+                                                {dayConverterNumToString(this.props.pickupGroup.day)}{" "}
+                                                from{" "}{this.props.pickupGroup.startTime}{" "}to{" "}
+                                                {this.props.pickupGroup.endTime}
+                                            </p>
+                                        </>
+
+                                    : <p>Your Coordinator must assign you a pickup group.</p> 
+                                }
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>  
 
+                {/* Garden Tip Card */}
+                <Weather />
                 <div className="member-dash-card">
                     <div className="member-dash-card-section">
                         <p>Profile</p>
                         {/* Edit-Save Profile Buttons */}
                         {this.state.canEditProfile 
-                            ?   <button onClick={() => this.handleSaveClick()}>Save Profile</button>
-                            :   <button onClick={() => this.handleEditClick()}>Edit Profile</button>
+                            ?   <button onClick={() => this.handleSaveClick() } className="link-button-small">Save Profile</button>
+                            :   <button onClick={() => this.handleEditClick()} className="link-button-small">Edit Profile</button>
                         }
 
                         <div className="member-profile-container">
                             {/* Map and display user data */}
                             {
                                 <form className= "member-edit-container">
-                                    {mappableUserData.map((user, index) => {
-                                        //Define Dynamic key name to retrieve value from userProfile state
-                                        let keyName = this.isUserProfileOption(user[3]) ? user[3] : "id";
-
+                                    {this.makeUserDataReady(this.props.userProfile).map((user) => {
+                                        
+                                        const [originalIndex, newIndex, uglyKey, prettyKey, value] = user
+                                                 
                                         return (
-                                            <div key={`userData${index}`} className="container">
+                                            <div key={`userData${newIndex}`} className="container">
                                                 <div className="row">
                                                     <div className="col">
                                                         <label
-                                                            htmlFor={user[3]}
+                                                            htmlFor={uglyKey}
                                                             className="my-3"
                                                             style={{fontWeight: "bold"}}
                                                         >
-                                                            {user[0]} 
+                                                            {prettyKey} 
                                                         </label>
                                                     </div>
                                                     <div className="col-sm-8">
                                                         <input
-                                                            name={user[3]}
+                                                            name={uglyKey}
                                                             type="text"
                                                             className="my-3"
-                                                            value={ this.props.userProfile[keyName] || "" }
+                                                            value={ value }
                                                             onChange={(e) => this.updateUserFormInputState(e)}
                                                             disabled = {!this.state.canEditProfile}
                                                         />
@@ -258,31 +281,31 @@ class MemberDashboard extends Component<
                             {
                                 //{Map and Display Member Profile Data}
                                 <form className= "member-edit-container">
-                                    {mappableMemberData.map((member, index) => {
-                                        //Define Dynamic key name to retrieve value from memberProfile state
-                                        let keyName: MemberProfileOptions = this.isMemberProfileOption(member[2]) ? member[2] : "bio";
+                                    {this.makeMemberDataReady(this.props.memberProfile).map((member) => {
+                                       
+                                        const [originalIndex, newIndex, uglyKey, prettyKey, value] = member
 
                                         return (
                                             <div
-                                                key={`memberProfile${index}`}
+                                                key={`memberProfile${newIndex}`}
                                                 className="container"
                                             >
                                                 <div className="row">
                                                     <div className="col">
                                                         <label
-                                                            htmlFor={member[2]}
+                                                            htmlFor={uglyKey}
                                                             className="my-3"
                                                             style={{fontWeight:"bold"}}
                                                         >
-                                                            {member[0]}
+                                                            {prettyKey}
                                                         </label>
                                                     </div>
                                                     <div className="col-sm-8">
                                                         <input
-                                                            name={member[2]}
+                                                            name={uglyKey}
                                                             type="text"
                                                             className="my-3"
-                                                            value={this.props.memberProfile[keyName] || ""}
+                                                            value={value}
                                                             onChange={(e) => this.updateMemberFormInputState(e)}
                                                             disabled={!this.state.canEditProfile}
                                                         />
