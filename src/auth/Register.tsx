@@ -1,8 +1,8 @@
 
 import { Component } from "react";
-import { SetSessionToken, IsAdmin, SetIsAdmin, User, SetUser, SetRegStep, SetRegComplete} from "../types";
-import {RouteComponentProps, withRouter} from "react-router";
-import {RegisterUser, RegisterAdmin, RegisterMember} from "./"
+import { RouteComponentProps, withRouter } from "react-router";
+import { IsAdmin, SetIsAdmin, SetRegComplete, SetRegStep, SetSessionToken, SetUser, User } from "../types";
+import { RegisterAdmin, RegisterMember, RegisterUser } from "./";
 
 type RegisterProps =
     RouteComponentProps &

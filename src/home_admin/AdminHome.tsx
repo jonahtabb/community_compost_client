@@ -1,8 +1,8 @@
 import { Component } from "react";
-import { BrowserRouter as Switch, Route, Redirect, withRouter, RouteComponentProps, Link} from "react-router-dom";
-import { getOwnAdminProfile, getOwnCommunityProfile, getOwnUserData, getAllCommunityMembers, getAllPickupGroups, updateMemberPickupGroup } from '../helpers';
-import {AdminProfile, CommunityProfile, User, MemberProfile, CommunityMembers, PickupGroups, MemberFullInfo, SetMemberGroup} from '../types'
+import { BrowserRouter as Switch, Redirect, Route, RouteComponentProps, withRouter } from "react-router-dom";
 import { AdminDashboard } from '.';
+import { getAllCommunityMembers, getAllPickupGroups, getOwnAdminProfile, getOwnCommunityProfile, getOwnUserData, updateMemberPickupGroup } from '../helpers';
+import { AdminProfile, CommunityMembers, CommunityProfile, PickupGroups, SetMemberGroup, SetPickupGroups, User } from '../types';
 import ManagePickupGroups from './ManagePickupGroups';
 
 type AdminHomeProps = {} & RouteComponentProps
@@ -35,6 +35,16 @@ class AdminHome extends Component<AdminHomeProps, AdminHomeState>{
             },
             communityMembers: [],
             pickupGroups: []
+        }
+    }
+
+    setPickupGroups: SetPickupGroups = (newPickupGroup) => {
+
+        if (newPickupGroup) {
+            this.setState((prevState) => ({
+                ...prevState,
+                pickupGroups: [...prevState.pickupGroups, newPickupGroup]
+            }))
         }
     }
 
@@ -77,7 +87,6 @@ class AdminHome extends Component<AdminHomeProps, AdminHomeState>{
 
     async componentDidMount(){
         const token = localStorage.getItem("token")
-        const isAdmin = localStorage.getItem("isAdmin")
         if (token) {
             //Get own user data
             const userResponse = await getOwnUserData(token)
@@ -174,6 +183,7 @@ class AdminHome extends Component<AdminHomeProps, AdminHomeState>{
                     <Route exact path ={`${this.props.match.path}/groups`}>
                         <ManagePickupGroups 
                             pickupGroups = {this.state.pickupGroups}
+                            setPickupGroups = {this.setPickupGroups}
                             communityMembers = {this.state.communityMembers}
                             setMemberGroup = {this.setMemberGroup}
                         />

@@ -4,4 +4,4 @@ import Logout from "./Logout";
 export {
     Header,
     Logout
-}
+};

@@ -1,7 +1,9 @@
-import "../App.css";
 import { Component } from "react";
-import { BrowserRouter as Switch, Route, Link } from "react-router-dom";
 import { RouteComponentProps, withRouter } from "react-router";
+import { Route } from "react-router-dom";
+import { Landing, Login, Register } from ".";
+import "../App.css";
+import { getOwnUserData } from "../helpers";
 import {
     IsAdmin,
     SessionToken,
@@ -9,10 +11,8 @@ import {
     SetRegComplete,
     SetSessionToken,
     SetUser,
-    User,
+    User
 } from "../types";
-import { Register, Login, Landing } from ".";
-import { getOwnUserData } from "../helpers";
 
 type AuthProps = 
     RouteComponentProps &
@@ -52,17 +52,18 @@ class Auth extends Component<AuthProps, AuthState> {
     //This fetches user data if a person completed the user registration, but did not complete the second page of registration.
     componentDidMount(){
         const token = localStorage.getItem("token")
-        if (token) {
+        const isAdmin = !!(localStorage.getItem("isAdmin"))
+        if (token && !isAdmin) {
             this.getUserData(token)
         }
     }
 
-    componentWillUnmount() {
-        console.info("AUTH HAS UNMOUNTED!");
-    }
+    // componentWillUnmount() {
+    //     console.info("AUTH HAS UNMOUNTED!");
+    // }
 
     render() {
-        console.info(`${this.props.match.path}/register`)
+
         return (
             <>
                 

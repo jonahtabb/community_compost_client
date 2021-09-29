@@ -514,7 +514,7 @@ select{
   text-decoration-thickness: 0;
 }
 
-
+/* Modal Standards for Member Details Button */
 .modal {
   background-color: transparent;
 }
@@ -539,7 +539,26 @@ select{
   transform: scale(1.05)
 }
 
+/* Modal Mods for Add New Pickup Group */
 
+.add-group-modal-form {
+  display: block
+}
+
+.add-group-modal-form label {
+  display: block;
+}
+
+.add-group-modal-form input {
+  display: block;
+}
+.add-group-modal-form button {
+  display: block;
+  font-size: 1rem;
+  width: auto;
+  height: auto;
+  border-radius: 10px;
+}
 
 /* Pickup Groups Component */
 

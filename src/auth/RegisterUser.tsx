@@ -1,17 +1,9 @@
-import "../App.css";
 import React, { Component } from "react";
-import {
-    SetSessionToken,
-    RegisterUserForm,
-    IsAdmin,
-    SetIsAdmin,
-    User,
-    SetUser,
-    SetRegStep,
-} from "../types";
-import { APIURL } from "../helpers/environment";
 import { RouteComponentProps, withRouter } from "react-router";
-import { ETXTBSY } from "constants";
+import { APIURL } from "../helpers/environment";
+import {
+    IsAdmin, RegisterUserForm, SetIsAdmin, SetRegStep, SetSessionToken, SetUser, User
+} from "../types";
 
 type RegisterUserProps = RouteComponentProps & {
     setSessionToken: SetSessionToken;

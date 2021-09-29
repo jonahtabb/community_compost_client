@@ -109,6 +109,8 @@ export type PickupGroup = {
 
 export type PickupGroups = PickupGroup[]
 
+export type SetPickupGroups = (newPickupGroup: PickupGroup) => void
+
 export type SetMemberGroup = (userId: number | null, groupId: number | null) => void
 
 //Types that originate in Member Home
@@ -116,8 +118,6 @@ export type SetMemberGroup = (userId: number | null, groupId: number | null) => 
 export type SetMemberProfile = (keyName: MemberProfileOptions, value: string | number)  => void
 
 export type SetUserProfile = (keyName: UserProfileOptions, value: string | number ) => void
-
-//These are used for dynamic mapping in the MemberDashboard
 
 export type MemberProfileOptions = 
     "secondaryEmail" |
@@ -140,3 +140,13 @@ export type UserProfileOptions =
         "email" |
         "firstName" |
         "lastName";
+
+// Types that originate from Manage Pickup Groups
+export type NewPickupGroup = {
+    name: string; 
+    description: string;
+    publicNotes: string;
+    startTime: string;
+    endTime: string;
+    day: number;
+}

@@ -1,7 +1,6 @@
-import '../App.css';
 import React, { Component } from "react";
-import { SetRegStep, User, SetRegComplete, MemberProfile, chooseCommunity} from "../types";
-import {APIURL} from "../helpers/environment";
+import { APIURL } from "../helpers/environment";
+import { chooseCommunity, MemberProfile, SetRegComplete, SetRegStep, User } from "../types";
 
 type RegisterMemberProps = {
     user: User,

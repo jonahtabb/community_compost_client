@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { BrowserRouter as Switch, Route, Redirect, withRouter, RouteComponentProps, Link } from "react-router-dom";
-import { CommunityMembers, CommunityProfile,  MemberFullInfo,  PickupGroup, PickupGroups } from '../types';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Link, RouteComponentProps, withRouter } from "react-router-dom";
+import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { camelToSentenceConverter, dayConverterNumToString } from '../helpers';
-import green_arrow from '../assets/green_arrow.svg'
+import { CommunityMembers, CommunityProfile, MemberFullInfo, PickupGroup, PickupGroups } from '../types';
 
 
 type AdminDashboardProps =
@@ -109,6 +108,7 @@ class AdminDashboard extends Component<AdminDashboardProps, AdminDashboardState>
         let userId = +(event.currentTarget.getAttribute("user-id") ?? 0)
         this.populateModal(userId)
         this.toggleModal()
+        console.warn("The errors are from the react-strap dependency -- awaiting dependency update")
     }
 
 
@@ -206,7 +206,7 @@ class AdminDashboard extends Component<AdminDashboardProps, AdminDashboardState>
                                 const userProfileKeys = Object.keys(this.state.selectedMember.userProfile)
                                 const prettyKey = camelToSentenceConverter(userProfileKeys[index])
                                 return (
-                                    <p><strong>{prettyKey}:</strong> {value}</p>
+                                    <p key={`userData${index}`}><strong>{prettyKey}:</strong> {value}</p>
                                 )
                             })
                         }
@@ -216,7 +216,7 @@ class AdminDashboard extends Component<AdminDashboardProps, AdminDashboardState>
                                 const memberProfileKeys = Object.keys(this.state.selectedMember.memberProfile)
                                 const prettyKey = camelToSentenceConverter(memberProfileKeys[index])
                                 return (
-                                    <p><strong>{prettyKey}:</strong> {value}</p>
+                                    <p key={`memberData${index}`}><strong>{prettyKey}:</strong> {value}</p>
                                 )
                             })
                         }

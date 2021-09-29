@@ -1,10 +1,9 @@
-import '../App.css';
 import { Component } from "react";
-import { BrowserRouter as Switch, Route, Redirect, withRouter, RouteComponentProps, Link } from "react-router-dom";
-import { AdminHome } from '../home_admin'
-import { IsAdmin } from '../types';
-import { Header } from '../common';
+import { BrowserRouter as Switch, Redirect, Route, RouteComponentProps, withRouter } from "react-router-dom";
+import '../App.css';
+import { AdminHome } from '../home_admin';
 import { MemberHome } from '../home_member';
+import { IsAdmin } from '../types';
 
 
 type HomeProps = 

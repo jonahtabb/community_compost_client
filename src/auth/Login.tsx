@@ -1,8 +1,8 @@
-import '../App.css';
 import React, { Component } from "react";
-import { SetSessionToken, IsAdmin, SetIsAdmin, User, SetUser, LoginUser, SetRegComplete} from "../types";
-import {APIURL} from "../helpers/environment";
-import {RouteComponentProps, withRouter} from "react-router";
+import { RouteComponentProps, withRouter } from "react-router";
+import '../App.css';
+import { APIURL } from "../helpers/environment";
+import { IsAdmin, LoginUser, SetIsAdmin, SetRegComplete, SetSessionToken, SetUser, User } from "../types";
 
 type LoginProps = 
     RouteComponentProps &
@@ -53,7 +53,7 @@ class Login extends Component<LoginProps, LoginState>{
                 })
             })
             let json = await res.json()
-            console.log(json)
+
             //Get Name from json response
             const {first_name, last_name, is_admin, registration_complete} = await json.user
 

@@ -1,18 +1,17 @@
 import { Component } from "react";
 import {
-    BrowserRouter as Switch,
-    Route,
-    Redirect,
-    withRouter,
-    RouteComponentProps,
-    Link,
+    RouteComponentProps, withRouter
 } from "react-router-dom";
+import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import { addNewPickupGroup } from "../helpers";
 import {
     CommunityMembers,
     MemberFullInfo,
+    NewPickupGroup,
     PickupGroup,
     PickupGroups,
     SetMemberGroup,
+    SetPickupGroups
 } from "../types";
 
 /*  Welcome to the Manage Pickup Groups Component!
@@ -20,13 +19,13 @@ import {
     One of my goals for this project has been to experiment with different levels of display my mapping.
     This has been useful for me to access the practicality, readability displaying the data using different approaches.
 
-*/
+*/ 
 
 type ManagePickupGroupsProps = RouteComponentProps & {
     pickupGroups: PickupGroups;
-} & { communityMembers: CommunityMembers } & { setMemberGroup: SetMemberGroup };
+} & {setPickupGroups: SetPickupGroups} & { communityMembers: CommunityMembers } & { setMemberGroup: SetMemberGroup };
 
-type ManagePickupGroupsState = { dropdownOpen: boolean };
+type ManagePickupGroupsState = { dropdownOpen: boolean, modal:boolean } & {newPickupGroup: NewPickupGroup};
 
 class ManagePickupGroups extends Component<
     ManagePickupGroupsProps,
@@ -36,7 +35,69 @@ class ManagePickupGroups extends Component<
         super(props);
         this.state = {
             dropdownOpen: false,
+            modal: false,
+            newPickupGroup: {
+                name: '',
+                description: '',
+                publicNotes: '',
+                startTime: '',
+                endTime: '',
+                day: 1
+            }
         };
+    }
+
+    toggleModal = () => {
+        this.setState((prevState) => ({
+            ...prevState,
+            modal: !prevState.modal
+        }))
+    }
+ 
+    handleAddNewGroup = async (e: React.FormEvent<HTMLFormElement>): Promise<any> => {
+        e.preventDefault(); 
+        const token: string = localStorage.getItem("token") || ''
+        const newPickupGroup: NewPickupGroup = this.state.newPickupGroup;
+        if (token && newPickupGroup){
+            const res = await addNewPickupGroup(token, newPickupGroup)
+            const addedPickupGroup = await res.newPickupGroup
+            this.props.setPickupGroups(addedPickupGroup)
+            this.setState((prevState) => ({
+                ...prevState,
+                modal: false,
+                newPickupGroup: {
+                    name: '',
+                    description: '',
+                    publicNotes: '',
+                    startTime: '',
+                    endTime: '',
+                    day: 1
+                }
+            }))
+        }
+    }
+
+    handleNewGroupOnChange(e: React.ChangeEvent<HTMLInputElement>): void {
+        let stateName: string = e.target.name;
+        let stateValue: string = e.target.value;
+        this.setState((prevState) => ({
+            ...prevState,
+            newPickupGroup:{
+                ...prevState.newPickupGroup,
+                [stateName]: stateValue
+            }
+        }));
+    }
+
+    handleNewGroupSelectDay(e:React.ChangeEvent<HTMLSelectElement>):void {
+        const dayNum = +(e.target.value)
+        this.setState((prevState) => ({
+            ...prevState,
+            newPickupGroup:{
+                ...prevState.newPickupGroup,
+                day: dayNum
+            }
+        }))
     }
 
     render() {
@@ -50,8 +111,32 @@ class ManagePickupGroups extends Component<
         const communityMembers = [...this.props.communityMembers]
         
         return (
-            <div className="container">
+            <div className="container" style={{paddingBottom:'100px'}}>
                 <h3>Manage Pickup Groups</h3>
+                <div className="row d-flex justify-content-between">
+                    <div className="col">
+                        <button className="link-button-small my-4" onClick={this.toggleModal}>Add New Group</button>
+                    </div>
+                    <div className="col">
+                        {/* These buttons don't work quite right */}
+                        {/* <Link
+                            to={`${this.props.match.url}auth/register`}
+                            className="link-button-small"
+                        >
+                            Back To Dashboard
+                        </Link> */}
+
+                        {/* <button
+                            onClick={() => {}}
+                            className="link-button-small my-4"
+                            type="button"
+                        >
+                            Back to Dashboard 
+                        </button> */}
+                    </div>
+                </div>
+                
+
                 {/* Sort, Map, and Display the name of each pickup group */}
                 {/* Note: this .sort() method just below only sorts by group id. An additional order field should be added for proper sorting */}
                 {pickupGroups.map((group: PickupGroup) => (
@@ -208,6 +293,72 @@ class ManagePickupGroups extends Component<
                         </div>
                     </div>
                 }
+                    {/* Add New Group */}
+                    
+                    <Modal isOpen={this.state.modal} toggle={this.toggleModal} scrollable={true}>
+                    <ModalHeader toggle={this.toggleModal}><h3>Add New Pickup Group</h3></ModalHeader>
+                    <ModalBody>
+                        <form className= "container add-group-modal-form" action="submit" onSubmit={(e) => {this.handleAddNewGroup(e)}}> 
+                            <label htmlFor="name" >Group Name</label>
+                            <input 
+                                name="name"
+                                type="text" 
+                                value={this.state.newPickupGroup.name} 
+                                onChange={e => {this.handleNewGroupOnChange(e)}} 
+                            />
+                            <label htmlFor="description">Description</label>
+                            <input 
+                                name="description"
+                                type="text" 
+                                value={this.state.newPickupGroup.description} 
+                                onChange={e => {this.handleNewGroupOnChange(e)}} 
+                            />
+                            <label htmlFor="publicNotes">Notes</label>
+                            <input 
+                                name="publicNotes"
+                                type="text" 
+                                value={this.state.newPickupGroup.publicNotes} 
+                                onChange={e => {this.handleNewGroupOnChange(e)}} 
+                            />
+                            <label htmlFor="startTime">Pickup Start Time</label>
+                            <input 
+                                name="startTime"
+                                type="text" 
+                                value={this.state.newPickupGroup.startTime} 
+                                onChange={e => {this.handleNewGroupOnChange(e)}} 
+                            />
+                            <label htmlFor="endTime">Pickup End Time</label>
+                            <input 
+                                name="endTime"
+                                type="text" 
+                                value={this.state.newPickupGroup.endTime} 
+                                onChange={e => {this.handleNewGroupOnChange(e)}} 
+                            />
+                            <label htmlFor="day">Pickup Day</label>
+                            <select
+                                name="day"
+                                onChange={e => {this.handleNewGroupSelectDay(e)}} 
+                            > 
+                                <option value="1">Monday</option>
+                                <option value="2">Tuesday</option>
+                                <option value="3">Wednesday</option>
+                                <option value="4">Thursday</option>
+                                <option value="5">Friday</option>
+                                <option value="6">Saturday</option>
+                                <option value="7">Sunday</option>
+                            
+                            </select>
+                            <button type="submit" className="link-button-small">Add New Group</button>
+                        </form>
+                        
+                    </ModalBody>
+                    <ModalFooter>
+                    </ModalFooter>
+                </Modal>
+
+                    
+                    
+
             </div>
         );
     }

@@ -1,21 +1,15 @@
 import { Component } from "react";
 import {
-    BrowserRouter as Switch,
-    Route,
-    Redirect,
-    withRouter,
-    RouteComponentProps,
-    Router,
+    BrowserRouter as Switch, Redirect, Route, RouteComponentProps, withRouter
 } from "react-router-dom";
 import { MemberDashboard } from ".";
 import {
-    getOwnCommunityProfile,
     getOwnMemberProfile,
     getOwnPickupGroup,
-    getOwnUserData,
+    getOwnUserData
 } from "../helpers";
 import { getOwnCommunityProfileForMember } from "../helpers/getOwnCommunityProfileForMember";
-import { CommunityProfile, MemberProfile, MemberProfileOptions, PickupGroup, SetMemberProfile, SetUserProfile, User } from "../types";
+import { CommunityProfile, MemberProfile, PickupGroup, SetMemberProfile, SetUserProfile, User } from "../types";
 
 type MemberHomeProps = RouteComponentProps;
 

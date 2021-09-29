@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { IsAdmin, SetIsAdmin, SetRegComplete, SetSessionToken, SetUser, User } from "../types";
+import { SetIsAdmin, SetRegComplete, SetSessionToken } from "../types";
 
 
 type LogoutProps =

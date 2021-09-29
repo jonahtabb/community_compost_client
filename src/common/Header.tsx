@@ -1,25 +1,15 @@
 import React, { Component } from "react";
-import {
-    BrowserRouter as Switch,
-    Route,
-    Redirect,
-    withRouter,
-    Router,
-    Link,
-} from "react-router-dom";
 import { RouteComponentProps } from "react-router";
-import { Logout } from ".";
 import {
-    IsAdmin,
+    Link, withRouter
+} from "react-router-dom";
+import logo1 from "../assets/logo1.svg";
+import {
     SessionToken,
     SetIsAdmin,
     SetRegComplete,
-    SetSessionToken,
-    SetUser,
-    User,
+    SetSessionToken
 } from "../types";
-import { CLIENTURL } from "../helpers";
-import logo1 from "../assets/logo1.svg";
 
 type HeaderProps = RouteComponentProps & { sessionToken: SessionToken } & {
     setSessionToken: SetSessionToken;
@@ -34,7 +24,7 @@ class Header extends Component<HeaderProps, {}> {
     };
 
     render() {
-        console.info(this.props);
+
         return (
             <div className="header">
                 <div className="header-image-container">
