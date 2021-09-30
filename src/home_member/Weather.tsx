@@ -50,7 +50,7 @@ export default class Weather extends Component<WeatherProps, WeatherState>{
 
     fetchWeather = async () => {
         try {
-            const res = await fetch(`http://api.airvisual.com/v2/nearest_city?key=a1d8a74d-2f39-4e75-a89f-70fa6578cbd9`)
+            const res = await fetch(`https://api.airvisual.com/v2/nearest_city?key=a1d8a74d-2f39-4e75-a89f-70fa6578cbd9`)
             const json = await res.json()
             const {tp: Celtemp, hu: humidity, ic: iconCode} = await json.data.current.weather
 
