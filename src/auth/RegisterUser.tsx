@@ -59,7 +59,6 @@ class RegisterUser extends Component<RegisterUserProps, RegisterUserState> {
     }
 
     handleConfirmEmail(e: React.ChangeEvent<HTMLInputElement>) {
-        console.log(e.target.value)
             const isEmailMatch = e.target.value === this.state.email
             this.setState({
                 emailMatch: isEmailMatch,

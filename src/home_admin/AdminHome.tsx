@@ -183,7 +183,9 @@ class AdminHome extends Component<AdminHomeProps, AdminHomeState>{
                     </Route>
 
                     <Route exact path ={`${this.props.match.path}/dashboard`}>     
-                        <AdminDashboard 
+                        <AdminDashboard
+                            userData={this.state.userData}
+                            adminProfile={this.state.adminProfile}
                             communityProfile={this.state.communityProfile}
                             communityMembers={this.state.communityMembers}
                             pickupGroups={this.state.pickupGroups}

@@ -29,7 +29,6 @@ export default class RegisterAdmin extends Component<RegisterAdminProps, Registe
         let primaryEmail = this.props.user.email;
         let secondaryEmailField = document.getElementById("secondaryEmail") as HTMLInputElement
         let checked = e.target.checked;
-        console.log(e.target.checked);
         if (checked) {
             this.setState({secondaryEmail: primaryEmail}) ;
             secondaryEmailField.disabled = true;
@@ -90,7 +89,6 @@ export default class RegisterAdmin extends Component<RegisterAdminProps, Registe
             })
             let adminJson = await adminResponse.json()
 
-            console.log(adminJson)
             //Create new community profile associated with user profile
             await fetch(`${APIURL}/community/create`, {
                 method: "POST",
