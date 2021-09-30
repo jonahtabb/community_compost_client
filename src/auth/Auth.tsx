@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { RouteComponentProps, withRouter } from "react-router";
+import { RouteComponentProps, withRouter, Switch } from "react-router";
 import { Route } from "react-router-dom";
 import { Landing, Login, Register } from ".";
 import "../App.css";
@@ -66,21 +66,18 @@ class Auth extends Component<AuthProps, AuthState> {
 
         return (
             <>
-                
-
-
-
-                    <Route exact path={`${this.props.match.path}/login`}>
-                        <Login
-                            setSessionToken={this.props.setSessionToken}
-                            isAdmin={this.props.isAdmin}
-                            setIsAdmin={this.props.setIsAdmin}
-                            user={this.state}
-                            setUser={this.setUser}
-                            setRegComplete={this.props.setRegComplete}
-                        />
+            <Switch>
+                    <Route path={`${this.props.match.path}/login`}>
+                                <Login
+                                    setSessionToken={this.props.setSessionToken}
+                                    isAdmin={this.props.isAdmin}
+                                    setIsAdmin={this.props.setIsAdmin}
+                                    user={this.state}
+                                    setUser={this.setUser}
+                                    setRegComplete={this.props.setRegComplete}
+                                />
                     </Route>
-
+                    
                     <Route exact path={`${this.props.match.path}/register`}>
                         <Register
                             setSessionToken={this.props.setSessionToken}
@@ -92,11 +89,14 @@ class Auth extends Component<AuthProps, AuthState> {
                         />
                     </Route>
 
-                    <Route exact path={`${this.props.match.path}`}>
+                    <Route path={`/auth`}>
                         <Landing
                             setIsAdmin={this.props.setIsAdmin}
                         />
                     </Route>
+
+            </Switch>
+
                 
             </>
         );

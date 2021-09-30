@@ -1,6 +1,6 @@
 import { Component } from "react";
 import {
-    RouteComponentProps, withRouter
+    RouteComponentProps, withRouter , Link
 } from "react-router-dom";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { addNewPickupGroup } from "../helpers";
@@ -118,21 +118,13 @@ class ManagePickupGroups extends Component<
                         <button className="link-button-small my-4" onClick={this.toggleModal}>Add New Group</button>
                     </div>
                     <div className="col">
-                        {/* These buttons don't work quite right */}
-                        {/* <Link
-                            to={`${this.props.match.url}auth/register`}
-                            className="link-button-small"
-                        >
-                            Back To Dashboard
-                        </Link> */}
-
-                        {/* <button
-                            onClick={() => {}}
+                        <button
+                            onClick={() => {this.props.history.goBack()}}
                             className="link-button-small my-4"
                             type="button"
                         >
                             Back to Dashboard 
-                        </button> */}
+                        </button>
                     </div>
                 </div>
                 

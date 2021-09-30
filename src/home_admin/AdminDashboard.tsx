@@ -117,7 +117,7 @@ class AdminDashboard extends Component<AdminDashboardProps, AdminDashboardState>
 
         return (
             <div className="container-sm px-5">
-                <h2>Admin Dashboard</h2>  
+                <h2>Coordinator Dashboard</h2>  
                 <div className="row">
                     <div className="col-md">
                         {/* Community Details Summary */}
@@ -142,9 +142,10 @@ class AdminDashboard extends Component<AdminDashboardProps, AdminDashboardState>
                     <div className="dashboard-card-container">
                         <div className="card-header-container">
                             <div>
-                                <p className="card-header-title">Pickup Groups</p>
+                                <p className="card-header-title">Pickup Groups</p> 
                                 <div className="card-header-title-underline"></div>
                             </div>
+                            <Link to={`/home/admin/groups`} className="link-button-small" style={{fontSize: ".7rem"}}> Manage Pickups</Link>
                         </div>
                         {
                             this.props.pickupGroups.map((group: PickupGroup) => {
@@ -161,8 +162,8 @@ class AdminDashboard extends Component<AdminDashboardProps, AdminDashboardState>
                         }
 
                         <Link to={`/home/admin/groups`} className="manage-link-container">
-                            <h3 className="manage-link-text">Manage Pickups </h3>
-                            <h3 className="manage-link-arrow">{`-->`}</h3>
+                            <h3 className="manage-link-text">Manage Pickups →</h3>
+                            {/* <h3 className="manage-link-arrow"></h3> */}
                         </Link>
 
                     </div>

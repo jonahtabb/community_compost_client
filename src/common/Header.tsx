@@ -3,7 +3,7 @@ import { RouteComponentProps } from "react-router";
 import {
     Link, withRouter
 } from "react-router-dom";
-import logo1 from "../assets/logo1.svg";
+import {logo1} from "../assets";
 import {
     SessionToken,
     SetIsAdmin,

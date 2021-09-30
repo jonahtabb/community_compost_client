@@ -1,11 +1,11 @@
 import { Component } from "react";
 import { RouteComponentProps, withRouter } from "react-router";
 import { Link } from "react-router-dom";
-import man_carrying_carrot from '../assets/man_carrying_carrot.svg';
-import man_carrying_radish from '../assets/man_carrying_radish.svg';
-import woman_carrying_apple from '../assets/woman_carrying_apple.svg';
-import woman_carrying_pepper from '../assets/woman_carrying_pepper.svg';
 import { SetIsAdmin } from "../types";
+import { man_carrying_carrot,
+    man_carrying_radish,
+    woman_carrying_apple,
+    woman_carrying_pepper} from '../assets'
 
 
 type LandingProps = RouteComponentProps &

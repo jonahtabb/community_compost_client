@@ -193,8 +193,6 @@ class MemberHome extends Component<MemberHomeProps, MemberHomeState> {
 
     render() {
         return (
-            <>
-                <h2>Member Home</h2>
                 <Switch>
                     <Redirect to={`${this.props.match.path}/dashboard`} />
                     <Route exact path={`${this.props.match.path}/dashboard`}>
@@ -208,7 +206,6 @@ class MemberHome extends Component<MemberHomeProps, MemberHomeState> {
                         />
                     </Route>
                 </Switch>
-            </>
         );
     }
 }

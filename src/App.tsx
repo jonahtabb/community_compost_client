@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { RouteComponentProps } from "react-router";
+import { RouteComponentProps, Switch } from "react-router";
 import { Redirect, Route, withRouter } from "react-router-dom";
 import { Auth } from './auth';
 import { Header } from './common';
@@ -73,27 +73,31 @@ class App extends Component<AppProps, AppState> {
                     setIsAdmin={this.setIsAdmin}
                     setRegComplete={this.setRegComplete}
                 />
-                
+
                 {this.state.sessionToken && this.state.regComplete ? 
                     <Redirect to="/home" /> :
                     <Redirect to="/auth" />
                 }
-       
+                <Switch>
+
                     <Route 
-                            path="/auth">
-                            <Auth
-                                sessionToken={this.state.sessionToken}
-                                setSessionToken={this.setSessionToken}
-                                isAdmin={this.state.isAdmin}
-                                setIsAdmin={this.setIsAdmin}
-                                setRegComplete={this.setRegComplete}
-                            />
-                        </Route>
-                        <Route path="/home">
+                        path="/auth">
+                        <Auth
+                            sessionToken={this.state.sessionToken}
+                            setSessionToken={this.setSessionToken}
+                            isAdmin={this.state.isAdmin}
+                            setIsAdmin={this.setIsAdmin}
+                            setRegComplete={this.setRegComplete}
+                        />
+                    </Route>
+                    <Route path="/home">
                             <Home 
                                 isAdmin={this.state.isAdmin}
                             />
-                        </Route>
+                    </Route>
+
+                </Switch>
+
                     
   
 

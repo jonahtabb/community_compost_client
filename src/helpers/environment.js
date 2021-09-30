@@ -5,7 +5,7 @@ switch (window.location.hostname) {
     APIURL = 'http://localhost:3001';
     break;
     case 'jtabb-yum-app.herokuapp.com':
-    APIURL = 'https://jtabb-yum-app-server.herokuapp.com'
+    APIURL = 'https://jtabb-community-compost-server.herokuapp.com/'
 }
 
 let CLIENTURL = '';
