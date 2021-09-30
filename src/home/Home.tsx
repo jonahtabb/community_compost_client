@@ -30,10 +30,10 @@ class Home extends Component<HomeProps, HomeState>{
                         :   <Redirect to={`${this.props.match.path}/member`} />
                     }
                 
-                    <Route exact path = {`${this.props.match.path}/admin`}>
+                    <Route path = {`${this.props.match.path}/admin`}>
                         <AdminHome />
                     </Route>
-                    <Route exact path = {`${this.props.match.path}/member`}>
+                    <Route path = {`${this.props.match.path}/member`}>
                         <MemberHome />
                     </Route>
                 </Switch>

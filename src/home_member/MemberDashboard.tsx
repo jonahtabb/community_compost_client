@@ -228,11 +228,11 @@ class MemberDashboard extends Component<
                     </div>
                 </div>  
 
-                {/* Garden Tip Card */}
+                {/* Weather Card */}
                 <Weather />
                 <div className="member-dash-card">
                     <div className="member-dash-card-section">
-                        <p>Profile</p>
+                        <h1>Your Member Profile</h1>
                         {/* Edit-Save Profile Buttons */}
                         {this.state.canEditProfile 
                             ?   <button onClick={() => this.handleSaveClick() } className="link-button-small">Save Profile</button>

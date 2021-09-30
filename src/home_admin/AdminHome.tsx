@@ -171,15 +171,8 @@ class AdminHome extends Component<AdminHomeProps, AdminHomeState>{
         return(
             <div> 
                 <Switch>
-                <Redirect to={`${this.props.match.path}/dashboard`} />
+                <Redirect from={`${this.props.match.path}`} to={`${this.props.match.path}/dashboard`} />
 
-                     <Route exact path ={`${this.props.match.path}/dashboard`}>     
-                        <AdminDashboard 
-                            communityProfile={this.state.communityProfile}
-                            communityMembers={this.state.communityMembers}
-                            pickupGroups={this.state.pickupGroups}
-                        />
-                    </Route>
                     <Route exact path ={`${this.props.match.path}/groups`}>
                         <ManagePickupGroups 
                             pickupGroups = {this.state.pickupGroups}
@@ -188,6 +181,15 @@ class AdminHome extends Component<AdminHomeProps, AdminHomeState>{
                             setMemberGroup = {this.setMemberGroup}
                         />
                     </Route>
+
+                    <Route exact path ={`${this.props.match.path}/dashboard`}>     
+                        <AdminDashboard 
+                            communityProfile={this.state.communityProfile}
+                            communityMembers={this.state.communityMembers}
+                            pickupGroups={this.state.pickupGroups}
+                        />
+                    </Route>
+
                 </Switch>
             </div>
         )
