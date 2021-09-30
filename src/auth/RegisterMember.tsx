@@ -46,7 +46,6 @@ export default class RegisterMember extends Component<
     ): void {
         let stateName: string = e.target.name;
         let stateValue: string = e.target.value;
-        console.log(stateName, stateValue)
         this.setState((prevState) => ({
             ...prevState,
             [stateName]: stateValue,
@@ -60,7 +59,6 @@ export default class RegisterMember extends Component<
             "secondaryEmail"
         ) as HTMLInputElement;
         let checked = e.target.checked;
-        console.log(e.target.checked);
         if (checked) {
             this.setState({ secondaryEmail: primaryEmail });
             secondaryEmailField.disabled = true;
@@ -92,9 +90,7 @@ export default class RegisterMember extends Component<
 
             let allCommJson = await allCommResponse.json();
             let communityList = await allCommJson.allCommunities;
-            console.log(communityList)
             this.setState({availableCommunities: await communityList});
-            // console.log();
         } catch (error) {
             console.log(error);
         }
@@ -154,7 +150,6 @@ export default class RegisterMember extends Component<
                 })
             })
             let json = await res.json()
-            console.log(json)
 
             //Mark registration as complete
             await fetch(`${APIURL}/user/update`, {

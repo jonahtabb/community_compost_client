@@ -58,10 +58,6 @@ class Auth extends Component<AuthProps, AuthState> {
         }
     }
 
-    // componentWillUnmount() {
-    //     console.info("AUTH HAS UNMOUNTED!");
-    // }
-
     render() {
 
         return (

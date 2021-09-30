@@ -2,22 +2,25 @@ import React, { Component } from "react";
 import { Link, RouteComponentProps, withRouter } from "react-router-dom";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { camelToSentenceConverter, dayConverterNumToString } from '../helpers';
-import { CommunityMembers, CommunityProfile, MemberFullInfo, PickupGroup, PickupGroups } from '../types';
+import { AdminProfile, CommunityMembers, CommunityProfile, MemberFullInfo, PickupGroup, PickupGroups, User } from '../types';
 
 
 type AdminDashboardProps =
     RouteComponentProps & 
+    {userData: User} &
+    {adminProfile: AdminProfile} &
     {communityProfile: CommunityProfile} & 
     {communityMembers: CommunityMembers} &
     {pickupGroups: PickupGroups}
 
-type AdminDashboardState = {modal: boolean} & {selectedMember: MemberFullInfo}
+type AdminDashboardState = {memberModal: boolean, myProfileModal: boolean} & {selectedMember: MemberFullInfo}
 
 class AdminDashboard extends Component<AdminDashboardProps, AdminDashboardState>{
     constructor(props: AdminDashboardProps){
         super(props)
         this.state= {
-            modal: false,
+            memberModal: false,
+            myProfileModal: false,
             selectedMember: {
                 userProfile: {
                     id: null,
@@ -45,15 +48,15 @@ class AdminDashboard extends Component<AdminDashboardProps, AdminDashboardState>
         }
     }
 
-    toggleModal = () => {
+    toggleMemberModal = () => {
 
         this.setState((prevState) => ({
             ...prevState,
-            modal: !prevState.modal
+            memberModal: !prevState.memberModal
         }))
     }
 
-    populateModal = (userId: number) => {
+    populateMemberModal = (userId: number) => {
         const selectedUser = this.props.communityMembers.find(member => member.userProfile.id === userId)
         if (selectedUser) {
             const {id, email, firstName, lastName} = selectedUser.userProfile
@@ -106,11 +109,21 @@ class AdminDashboard extends Component<AdminDashboardProps, AdminDashboardState>
 
     handleClickDetails = (event: React.MouseEvent<HTMLButtonElement, MouseEvent> ) => {
         let userId = +(event.currentTarget.getAttribute("user-id") ?? 0)
-        this.populateModal(userId)
-        this.toggleModal()
-        console.warn("The errors are from the react-strap dependency -- awaiting dependency update")
+        this.populateMemberModal(userId)
+        this.toggleMemberModal()
+        console.warn("These errors are from the react-strap dependency. Either need an dependency update or to refactor the modal")
     }
 
+    toggleMyProfileModal = () => {
+        this.setState((prevState) => ({
+            ...prevState,
+            myProfileModal: !prevState.myProfileModal
+        }))
+    }
+
+    handleClickMyProfile = () => {
+        this.toggleMyProfileModal()
+    }
 
 
     render(){
@@ -127,6 +140,7 @@ class AdminDashboard extends Component<AdminDashboardProps, AdminDashboardState>
                                     <p className="card-header-title">Community Details</p>
                                     <div className="card-header-title-underline"></div>
                                 </div>
+                                <button  className="link-button-small" style={{fontSize: ".7rem"}} onClick={() => this.handleClickMyProfile()}>Profile</button>
                             </div>
 
                             <div className="card-content-container">
@@ -136,6 +150,22 @@ class AdminDashboard extends Component<AdminDashboardProps, AdminDashboardState>
                                 <p className="card-content-text">{this.props.communityProfile.communityDescription}</p>
                             </div>
                         </div>
+
+                    <Modal isOpen={this.state.myProfileModal} toggle={this.toggleMyProfileModal} scrollable={true}>
+                    <ModalHeader toggle={this.toggleMyProfileModal}>{this.state.selectedMember.userProfile.firstName} {this.state.selectedMember.userProfile.lastName}</ModalHeader>
+                    <ModalBody>
+                        <div className="container">
+                            <p>Name: {this.props.userData.firstName} {this.props.userData.lastName}</p> 
+                            <p>Primary Email: {this.props.userData.email}</p> 
+                            <p>Secondary Email: {this.props.adminProfile.secondaryEmail}</p> 
+                            <p>Primary Phone: {this.props.adminProfile.phone}</p> 
+                            <p>Bio: {this.props.adminProfile.bio}</p> 
+                        </div>
+
+                    </ModalBody>
+                    <ModalFooter>
+                    </ModalFooter>
+                </Modal>
 
 
                     {/* Pickup Groups List */}
@@ -197,9 +227,9 @@ class AdminDashboard extends Component<AdminDashboardProps, AdminDashboardState>
 
                     </div>
                 </div>
-
-                <Modal isOpen={this.state.modal} toggle={this.toggleModal} scrollable={true}>
-                    <ModalHeader toggle={this.toggleModal}>{this.state.selectedMember.userProfile.firstName} {this.state.selectedMember.userProfile.lastName}</ModalHeader>
+                {/* Member Details Modal */}
+                <Modal isOpen={this.state.memberModal} toggle={this.toggleMemberModal} scrollable={true}>
+                    <ModalHeader toggle={this.toggleMemberModal}>{this.state.selectedMember.userProfile.firstName} {this.state.selectedMember.userProfile.lastName}</ModalHeader>
                     <ModalBody>
                         {
                             //Map and display user data

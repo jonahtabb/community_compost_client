@@ -64,8 +64,6 @@ export default class Weather extends Component<WeatherProps, WeatherState>{
                 iconCode,
                 iconImage
             })
-            // Icon format https://www.airvisual.com/images/01n.png
-            console.log(await json)
 
         }catch(error){
             console.error(error)
