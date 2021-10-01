@@ -5,7 +5,7 @@
 - Github Repo: https://github.com/jonahtabb/community_compost_client
 
 **SERVER:**
-- Github Repo: https://jtabb-community-compost-server.herokuapp.com
+- Github Repo: https://github.com/jonahtabb/community_compost_server
 
 # About
 ### A full stack, fully responsive React App built built by Jonah Tabb. The app provides community groups a way to manage groups for door-to-door household compost pickups. 
