@@ -148,7 +148,7 @@ class MemberHome extends Component<MemberHomeProps, MemberHomeState> {
 
                 // Get own pickup group data, if pickup group is not null
                 
-                if (!PickupGroupId) {
+                if (PickupGroupId) {
                     const pickupGroupResponse = await getOwnPickupGroup(token);
                     
                     const {
@@ -172,15 +172,6 @@ class MemberHome extends Component<MemberHomeProps, MemberHomeState> {
                     }
                     })
                 }
-                
-                
-
-
-
-
-
-
-
             }
         } catch (error) {
             console.log(error);
@@ -190,6 +181,7 @@ class MemberHome extends Component<MemberHomeProps, MemberHomeState> {
     componentDidMount() {
         this.updateState();
     }
+
 
     render() {
         return (
