@@ -27,4 +27,6 @@
 - Login / Logout / Register
 - Token based authentication
 - REST API with full CRUD interaction between client and server
+- # Notes
+- This react app uses class components
   
