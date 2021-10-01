@@ -130,10 +130,16 @@ button:active {
     text-decoration: none;
     border: 1px solid var(--main-green);
     border-radius: 10px;
+    transition: .7s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 .link-button-small:hover {
-    color: var(--hover-green);
+    color: var(--light-background);
+    background-color: var(--main-green);
+}
+
+.link-button-small:active {
+    transform: translate(1px, 1px);
 }
 
 .react-router-link-button {
@@ -148,6 +154,7 @@ button:active {
     font-size: 1.2rem;
     text-decoration: none;
     text-align: center;
+    transition: 1s cubic-bezier(0.075, 0.82, 0.165, 1)
 }
 
 .react-router-link-button:hover {
@@ -307,6 +314,7 @@ select option {
     background-color: transparent;
 }
 
+
 @media (max-width: 1200px) {
     .happy-carrot-container {
         right: 2%;
@@ -324,7 +332,20 @@ select option {
 .happy-carrot-image {
     background-color: transparent;
     width: 80px;
+    animation: carrotjump 1s infinite;
+    animation-delay: 2s;
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000) ;
 }
+
+@keyframes carrotjump {
+    0% {
+    }
+    40%{transform: translate(0, -12px)}
+    80%{
+        transform: translate(0, 0);
+    }
+}
+
 
 .speech-bubble-container {
     display: flex;
@@ -342,6 +363,11 @@ select option {
     justify-items: center;
     width: 100%;
     top: 10%;
+    transition-duration: .2s;
+}
+
+.speech-bubble-text-wrapper:hover {
+    transform: scale(1.02, 1.02)
 }
 .speech-bubble-text-wrapper-toggled {
     position: absolute;
@@ -603,6 +629,14 @@ select option {
 }
 
 /* Modal Standards for Member Details Button */
+
+.modal-content {
+    background-color: var(--light-background);
+}
+
+.modal-header {
+    border: none;
+}
 .modal {
     background-color: transparent;
 }
@@ -750,6 +784,18 @@ div.pickup-group-container:nth-child(even) {
     align-self: flex-start;
     padding: 1rem;
 }
+
+.member-edit-container .container:nth-last-child(2n+1) {
+    background-color: rgba(38, 124, 24, 0.05);
+}
+
+.member-edit-container .container:nth-child(2n) {
+    background-color: rgba(38, 124, 24, 0.1);
+}
+
+
+
+
 
 /* Weather Card Styles */
 
