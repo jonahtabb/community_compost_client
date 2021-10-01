@@ -64,14 +64,14 @@ class Auth extends Component<AuthProps, AuthState> {
             <>
             <Switch>
                     <Route path={`${this.props.match.path}/login`}>
-                                <Login
-                                    setSessionToken={this.props.setSessionToken}
-                                    isAdmin={this.props.isAdmin}
-                                    setIsAdmin={this.props.setIsAdmin}
-                                    user={this.state}
-                                    setUser={this.setUser}
-                                    setRegComplete={this.props.setRegComplete}
-                                />
+                        <Login
+                            setSessionToken={this.props.setSessionToken}
+                            isAdmin={this.props.isAdmin}
+                            setIsAdmin={this.props.setIsAdmin}
+                            user={this.state}
+                            setUser={this.setUser}
+                            setRegComplete={this.props.setRegComplete}
+                        />
                     </Route>
                     
                     <Route exact path={`${this.props.match.path}/register`}>
@@ -87,7 +87,13 @@ class Auth extends Component<AuthProps, AuthState> {
 
                     <Route path={`/auth`}>
                         <Landing
+                            sessionToken={this.props.sessionToken}
+                            setSessionToken={this.props.setSessionToken}
+                            isAdmin={this.props.isAdmin}
                             setIsAdmin={this.props.setIsAdmin}
+                            user={this.state}
+                            setUser={this.setUser}
+                            setRegComplete={this.props.setRegComplete}
                         />
                     </Route>
 

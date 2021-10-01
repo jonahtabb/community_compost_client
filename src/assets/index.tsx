@@ -3,6 +3,8 @@ import man_carrying_radish from '../assets/man_carrying_radish.svg';
 import woman_carrying_apple from '../assets/woman_carrying_apple.svg';
 import woman_carrying_pepper from '../assets/woman_carrying_pepper.svg';
 import logo1 from '../assets/logo1.svg'
+import happy_carrot from '../assets/happy_carrot.svg'
+import speech_bubble from '../assets/speech_bubble.svg'
 import weather01d from '../assets/weather01d.png'
 import weather01n from '../assets/weather01n.png'
 import weather02d from '../assets/weather02d.png'
@@ -22,6 +24,8 @@ export {
     woman_carrying_apple,
     woman_carrying_pepper,
     logo1,
+    happy_carrot,
+    speech_bubble,
     weather01d,
     weather01n,
     weather02d,

@@ -18,8 +18,17 @@ switch (window.location.hostname) {
     CLIENTURL = 'https://jtabb-community-compost.herokuapp.com'
 }
 
+const ADMIN_DEMO_EMAIL = "captain@compost.com";
+const ADMIN_DEMO_PASSWORD = "Compost1";
+const MEMBER_DEMO_EMAIL = "member@compost.com";
+const MEMBER_DEMO_PASSWORD = "Compost1"
+
 
 export {
     APIURL,
-    CLIENTURL
+    CLIENTURL,
+    ADMIN_DEMO_EMAIL,
+    ADMIN_DEMO_PASSWORD,
+    MEMBER_DEMO_EMAIL,
+    MEMBER_DEMO_PASSWORD
 }
