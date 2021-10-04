@@ -735,7 +735,6 @@ div.pickup-group-container:nth-child(even) {
     all: initial;
     text-decoration: none;
     display: block;
-    border-radius: 2px;
     border: none;
     cursor: pointer;
     height: 100%;
@@ -744,6 +743,7 @@ div.pickup-group-container:nth-child(even) {
     font: var(--paragraph-fonts);
     padding-left: 5px;
     background-color: var(--light-background);
+    border: 1px solid var(--light-green);
 }
 
 /* Change color of dropdown links on hover */
