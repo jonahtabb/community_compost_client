@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link, RouteComponentProps, withRouter } from "react-router-dom";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import { loading_spinner } from "../assets";
 import { camelToSentenceConverter, dayConverterNumToString } from '../helpers';
 import { AdminProfile, CommunityMembers, CommunityProfile, MemberFullInfo, PickupGroup, PickupGroups, User } from '../types';
 
@@ -134,22 +135,27 @@ class AdminDashboard extends Component<AdminDashboardProps, AdminDashboardState>
                 <div className="row">
                     <div className="col-md">
                         {/* Community Details Summary */}
-                        <div className="dashboard-card-container">
-                            <div className="card-header-container">
-                                <div>
-                                    <p className="card-header-title">Community Details</p>
-                                    <div className="card-header-title-underline"></div>
+                        {
+                            Object.values(this.props.communityProfile).some((value) => value === null || undefined)
+                            ?   <img src={loading_spinner} alt="" />
+                            :   <div className="dashboard-card-container">
+                                <div className="card-header-container">
+                                    <div>
+                                        <p className="card-header-title">Community Details</p>
+                                        <div className="card-header-title-underline"></div>
+                                    </div>
+                                    <button  className="link-button-small" style={{fontSize: ".7rem"}} onClick={() => this.handleClickMyProfile()}>Profile</button>
                                 </div>
-                                <button  className="link-button-small" style={{fontSize: ".7rem"}} onClick={() => this.handleClickMyProfile()}>Profile</button>
-                            </div>
 
-                            <div className="card-content-container">
-                                <h3 className="card-content-header">Name</h3>
-                                <p className="card-content-text">{this.props.communityProfile.communityName}</p>
-                                <h3 className="card-content-header">Description</h3>
-                                <p className="card-content-text">{this.props.communityProfile.communityDescription}</p>
+                                <div className="card-content-container">
+                                    <h3 className="card-content-header">Name</h3>
+                                    <p className="card-content-text">{this.props.communityProfile.communityName}</p>
+                                    <h3 className="card-content-header">Description</h3>
+                                    <p className="card-content-text">{this.props.communityProfile.communityDescription}</p>
+                                </div>
                             </div>
-                        </div>
+                        }
+
 
                     <Modal isOpen={this.state.myProfileModal} toggle={this.toggleMyProfileModal} scrollable={true}>
                     <ModalHeader toggle={this.toggleMyProfileModal}>{this.state.selectedMember.userProfile.firstName} {this.state.selectedMember.userProfile.lastName}</ModalHeader>

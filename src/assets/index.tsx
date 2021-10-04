@@ -17,6 +17,7 @@ import weather10n from '../assets/weather10n.png'
 import weather11d from '../assets/weather11d.png'
 import weather13d from '../assets/weather13d.png'
 import weather50d from '../assets/weather50d.png'
+import loading_spinner from '../assets/loading_spinner.svg'
 
 export {
     man_carrying_carrot,
@@ -37,5 +38,6 @@ export {
     weather10n,
     weather11d,
     weather13d,
-    weather50d
+    weather50d,
+    loading_spinner
 }
