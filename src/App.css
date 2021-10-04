@@ -775,8 +775,10 @@ div.pickup-group-container:nth-child(even) {
     align-items: center;
     justify-content: center;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    width: 80%;
+    /* width: 80%; */
     margin-bottom: 1.5rem;
+    height: auto;
+
 }
 
 .member-dash-card-section {

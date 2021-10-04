@@ -198,126 +198,144 @@ class MemberDashboard extends Component<
                 <h2>Member Dashboard</h2>
 
                 {/* Overview Card */}
-                <div className="member-dash-card">
-                    <h3>Welcome {this.props.userProfile.firstName}!</h3>
-                    <div className="member-dash-card-section">
-                        <div className="row">
-                            <div className="col-sm">
-                                <p><strong>Your Community:</strong></p>
-                                <p>{this.props.communityProfile.communityName}</p>
-                                <p>{this.props.communityProfile.communityDescription}</p>
-                            </div>
-                            <div className="col">
-                                <p><strong>Your Pickup Group:</strong></p>
-                                {
-                                    this.props.pickupGroup.name ?
-                                        <>
-                                            <p>{this.props.pickupGroup.name}</p>
-                                            <p>
-                                                Pickups are on{" "}
-                                                {dayConverterNumToString(this.props.pickupGroup.day)}{" "}
-                                                from{" "}{this.props.pickupGroup.startTime}{" "}to{" "}
-                                                {this.props.pickupGroup.endTime}
-                                            </p>
-                                        </>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-lg-8 col-12">
+                            <div className="member-dash-card">
+                                <h3>Welcome {this.props.userProfile.firstName}!</h3>
+                                <div className="member-dash-card-section">
+                                    <div className="row">
+                                        <div className="col-sm">
+                                            <p><strong>Your Community:</strong></p>
+                                            <p>{this.props.communityProfile.communityName}</p>
+                                            <p>{this.props.communityProfile.communityDescription}</p>
+                                        </div>
+                                        <div className="col">
+                                            <p><strong>Your Pickup Group:</strong></p>
+                                            {
+                                                this.props.pickupGroup.name ?
+                                                    <>
+                                                        <p>{this.props.pickupGroup.name}</p>
+                                                        <p>
+                                                            Pickups are on{" "}
+                                                            {dayConverterNumToString(this.props.pickupGroup.day)}{" "}
+                                                            from{" "}{this.props.pickupGroup.startTime}{" "}to{" "}
+                                                            {this.props.pickupGroup.endTime}
+                                                        </p>
+                                                    </>
 
-                                    : <p>Your Coordinator must assign you a pickup group.</p> 
+                                                : <p>Your Coordinator must assign you a pickup group.</p> 
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>
+
+
+                        {/* Weather Card */}
+                        <div className="col-md">
+                            <Weather />
+                        </div>
+
+
+                    
+
+                        <div className="col-12">
+                            <div className="member-dash-card">
+                            <div className="member-dash-card-section">
+                                <h1>Your Member Profile</h1>
+                                {/* Edit-Save Profile Buttons */}
+                                {this.state.canEditProfile 
+                                    ?   <button onClick={() => this.handleSaveClick() } className="link-button-small my-3">Save Profile</button>
+                                    :   <button onClick={() => this.handleEditClick()} className="link-button-small my-3">Edit Profile</button>
                                 }
+
+                                <div className="member-profile-container">
+                                    {/* Map and display user data */}
+                                    {
+                                        <form className= "member-edit-container">
+                                            {this.makeUserDataReady(this.props.userProfile).map((user) => {
+                                                
+                                                const [originalIndex, newIndex, uglyKey, prettyKey, value] = user
+                                                        
+                                                return (
+                                                    <div key={`userData${newIndex}`} className="container">
+                                                        <div className="row">
+                                                            <div className="col">
+                                                                <label
+                                                                    htmlFor={uglyKey}
+                                                                    className="my-3"
+                                                                    style={{fontWeight: "bold"}}
+                                                                >
+                                                                    {prettyKey} 
+                                                                </label>
+                                                            </div>
+                                                            <div className="col-sm-8">
+                                                                <input
+                                                                    name={uglyKey}
+                                                                    type="text"
+                                                                    className="my-3"
+                                                                    value={ value }
+                                                                    onChange={(e) => this.updateUserFormInputState(e)}
+                                                                    disabled = {!this.state.canEditProfile}
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })}
+                                        </form>
+                                    }
+
+                                    {/* Map and display member profile data */}
+
+                                    {
+                                        //{Map and Display Member Profile Data}
+                                        <form className= "member-edit-container">
+                                            {this.makeMemberDataReady(this.props.memberProfile).map((member) => {
+                                            
+                                                const [originalIndex, newIndex, uglyKey, prettyKey, value] = member
+
+                                                return (
+                                                    <div
+                                                        key={`memberProfile${newIndex}`}
+                                                        className="container"
+                                                    >
+                                                        <div className="row">
+                                                            <div className="col">
+                                                                <label
+                                                                    htmlFor={uglyKey}
+                                                                    className="my-3"
+                                                                    style={{fontWeight:"bold"}}
+                                                                >
+                                                                    {prettyKey}
+                                                                </label>
+                                                            </div>
+                                                            <div className="col-sm-8">
+                                                                <input
+                                                                    name={uglyKey}
+                                                                    type="text"
+                                                                    className="my-3"
+                                                                    value={value}
+                                                                    onChange={(e) => this.updateMemberFormInputState(e)}
+                                                                    disabled={!this.state.canEditProfile}
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })}
+                                        </form>
+                                    }
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>  
-
-                {/* Weather Card */}
-                <Weather />
-                <div className="member-dash-card">
-                    <div className="member-dash-card-section">
-                        <h1>Your Member Profile</h1>
-                        {/* Edit-Save Profile Buttons */}
-                        {this.state.canEditProfile 
-                            ?   <button onClick={() => this.handleSaveClick() } className="link-button-small">Save Profile</button>
-                            :   <button onClick={() => this.handleEditClick()} className="link-button-small">Edit Profile</button>
-                        }
-
-                        <div className="member-profile-container">
-                            {/* Map and display user data */}
-                            {
-                                <form className= "member-edit-container">
-                                    {this.makeUserDataReady(this.props.userProfile).map((user) => {
-                                        
-                                        const [originalIndex, newIndex, uglyKey, prettyKey, value] = user
-                                                 
-                                        return (
-                                            <div key={`userData${newIndex}`} className="container">
-                                                <div className="row">
-                                                    <div className="col">
-                                                        <label
-                                                            htmlFor={uglyKey}
-                                                            className="my-3"
-                                                            style={{fontWeight: "bold"}}
-                                                        >
-                                                            {prettyKey} 
-                                                        </label>
-                                                    </div>
-                                                    <div className="col-sm-8">
-                                                        <input
-                                                            name={uglyKey}
-                                                            type="text"
-                                                            className="my-3"
-                                                            value={ value }
-                                                            onChange={(e) => this.updateUserFormInputState(e)}
-                                                            disabled = {!this.state.canEditProfile}
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        );
-                                    })}
-                                </form>
-                            }
-
-                            {/* Map and display member profile data */}
-
-                            {
-                                //{Map and Display Member Profile Data}
-                                <form className= "member-edit-container">
-                                    {this.makeMemberDataReady(this.props.memberProfile).map((member) => {
-                                       
-                                        const [originalIndex, newIndex, uglyKey, prettyKey, value] = member
-
-                                        return (
-                                            <div
-                                                key={`memberProfile${newIndex}`}
-                                                className="container"
-                                            >
-                                                <div className="row">
-                                                    <div className="col">
-                                                        <label
-                                                            htmlFor={uglyKey}
-                                                            className="my-3"
-                                                            style={{fontWeight:"bold"}}
-                                                        >
-                                                            {prettyKey}
-                                                        </label>
-                                                    </div>
-                                                    <div className="col-sm-8">
-                                                        <input
-                                                            name={uglyKey}
-                                                            type="text"
-                                                            className="my-3"
-                                                            value={value}
-                                                            onChange={(e) => this.updateMemberFormInputState(e)}
-                                                            disabled={!this.state.canEditProfile}
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        );
-                                    })}
-                                </form>
-                            }
+                            
                         </div>
+                    
                     </div>
+
                 </div>
             </div>
         );
