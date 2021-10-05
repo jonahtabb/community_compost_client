@@ -1,6 +1,6 @@
 html,
 body {
-    background-color: var(--light-background);
+    background-color: var(--lighter-background);
     min-height: 100%;
     padding: 0;
     margin: 0;
@@ -25,7 +25,10 @@ body {
     --hover-green: hsl(81, 85%, 35%);
     --light-green: hsla(81, 65%, 30%, 0.322);
     --light-background: hsl(50, 24%, 85%);
+    --lighter-background: hsl(48, 60%, 97%);
+    --lightest-background: hsl(48, 60%, 97%);
     --brown: hsl(30, 29%, 28%);
+    --box-shadow-standard: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     font-family: var(--paragraph-fonts);
 }
 
@@ -134,7 +137,7 @@ button:active {
 }
 
 .link-button-small:hover {
-    color: var(--light-background);
+    color: var(--lightest-background);
     background-color: var(--main-green);
 }
 
@@ -264,6 +267,8 @@ select option {
     color: rgba(38, 124, 24, 0.8);
     padding-left: 5rem;
     padding-right: 5rem;
+    background-color: var(--light-background);
+    box-shadow: var(--box-shadow-standard)
 }
 
 .header-image-container {
@@ -458,11 +463,12 @@ select option {
 }
 
 .register-valid {
-    box-shadow: hsla(81, 65%, 30%, 0.45) 0px 4px 16px;
+    /* box-shadow: rgb(255, 255, 255) 0px 0px 2px 5px, var(--main-green) 0px 0px 2px 5px; */
 }
 
 .register-invalid {
-    box-shadow: rgba(136, 22, 22, 0.37) 0px 6px 16px;
+    /* border-color: #ff4f4f54; */
+    box-shadow: inset rgb(255, 255, 255) 0px 0px 2px 5px, #ff4f4f69 0px 0px 2px 3px;
 }
 
 .register-validation-text {
@@ -550,6 +556,10 @@ select option {
 /* Admin Dashboard */
 .dashboard-card-container {
     margin-bottom: 2rem;
+    padding: 12px;
+    box-shadow: var(--box-shadow-standard);
+    background-color: var(--lightest-background);
+    border-radius: 20px;
 }
 .card-header-container {
     display: flex;
@@ -774,8 +784,8 @@ div.pickup-group-container:nth-child(even) {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    /* width: 80%; */
+    box-shadow: var(--box-shadow-standard);
+    border-radius: 20px;
     margin-bottom: 1.5rem;
     height: auto;
 
@@ -815,4 +825,8 @@ div.pickup-group-container:nth-child(even) {
     text-align: center;
     align-items: center;
     justify-content: center;
+}
+
+.weather-image {
+    border-radius: 50%;
 }

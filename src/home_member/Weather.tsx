@@ -84,7 +84,7 @@ export default class Weather extends Component<WeatherProps, WeatherState>{
                             <h2>{this.state.temperature} ° F</h2>
                         </div>
                         <div className="col">
-                            <img src={this.state.iconImage} alt="" width="75px" style={{borderRadius: "50%", backgroundColor: "hsla(81, 65%, 30%, 0.322)", border: "10px solid hsla(81, 65%, 30%, 0.01)"}} />
+                            <img src={this.state.iconImage} alt="" width="75px" className="weather-image" />
                         </div>
                     </div>
                 </div>
