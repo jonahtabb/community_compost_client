@@ -240,7 +240,7 @@ class MemberDashboard extends Component<
 
 
                     
-
+                        {/* Member Profile Card */}
                         <div className="col-12">
                             <div className="member-dash-card">
                             <div className="member-dash-card-section">
