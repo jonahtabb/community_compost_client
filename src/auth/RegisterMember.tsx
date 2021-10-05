@@ -245,7 +245,7 @@ export default class RegisterMember extends Component<
                         placeholder="Secondary Phone Number"
                         id="secondaryPhone"
                         name="secondaryPhone"
-                        value={this.state.primaryPhone}
+                        value={this.state.secondaryPhone}
                         onChange={(e) => this.updateInputState(e)}
                     />
 
