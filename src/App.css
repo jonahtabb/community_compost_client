@@ -663,6 +663,28 @@ select option {
     transition: all 0.2s ease-in-out;
 }
 
+.modal .delete-group-button {
+    display: inline;
+    width: auto;
+    height: auto;
+    font-family: var(--paragraph-fonts);
+    font-size: .8rem;
+    font-weight: 400;
+    background-color: transparent;
+    color: rgb(175, 0, 0);
+    padding: 5px;
+    margin: 0 0 0 0;
+    text-decoration: none;
+    border: 1px solid rgb(175, 0, 0);
+    border-radius: 10px;
+    padding: 8px;
+    line-height: 1rem;
+    transition: .7s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+.modal .delete-group-button:active {
+    transform: translate(1px, 1px);
+}
+
 .modal button span {
     background-color: transparent;
 }
@@ -690,6 +712,9 @@ select option {
     height: auto;
     border-radius: 10px;
 }
+
+/* Modal Mods for Delete Group */
+
 
 /* Pickup Groups Component */
 

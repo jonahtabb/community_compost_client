@@ -1,9 +1,10 @@
-import { Component } from "react";
+import { group } from "console";
+import React, { Component } from "react";
 import {
     RouteComponentProps, withRouter , Link
 } from "react-router-dom";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-import { addNewPickupGroup } from "../helpers";
+import { addNewPickupGroup, dayConverterNumToString, deletePickupGroup } from "../helpers";
 import {
     CommunityMembers,
     MemberFullInfo,
@@ -18,15 +19,14 @@ import {
     You've notices that there is a lot of chained filtering, sorting and mapping! 
     One of my goals for this project has been to experiment with different levels of display my mapping.
     This has been useful for me to access the practicality, readability displaying the data using different approaches.
-
 */ 
 
 type ManagePickupGroupsProps = RouteComponentProps & {
     pickupGroups: PickupGroups;
-} & {setPickupGroups: SetPickupGroups} & { communityMembers: CommunityMembers } & { setMemberGroup: SetMemberGroup };
+} & {setPickupGroups: SetPickupGroups} & { communityMembers: CommunityMembers } & { setMemberGroup: SetMemberGroup } & {setNeedsUpdate: () => void};
 
-type ManagePickupGroupsState = { dropdownOpen: boolean, modal:boolean } & {newPickupGroup: NewPickupGroup};
-
+type ManagePickupGroupsState = { dropdownOpen: boolean, addNewGroupModal:boolean, deleteGroupModal:boolean, groupToDeleteId:number | null, groupToDeleteName: string } & {newPickupGroup: NewPickupGroup};
+ 
 class ManagePickupGroups extends Component<
     ManagePickupGroupsProps,
     ManagePickupGroupsState
@@ -35,7 +35,10 @@ class ManagePickupGroups extends Component<
         super(props);
         this.state = {
             dropdownOpen: false,
-            modal: false,
+            addNewGroupModal: false,
+            deleteGroupModal: false,
+            groupToDeleteId: null,
+            groupToDeleteName: '',
             newPickupGroup: {
                 name: '',
                 description: '',
@@ -47,10 +50,10 @@ class ManagePickupGroups extends Component<
         };
     }
 
-    toggleModal = () => {
+    toggleAddNewGroupModal = () => {
         this.setState((prevState) => ({
             ...prevState,
-            modal: !prevState.modal
+            addNewGroupModal: !prevState.addNewGroupModal
         }))
     }
  
@@ -64,7 +67,7 @@ class ManagePickupGroups extends Component<
             this.props.setPickupGroups(addedPickupGroup)
             this.setState((prevState) => ({
                 ...prevState,
-                modal: false,
+                addNewGroupModal: false,
                 newPickupGroup: {
                     name: '',
                     description: '',
@@ -100,6 +103,45 @@ class ManagePickupGroups extends Component<
         }))
     }
 
+    toggleDeleteGroupModal = () => {
+        console.log("triggered")
+        this.setState((prevState) => ({
+            ...prevState,
+            deleteGroupModal: !prevState.deleteGroupModal
+        }))
+    }
+
+    handleClickDeleteDashboard = (e: React.MouseEvent<HTMLButtonElement>) => {
+        let element = e.currentTarget
+        let groupId = parseInt(element.getAttribute("data-group-id") || '-1');
+        let groupIndex = this.props.pickupGroups.findIndex((value) => value.id === groupId);
+        let groupName = this.props.pickupGroups[groupIndex].name;
+        console.log(groupName)
+        if (typeof groupId)
+        this.setState({
+            groupToDeleteId: groupId,
+            groupToDeleteName: groupName
+        })
+        this.toggleDeleteGroupModal()
+    }
+
+    handleClickDeleteModal= async (): Promise<any> => {
+        let token = localStorage.getItem("token")
+        let groupId = this.state.groupToDeleteId ?? -1
+        if (token) {
+            try {
+                this.props.setNeedsUpdate()
+                this.toggleDeleteGroupModal();
+                await deletePickupGroup(token, groupId);
+                
+            }catch (error) {
+                console.error({error, message: "delete failed"})
+            }
+
+        }
+        
+    }
+
     render() {
         /*  
             Pre-sort and / or copy the arrays that will be used for mapping and filtered in the JSX return.
@@ -115,7 +157,7 @@ class ManagePickupGroups extends Component<
                 <h3>Manage Pickup Groups</h3>
                 <div className="row d-flex justify-content-between">
                     <div className="col">
-                        <button className="link-button-small my-4" onClick={this.toggleModal}>Add New Group</button>
+                        <button className="link-button-small my-4" onClick={this.toggleAddNewGroupModal}>Add New Group</button>
                     </div>
                     <div className="col">
                         <button
@@ -134,15 +176,30 @@ class ManagePickupGroups extends Component<
                 {pickupGroups.map((group: PickupGroup) => (
                     <div key={`group${group.id}`}>
                         {/* Group Header Info */}
-                        <div className="container card-header-container">
-                            <div>
+                        <div className="container card-header-container my-3"
+                                key={`groupid${group.id}`}
+                        >
+                            <div className="row w-50 justify-content-between">
+                            <div className="col">
                                 <p
-                                    key={`groupid${group.id}`}
+
                                     className="card-header-title"
                                 >
-                                    {group.name}
+                                    {group.name} 
+                                    <br></br>
+                                    <span style={{fontSize: ".8rem", fontWeight:200}}>{dayConverterNumToString(group.day)}s from {group.startTime} to {group.endTime}</span> 
                                 </p>
                                 <div className="card-header-title-underline"></div>
+                            </div>
+                            <div className="col">
+                                <button 
+                                    onClick={(e) => this.handleClickDeleteDashboard(e)}
+                                    className="link-button-small"
+                                    data-group-id={group.id}
+                                    style={{fontSize: ".65rem"}}>
+                                    Delete {group.name}
+                                </button>
+                            </div>
                             </div>
                         </div>
                         {/* Group Members */}
@@ -287,8 +344,8 @@ class ManagePickupGroups extends Component<
                 }
                     {/* Add New Group */}
                     
-                    <Modal isOpen={this.state.modal} toggle={this.toggleModal} scrollable={true}>
-                    <ModalHeader toggle={this.toggleModal}><h3>Add New Pickup Group</h3></ModalHeader>
+                    <Modal isOpen={this.state.addNewGroupModal} toggle={this.toggleAddNewGroupModal} scrollable={true}>
+                    <ModalHeader toggle={this.toggleAddNewGroupModal}>Add New Pickup Group</ModalHeader>
                     <ModalBody>
                         <form className= "container add-group-modal-form" action="submit" onSubmit={(e) => {this.handleAddNewGroup(e)}}> 
                             <label htmlFor="name" >Group Name</label>
@@ -342,6 +399,18 @@ class ManagePickupGroups extends Component<
                             </select>
                             <button type="submit" className="link-button-small">Add New Group</button>
                         </form>
+                        
+                    </ModalBody>
+                    <ModalFooter>
+                    </ModalFooter>
+                </Modal>
+
+                {/* Delete Group Modal */}
+                <Modal isOpen={this.state.deleteGroupModal} toggle={this.toggleDeleteGroupModal} scrollable={true}>
+                    <ModalHeader toggle={this.toggleDeleteGroupModal}>Delete {this.state.groupToDeleteName}</ModalHeader>
+                    <ModalBody>
+                        <div><p>Are you should you want to delete the group "{this.state.groupToDeleteName}"? This cannot be undone, and will move all group members into un-assigned. </p></div>
+                        <button className="delete-group-button" onClick={this.handleClickDeleteModal}>Delete Group</button>
                         
                     </ModalBody>
                     <ModalFooter>

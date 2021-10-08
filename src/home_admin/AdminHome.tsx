@@ -11,7 +11,8 @@ type AdminHomeState =
     {adminProfile: AdminProfile} &
     {communityProfile: CommunityProfile} &
     {communityMembers: CommunityMembers} &
-    {pickupGroups: PickupGroups}
+    {pickupGroups: PickupGroups} &
+    {needsUpdate: boolean}
 
 class AdminHome extends Component<AdminHomeProps, AdminHomeState>{
     constructor(props: AdminHomeProps){
@@ -34,9 +35,18 @@ class AdminHome extends Component<AdminHomeProps, AdminHomeState>{
                 communityDescription: ''
             },
             communityMembers: [],
-            pickupGroups: []
+            pickupGroups: [],
+            needsUpdate: false,
         }
     }
+
+    setNeedsUpdate = async () => {
+        console.log("NEEDS UPDATE TRIGGERED")
+        this.setState({
+            needsUpdate: true
+        })
+    }
+
 
     setPickupGroups: SetPickupGroups = (newPickupGroup) => {
 
@@ -85,8 +95,7 @@ class AdminHome extends Component<AdminHomeProps, AdminHomeState>{
 
     }
 
-    async componentDidMount(){
-        const token = localStorage.getItem("token")
+    fetchAndSetAllData = async (token: string) => {
         if (token) {
             //Get own user data
             const userResponse = await getOwnUserData(token)
@@ -164,7 +173,26 @@ class AdminHome extends Component<AdminHomeProps, AdminHomeState>{
                 pickupGroups: pickupGroups
             })
         }
+    }
 
+    componentDidMount(){
+        const token = localStorage.getItem("token")
+        if (token) {
+            this.fetchAndSetAllData(token)
+        } 
+
+    }
+
+    componentDidUpdate() {
+        if (this.state.needsUpdate) {
+            const token = localStorage.getItem("token")
+            if (token) {
+                this.fetchAndSetAllData(token)
+                this.setState({
+                    needsUpdate: false
+                })
+            }
+        }
     }
 
     render(){
@@ -179,6 +207,7 @@ class AdminHome extends Component<AdminHomeProps, AdminHomeState>{
                             setPickupGroups = {this.setPickupGroups}
                             communityMembers = {this.state.communityMembers}
                             setMemberGroup = {this.setMemberGroup}
+                            setNeedsUpdate = {this.setNeedsUpdate}
                         />
                     </Route>
 

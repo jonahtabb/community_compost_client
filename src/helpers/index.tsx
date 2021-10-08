@@ -2,6 +2,7 @@ import { addNewPickupGroup } from "./addNewPickupGroup";
 import { camelToSentenceConverter } from "./camelToSentenceConverter";
 import { dayConverterNumToString, dayConverterStringToNum } from "./dayConverters";
 import { APIURL, CLIENTURL ,ADMIN_DEMO_EMAIL, ADMIN_DEMO_PASSWORD, MEMBER_DEMO_EMAIL, MEMBER_DEMO_PASSWORD } from "./environment";
+import { deletePickupGroup } from "./deletePickupGroup";
 import { getAllCommunityMembers } from "./getAllCommunityMembers";
 import { getAllMembersOfPickupGroup } from "./getAllMembersOfPickupGroup";
 import { getAllPickupGroups } from "./getAllPickupGroups";
@@ -20,6 +21,7 @@ export {
     camelToSentenceConverter,
     dayConverterNumToString,
     dayConverterStringToNum,
+    deletePickupGroup,
     getAllCommunityMembers,
     getAllMembersOfPickupGroup,
     getAllPickupGroups,
